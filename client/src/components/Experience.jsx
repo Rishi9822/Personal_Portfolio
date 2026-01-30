@@ -255,6 +255,16 @@ const Experience = () => {
   const containerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isDesktop, setIsDesktop] = useState(true);
+  const totalSteps = experiences.length;
+  const progress = totalSteps > 1 ? activeIndex / (totalSteps - 1) : 0;
+
+  const smoothProgress = useSpring(progress, {
+    stiffness: 140,
+    damping: 28,
+    mass: 0.35,
+  });
+
+
 
   // SSR-safe responsive detection
   useEffect(() => {
@@ -282,21 +292,6 @@ const Experience = () => {
       setActiveIndex(newIndex);
     }
   });
-
-  const step = 1 / experiences.length;
-
-  const snappedProgress = useTransform(scrollYProgress, (latest) => {
-    const snapped = Math.floor(latest / step) * step;
-    return Math.min(snapped, 1);
-  });
-
-  const smoothSnappedProgress = useSpring(snappedProgress, {
-    stiffness: 140,
-    damping: 30,
-    mass: 0.25,
-  });
-
-
 
   // Background parallax
   const bgY = useTransform(scrollYProgress, [0, 1], [0, -50]);
@@ -394,33 +389,38 @@ const Experience = () => {
             {/* Main content area - cards and timeline */}
             <div className="relative h-full flex items-center justify-center">
               {/* Center timeline */}
-              <div className="absolute left-1/2 top-8 bottom-24 -translate-x-1/2 w-1 z-10">
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+h-[60vh] w-[48px] z-10 z-30 pointer-events-none">
                 {/* Background line */}
-                <div className="absolute inset-0 bg-border/30 rounded-full" />
+                <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2
+w-[2px] rounded-full bg-gradient-to-b
+from-border/20 via-border/40 to-border/20" />
+
 
                 {/* Animated progress line */}
-                <motion.div
-                  className="absolute top-0 left-0 right-0 rounded-full origin-top
-             bg-gradient-to-b from-primary via-purple-500 to-accent"
-                  style={{
-                    scaleY: smoothSnappedProgress,
-                    transformOrigin: 'top',
-                  }}
-                >
-                  {/* Glow effect */}
-                  <div className="absolute inset-0 blur-md opacity-60
-                  bg-gradient-to-b from-primary via-purple-500 to-accent" />                </motion.div>
+               <motion.div
+  className="absolute top-0 left-1/2 -translate-x-1/2
+  w-[2px] h-full rounded-full origin-top
+  bg-gradient-to-b from-primary via-purple-500 to-accent"
+  style={{ scaleY: smoothProgress }}
+>
+  <div className="absolute inset-0 blur-lg opacity-70
+  bg-gradient-to-b from-primary via-purple-500 to-accent" />
+</motion.div>
+
+
+
 
                 {/* Step dots */}
                 {experiences.map((_, index) => {
-                  const dotPosition = ((index + 0.5) / experiences.length) * 100;
+                  const dotPosition = (index / (experiences.length - 1)) * 100;
                   const isCompleted = activeIndex >= index;
                   const isCurrent = activeIndex === index;
 
                   return (
                     <motion.div
                       key={index}
-                      className="absolute left-1/2 -translate-x-1/2"
+                      className="absolute left-1/2 -translate-x-1/2 z-40"
                       style={{ top: `${dotPosition}%` }}
                       animate={{
                         scale: isCurrent ? 1.4 : 1,
@@ -429,8 +429,8 @@ const Experience = () => {
                     >
                       <div
                         className={`w-4 h-4 rounded-full border-2 transition-all duration-500 ${isCompleted
-                          ? 'bg-primary border-primary shadow-lg'
-                          : 'bg-background border-border'
+                          ? 'bg-primary border-primary shadow-[0_0_16px_hsl(var(--primary))]'
+                          : 'bg-background border-border/60'
                           }`}
                         style={{
                           boxShadow: isCurrent ? '0 0 20px hsl(var(--primary) / 0.6)' : 'none'

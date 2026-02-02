@@ -192,7 +192,7 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Your Name | CS Student & Developer</title>
+        <title>Rishi Patel | CS Student & Developer</title>
         <meta
           name="description"
           content="Portfolio of a passionate third-year Computer Science student specializing in full-stack development, building elegant digital experiences."
@@ -202,7 +202,7 @@ const Index = () => {
         <meta name="theme-color" content="#0a0c10" />
         
         {/* Open Graph */}
-        <meta property="og:title" content="Your Name | CS Student & Developer" />
+        <meta property="og:title" content="Rishi Patel | CS Student & Developer" />
         <meta property="og:description" content="Portfolio of a passionate CS student building elegant digital experiences." />
         <meta property="og:type" content="website" />
         

@@ -58,12 +58,13 @@ const ExperienceCard = ({ exp, index, isActive, direction, totalCards }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: direction === 'left' ? -120 : 120, scale: 0.85 }}
+      initial={{ opacity: 0, x: direction === 'left' ? -150 : 150, scale: 0.8, rotateY: direction === 'left' ? -15 : 15 }}
       animate={{
         opacity: isActive ? 1 : 0,
-        x: isActive ? 0 : direction === 'left' ? -120 : 120,
-        scale: isActive ? 1 : 0.95,
-        filter: isActive ? "blur(0px)" : "blur(4px)",
+        x: isActive ? 0 : direction === 'left' ? -150 : 150,
+        scale: isActive ? 1 : 0.9,
+        filter: isActive ? "blur(0px)" : "blur(2px)",
+        rotateY: isActive ? 0 : (direction === 'left' ? -15 : 15),
         y: '-50%',
       }}
       transition={{
@@ -73,15 +74,25 @@ const ExperienceCard = ({ exp, index, isActive, direction, totalCards }) => {
       className={`absolute top-1/2 w-full max-w-lg xl:max-w-xl ${direction === 'left'
         ? 'left-4 lg:left-12 xl:left-20'
         : 'right-4 lg:right-12 xl:right-20'
-        } ${isActive ? 'pointer-events-auto z-10' : 'pointer-events-none z-0'}`}
+        } ${isActive ? 'pointer-events-auto z-20' : 'pointer-events-none z-0'}`}
     >
-      <div className="group relative p-6 lg:p-8 rounded-2xl bg-card/95 backdrop-blur-xl border border-border/50 hover:border-primary/50 transition-all duration-500 overflow-hidden shadow-2xl shadow-background/50">
-        {/* Subtle glow behind card */}
-        <div className={`absolute -inset-1 rounded-2xl opacity-20 blur-xl transition-opacity duration-500 ${isActive ? 'opacity-30' : 'opacity-0'
-          } ${direction === 'left' ? 'bg-gradient-to-r from-primary to-transparent' : 'bg-gradient-to-l from-accent to-transparent'}`} />
+      <motion.div
+        className="group relative p-6 lg:p-8 rounded-2xl bg-card/95 backdrop-blur-xl border border-border/50 hover:border-primary/50 transition-all duration-500 overflow-hidden shadow-2xl shadow-background/50"
+        whileHover={isActive ? { 
+          scale: 1.02,
+          boxShadow: "0 25px 50px -10px hsl(var(--primary) / 0.15), 0 0 0 1px hsl(var(--primary) / 0.1)",
+        } : {}}
+        transition={{ type: "tween", ease: [0.25, 0.46, 0.45, 0.94], duration: 0.3 }}
+      >
+        {/* Jawdropping glow behind card */}
+        <div className={`absolute -inset-1 rounded-2xl opacity-0 blur-2xl transition-all duration-700 ${
+          isActive 
+            ? 'opacity-60 bg-gradient-to-r from-primary/30 via-purple-500/30 to-accent/30' 
+            : 'opacity-0'
+        } ${direction === 'left' ? 'bg-gradient-to-r' : 'bg-gradient-to-l'}`} />
 
-        {/* Background pattern */}
-        <div className="absolute inset-0 opacity-5">
+        {/* Premium background pattern */}
+        <div className="absolute inset-0 opacity-[0.03]">
           <div
             className="absolute inset-0"
             style={{
@@ -90,26 +101,97 @@ const ExperienceCard = ({ exp, index, isActive, direction, totalCards }) => {
           />
         </div>
 
-        {/* Card number badge */}
-        <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
-          <span className="font-mono text-xs text-primary font-medium">
+        {/* Animated corner accents */}
+        {isActive && (
+          <>
+            <motion.div
+              className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary/50"
+              animate={{
+                width: [32, 40, 32],
+                height: [32, 40, 32],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            <motion.div
+              className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary/50"
+              animate={{
+                width: [32, 40, 32],
+                height: [32, 40, 32],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            <motion.div
+              className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary/50"
+              animate={{
+                width: [32, 40, 32],
+                height: [32, 40, 32],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            <motion.div
+              className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-primary/50"
+              animate={{
+                width: [32, 40, 32],
+                height: [32, 40, 32],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+          </>
+        )}
+
+        {/* Premium card number badge */}
+        <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 border border-primary/30 backdrop-blur-sm">
+          <span className="font-mono text-xs text-primary font-bold">
             {String(index + 1).padStart(2, '0')}/{String(totalCards).padStart(2, '0')}
           </span>
         </div>
 
-        {/* Header */}
+        {/* Header with enhanced effects */}
         <div className="flex items-start gap-4 mb-5 pr-16">
           <motion.div
-            className="p-3 rounded-xl bg-gradient-to-br from-primary/20 to-accent/10 group-hover:scale-110 transition-transform duration-300"
-            whileHover={{ rotate: 360 }}
+            className="p-3 rounded-xl bg-gradient-to-br from-primary/20 via-purple-500/15 to-accent/10 group-hover:scale-110 transition-all duration-300 shadow-lg"
+            whileHover={{ 
+              rotate: 360,
+              boxShadow: "0 10px 25px -5px hsl(var(--primary) / 0.3)"
+            }}
             transition={{ duration: 0.6 }}
           >
             <Briefcase className="w-6 h-6 text-primary" />
           </motion.div>
 
           <div className="flex-1">
-            <h3 className="text-xl lg:text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
+            <h3 className="text-xl lg:text-2xl font-bold mb-2 group-hover:text-primary transition-all duration-300">
               {exp.title}
+              {isActive && (
+                <motion.div
+                  className="inline-block ml-2 w-2 h-2 bg-primary rounded-full"
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [1, 0.5, 1],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              )}
             </h3>
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-sm">
               <span className="font-semibold text-foreground">
@@ -124,11 +206,18 @@ const ExperienceCard = ({ exp, index, isActive, direction, totalCards }) => {
           </div>
         </div>
 
-        {/* Period */}
+        {/* Period with enhanced styling */}
         <div className="flex items-center gap-2 mb-4">
-          <div className="p-1.5 rounded-lg bg-primary/10">
+          <motion.div
+            className="p-1.5 rounded-lg bg-gradient-to-br from-primary/15 to-accent/10 shadow-md"
+            whileHover={{
+              scale: 1.1,
+              boxShadow: "0 5px 15px -3px hsl(var(--primary) / 0.3)"
+            }}
+            transition={{ duration: 0.2 }}
+          >
             <Calendar className="w-4 h-4 text-primary" />
-          </div>
+          </motion.div>
           <span className="font-mono text-primary text-sm font-medium">{exp.period}</span>
         </div>
 
@@ -137,56 +226,103 @@ const ExperienceCard = ({ exp, index, isActive, direction, totalCards }) => {
           {exp.description}
         </p>
 
-        {/* Achievements */}
+        {/* Achievements with enhanced styling */}
         <div className="mb-5">
           <h4 className="font-bold mb-3 text-sm flex items-center gap-2">
-            <Award className="w-4 h-4 text-primary" />
+            <motion.div
+              className="p-1 rounded-lg bg-gradient-to-br from-primary/15 to-accent/10"
+              animate={{
+                rotate: [0, 5, 0],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <Award className="w-4 h-4 text-primary" />
+            </motion.div>
             Key Achievements
           </h4>
           <ul className="space-y-2">
             {exp.achievements.map((achievement, i) => (
-              <li
+              <motion.li
                 key={i}
                 className="text-muted-foreground flex items-start gap-2"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
               >
-                <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-primary to-accent mt-2 flex-shrink-0" />
+                <motion.div
+                  className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-primary to-accent mt-2 flex-shrink-0"
+                  animate={{
+                    scale: [1, 1.3, 1],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: i * 0.2,
+                    ease: "easeInOut"
+                  }}
+                />
                 <span className="text-sm leading-relaxed">{achievement}</span>
-              </li>
+              </motion.li>
             ))}
           </ul>
         </div>
 
-        {/* Technologies */}
+        {/* Technologies with enhanced hover effects */}
         <div className="mb-5">
           <h4 className="font-bold mb-3 text-sm">Technologies</h4>
           <div className="flex flex-wrap gap-2">
-            {exp.technologies.map((tech) => (
-              <span
+            {exp.technologies.map((tech, i) => (
+              <motion.span
                 key={tech}
-                className="px-3 py-1.5 rounded-lg text-xs font-mono bg-secondary text-foreground/80 border border-border/30 hover:border-primary/50 transition-all duration-300"
+                className="px-3 py-1.5 rounded-lg text-xs font-mono bg-gradient-to-r from-secondary/50 to-secondary/30 text-foreground/80 border border-border/30 hover:border-primary/50 hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 hover:text-primary transition-all duration-300 cursor-default"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: i * 0.05, duration: 0.3 }}
+                whileHover={{
+                  scale: 1.05,
+                  y: -2,
+                }}
               >
                 {tech}
-              </span>
+              </motion.span>
             ))}
           </div>
         </div>
 
-        {/* Link */}
+        {/* Enhanced link button */}
         {exp.link && exp.link !== "#" && (
           <MagneticButton strength={0.3}>
             <motion.a
               href={exp.link}
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 border border-primary/20 hover:border-primary/40"
-              whileHover={{ scale: 1.02, x: 4 }}
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors px-4 py-2 rounded-lg bg-gradient-to-r from-primary/10 to-accent/10 hover:from-primary/20 hover:to-accent/20 border border-primary/20 hover:border-primary/40 shadow-lg hover:shadow-xl"
+              whileHover={{ 
+                scale: 1.02, 
+                x: 4,
+                boxShadow: "0 10px 25px -5px hsl(var(--primary) / 0.3)"
+              }}
               whileTap={{ scale: 0.98 }}
+              transition={{ type: "tween", ease: [0.25, 0.46, 0.45, 0.94], duration: 0.2 }}
             >
               <ExternalLink className="w-4 h-4" />
               View Details
-              <ArrowRight className="w-4 h-4" />
+              <motion.div
+                animate={{ x: [0, 4, 0] }}
+                transition={{
+                  duration: 1,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                <ArrowRight className="w-4 h-4" />
+              </motion.div>
             </motion.a>
           </MagneticButton>
         )}
-      </div>
+      </motion.div>
     </motion.div>
   );
 };
@@ -259,11 +395,15 @@ const Experience = () => {
   const progress = totalSteps > 1 ? activeIndex / (totalSteps - 1) : 0;
 
   const smoothProgress = useSpring(progress, {
-    stiffness: 140,
-    damping: 28,
-    mass: 0.35,
+    stiffness: 60,  // Reduced from 140 for smoother, slower transitions
+    damping: 20,   // Reduced from 28 for more damping
+    mass: 0.8,      // Increased from 0.35 for slower movement
   });
 
+  const progressHeight = useTransform(
+  smoothProgress,
+  v => `${v * 70}vh`
+);
 
 
   // SSR-safe responsive detection
@@ -346,14 +486,65 @@ const Experience = () => {
         className="relative"
       >
 
-        {/* Background with subtle parallax */}
+        {/* Background with jawdropping parallax and effects */}
         <motion.div
-          className="absolute inset-0 bg-background"
+          className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background"
           style={{ y: bgY }}
         >
-          {/* Gradient orbs */}
-          <div className="absolute top-1/4 left-10 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 right-10 w-[400px] h-[400px] bg-accent/5 rounded-full blur-3xl" />
+          {/* Premium gradient orbs with animation */}
+          <motion.div
+            className="absolute top-20 left-20 w-[600px] h-[600px] bg-gradient-to-br from-primary/8 to-purple-500/6 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.3, 1],
+              x: [0, 50, 0],
+              y: [0, -30, 0],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          <motion.div
+            className="absolute bottom-20 right-20 w-[500px] h-[500px] bg-gradient-to-tr from-accent/8 to-cyan-500/6 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.4, 1],
+              x: [0, -60, 0],
+              y: [0, 40, 0],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          
+          {/* Floating geometric shapes */}
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 rounded-full bg-primary/20"
+              style={{
+                left: `${10 + Math.random() * 80}%`,
+                top: `${10 + Math.random() * 80}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                x: [0, Math.random() * 40 - 20, 0],
+                opacity: [0.1, 0.4, 0.1],
+                scale: [1, 2, 1],
+              }}
+              transition={{
+                duration: 4 + Math.random() * 3,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+          
+          {/* Mesh gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-30" />
         </motion.div>
 
         {/* Content container */}
@@ -388,30 +579,57 @@ const Experience = () => {
           <div className="sticky top-0 h-screen overflow-hidden">
             {/* Main content area - cards and timeline */}
             <div className="relative h-full flex items-center justify-center">
-              {/* Center timeline */}
+              {/* Center timeline - perfectly positioned with highly visible effects */}
               <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-h-[60vh] w-[48px] z-10 z-30 pointer-events-none">
-                {/* Background line */}
-                <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2
-w-[2px] rounded-full bg-gradient-to-b
-from-border/20 via-border/40 to-border/20" />
+                h-[70vh] w-[120px] z-30">
+                
+                {/* Premium ambient gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-accent/10 rounded-full blur-2xl" />
+                
+                {/* Animated floating particles for premium feel */}
+                {[...Array(8)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-2 h-2 rounded-full bg-primary/50"
+                    style={{
+                      left: `${30 + Math.random() * 60}px`,
+                      top: `${Math.random() * 100}%`,
+                    }}
+                    animate={{
+                      y: [0, -25, 0],
+                      opacity: [0.3, 1, 0.3],
+                      scale: [1, 1.8, 1],
+                    }}
+                    transition={{
+                      duration: 3 + Math.random() * 2,
+                      repeat: Infinity,
+                      delay: Math.random() * 2,
+                      ease: "easeInOut"
+                    }}
+                  />
+                ))}
 
-
-                {/* Animated progress line */}
-               <motion.div
-  className="absolute top-0 left-1/2 -translate-x-1/2
-  w-[2px] h-full rounded-full origin-top
-  bg-gradient-to-b from-primary via-purple-500 to-accent"
-  style={{ scaleY: smoothProgress }}
+                {/* Progress line container – fixed height */}
+<div
+  className="absolute left-1/2 -translate-x-1/2 top-0
+    w-[12px] h-[70vh] rounded-full overflow-hidden z-40"
 >
-  <div className="absolute inset-0 blur-lg opacity-70
-  bg-gradient-to-b from-primary via-purple-500 to-accent" />
-</motion.div>
+  {/* Animated progress fill */}
+  <motion.div
+    className="absolute top-0 left-0 w-full rounded-full"
+    style={{ height: progressHeight }}
+  >
+    {/* Bright core */}
+    <div className="absolute inset-0 bg-gradient-to-b from-primary via-purple-500 to-accent rounded-full">
+      {/* Glow */}
+      <div className="absolute -inset-4 bg-gradient-to-b from-primary/70 via-purple-500/70 to-accent/70 blur-2xl" />
+      <div className="absolute -inset-2 bg-gradient-to-b from-primary/90 via-purple-500/90 to-accent/90 blur-xl" />
+    </div>
+  </motion.div>
+</div>
 
 
-
-
-                {/* Step dots */}
+                {/* Step dots - perfectly aligned with premium effects */}
                 {experiences.map((_, index) => {
                   const dotPosition = (index / (experiences.length - 1)) * 100;
                   const isCompleted = activeIndex >= index;
@@ -420,25 +638,108 @@ from-border/20 via-border/40 to-border/20" />
                   return (
                     <motion.div
                       key={index}
-                      className="absolute left-1/2 -translate-x-1/2 z-40"
+                      className="absolute left-1/2 -translate-x-1/2 z-50"
                       style={{ top: `${dotPosition}%` }}
                       animate={{
-                        scale: isCurrent ? 1.4 : 1,
+                        scale: isCurrent ? 1.5 : 1,
                       }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                      transition={{ type: 'spring', stiffness: 500, damping: 20 }}
                     >
+                      {/* Outer ring for active state */}
+                      {isCurrent && (
+                        <motion.div
+                          className="absolute inset-0 rounded-full border-3 border-primary"
+                          animate={{
+                            scale: [1, 2.5, 1],
+                            opacity: [1, 0.3, 1],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }}
+                          style={{
+                            width: '40px',
+                            height: '40px',
+                            left: '-7px',
+                            top: '-7px',
+                          }}
+                        />
+                      )}
+                      
+                      {/* Main dot with premium styling */}
                       <div
-                        className={`w-4 h-4 rounded-full border-2 transition-all duration-500 ${isCompleted
-                          ? 'bg-primary border-primary shadow-[0_0_16px_hsl(var(--primary))]'
-                          : 'bg-background border-border/60'
-                          }`}
+                        className={`w-4 h-4 rounded-full border-4 transition-all duration-700 relative ${
+                          isCompleted
+                            ? 'bg-primary border-primary shadow-[0_0_40px_hsl(var(--primary))]'
+                            : 'bg-background border-border/80'
+                        }`}
                         style={{
-                          boxShadow: isCurrent ? '0 0 20px hsl(var(--primary) / 0.6)' : 'none'
+                          boxShadow: isCurrent 
+                            ? '0 0 50px hsl(var(--primary) / 1), 0 0 25px hsl(var(--primary) / 0.7), inset 0 0 15px hsl(var(--primary) / 0.4)' 
+                            : isCompleted 
+                              ? '0 0 20px hsl(var(--primary) / 0.6), inset 0 0 8px hsl(var(--primary) / 0.3)'
+                              : '0 0 8px hsl(var(--border) / 0.4)'
+                        }}
+                      >
+                        {/* Inner glow for active state */}
+                        {isCurrent && (
+                          <>
+                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/50 to-transparent" />
+                            <motion.div
+                              className="absolute inset-0 rounded-full bg-primary"
+                              animate={{
+                                scale: [1, 0.6, 1],
+                                opacity: [1, 0.3, 1],
+                              }}
+                              transition={{
+                                duration: 1.5,
+                                repeat: Infinity,
+                                ease: "easeInOut"
+                              }}
+                            />
+                          </>
+                        )}
+                        
+                        {/* Completed state checkmark */}
+                        {isCompleted && !isCurrent && (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-4 h-4 text-primary font-bold" style={{
+                              fontSize: '10px',
+                            }}>
+                              ✓
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Connecting line to dot */}
+                      <div 
+                        className="absolute left-1/2 -translate-x-1/2 w-1 bg-gradient-to-b from-primary/60 to-transparent"
+                        style={{
+                          height: '25px',
+                          top: isCurrent ? '-25px' : '-15px',
+                          opacity: isCompleted ? 1 : 0.4,
                         }}
                       />
                     </motion.div>
                   );
                 })}
+
+                {/* Progress percentage indicator */}
+                <motion.div
+                  className="absolute -right-24 top-1/2 -translate-y-1/2 text-primary font-mono text-sm font-bold bg-card/90 backdrop-blur-sm px-4 py-2 rounded-full border-2 border-primary/40 shadow-lg"
+                  animate={{
+                    opacity: [0.8, 1, 0.8],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  {Math.round(progress * 100)}%
+                </motion.div>
               </div>
 
               {/* Experience cards container */}

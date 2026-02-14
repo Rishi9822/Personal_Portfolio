@@ -138,16 +138,16 @@ const Projects = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
 
           {/* Content */}
-          <div className="relative z-10 flex h-full flex-col justify-end p-12">
-            <span className="text-xs uppercase tracking-[0.3em] text-white/50">
+          <div className="relative z-10 flex h-full flex-col justify-end p-6 sm:p-10 lg:p-12">
+            <span className="text-[11px] sm:text-xs uppercase tracking-[0.3em] text-white/50">
               {project.subtitle}
             </span>
 
-            <h3 className="mt-3 text-4xl md:text-5xl font-semibold tracking-tight">
+            <h3 className="mt-3 text-2xl sm:text-3xl md:text-5xl font-semibold tracking-tight">
               {project.title}
             </h3>
 
-            <div className="mt-6 flex items-center gap-6">
+            <div className="mt-5 sm:mt-6 flex items-center gap-6">
               <a
                 href={project.liveUrl}
                 target="_blank"
@@ -198,7 +198,7 @@ const Projects = () => {
         <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 py-16 lg:py-24">
             {/* LEFT SIDE - Fixed Project Description */}
-            <div className="relative lg:sticky lg:top-32 h-fit pr-0 lg:pr-16">
+            <div className="relative lg:sticky lg:top-32 h-fit pr-0 lg:pr-16 hidden lg:block">
               <motion.div
                 key={currentProject.id}
                 initial={{ opacity: 0, x: -50 }}
@@ -287,13 +287,70 @@ const Projects = () => {
                 const end = (i + 1) / projects.length;
 
                 return (
-                  <StickyCard
-                    key={project.id}
-                    project={project}
-                    progress={scrollYProgress}
-                    range={isDesktop ? [start, end] : [0, 1]}
-                    targetScale={isDesktop ? 1 - (projects.length - i - 1) * 0.06 : 1}
-                  />
+                  <div key={project.id} className="space-y-6">
+                    <StickyCard
+                      project={project}
+                      progress={scrollYProgress}
+                      range={isDesktop ? [start, end] : [0, 1]}
+                      targetScale={isDesktop ? 1 - (projects.length - i - 1) * 0.06 : 1}
+                    />
+
+                    {/* Mobile Details */}
+                    <div className="lg:hidden space-y-4 px-2 pb-6">
+                      <div className="flex items-center gap-3">
+                        <span
+                          className="text-2xl font-semibold"
+                          style={{ color: project.color }}
+                        >
+                          {project.number}
+                        </span>
+                        <div className="h-px bg-white/20 flex-1"></div>
+                      </div>
+
+                      <p className="text-base text-white/80 font-medium">
+                        {project.title}
+                      </p>
+
+                      <p className="text-sm text-white/60">
+                        {project.subtitle}
+                      </p>
+
+                      <p className="text-sm text-white/60 leading-relaxed">
+                        {project.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-3 py-1 rounded-lg text-[11px] font-mono bg-white/10 text-white/80 border border-white/20"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex flex-wrap gap-3 pt-2">
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition-colors w-full sm:w-auto"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          Live Site
+                        </a>
+
+                        <a
+                          href={project.githubUrl}
+                          className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-white/20 text-white text-sm hover:bg-white/10 transition-colors w-full sm:w-auto"
+                        >
+                          <Github className="w-4 h-4" />
+                          Source
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 );
               })}
 

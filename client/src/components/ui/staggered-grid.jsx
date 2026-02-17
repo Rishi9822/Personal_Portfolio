@@ -193,18 +193,28 @@ export function StaggeredGrid({
                       bentoItem.tone === "accent"
                         ? "from-accent/30 via-black/60 to-primary/30"
                         : "from-primary/30 via-black/60 to-accent/30";
+                    const Tag = bentoItem.href ? "a" : "button";
+                    const tagProps = bentoItem.href
+                      ? {
+                          href: bentoItem.href,
+                          target: bentoItem.target,
+                          rel: bentoItem.target === "_blank" ? "noreferrer" : undefined,
+                        }
+                      : { type: "button" };
+
                     return (
-                      <button
+                      <Tag
                         key={bentoItem.id}
-                        type="button"
                         className={cn(
-                          "relative cursor-pointer overflow-hidden rounded-2xl h-full transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] border-0 p-0 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60",
+                          "relative cursor-pointer overflow-hidden rounded-2xl h-full transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] border-0 p-0 text-left no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60",
                           isActive ? "bg-zinc-900/10 shadow-2xl" : "bg-zinc-950"
                         )}
                         style={{ width: isActive ? "60%" : "20%" }}
                         onMouseEnter={() => setActiveBento(index)}
                         onClick={() => setActiveBento(index)}
-                        aria-pressed={isActive}
+                        aria-pressed={bentoItem.href ? undefined : isActive}
+                        aria-label={bentoItem.ariaLabel || bentoItem.title}
+                        {...tagProps}
                       >
                         <div
                           className={cn(
@@ -240,11 +250,23 @@ export function StaggeredGrid({
                                 />
                               )}
                             </div>
-                            <div className="absolute bottom-0 left-0 w-full h-20 flex items-center justify-between px-5 z-20">
-                              <h3 className="text-sm font-bold text-white drop-shadow-md">
-                                {bentoItem.title}
-                              </h3>
-                              <div className="text-white/90">{bentoItem.icon}</div>
+                            <div className="absolute bottom-0 left-0 w-full px-5 pb-4 pt-6 z-20">
+                              {bentoItem.subtitle ? (
+                                <p className="text-[10px] uppercase tracking-[0.2em] text-white/60">
+                                  {bentoItem.subtitle}
+                                </p>
+                              ) : null}
+                              <div className="flex items-center justify-between gap-3">
+                                <h3 className="text-sm font-bold text-white drop-shadow-md">
+                                  {bentoItem.title}
+                                </h3>
+                                <div className="text-white/90">{bentoItem.icon}</div>
+                              </div>
+                              {bentoItem.description ? (
+                                <p className="mt-1 text-[11px] text-white/70 leading-snug">
+                                  {bentoItem.description}
+                                </p>
+                              ) : null}
                             </div>
                           </div>
                         </div>
@@ -261,7 +283,7 @@ export function StaggeredGrid({
                             {bentoItem.title}
                           </span>
                         </div>
-                      </button>
+                      </Tag>
                     );
                   })}
                 </div>
@@ -287,6 +309,13 @@ export function StaggeredGrid({
                       <div className={cn("absolute inset-0 bg-gradient-to-br", toneClass)} />
                     )}
                     <div className="relative z-10 flex flex-col items-center justify-center gap-2 px-2 text-center">
+                      {item.logo ? (
+                        <img
+                          src={item.logo}
+                          alt={item.logoAlt || item.label}
+                          className="h-6 w-6 object-contain opacity-90"
+                        />
+                      ) : null}
                       <span className="block text-[10px] font-medium text-white/70 uppercase tracking-wider">
                         Skill
                       </span>

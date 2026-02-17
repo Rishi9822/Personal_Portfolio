@@ -22,6 +22,9 @@ import {
 import ScrollReveal from "./ScrollReveal";
 import { useIsMobile } from "../hooks/use-mobile.js";
 import { StaggeredGrid } from "@/components/ui/staggered-grid";
+import nodeLogo from "@/assets/nodejs.png";
+import javaLogo from "@/assets/java.gif";
+import jsLogo from "@/assets/js.gif";
 
 const projectExamples = {
   JavaScript: [
@@ -50,21 +53,21 @@ const projectExamples = {
 
 // Extended skill data for rich carousel
 const allSkills = [
-  { name: "JavaScript", icon: Code2, level: 90, color: "primary" },
   { name: "React", icon: Layers, level: 88, color: "accent" },
-  { name: "TypeScript", icon: Code2, level: 85, color: "primary" },
-  { name: "Python", icon: Terminal, level: 82, color: "accent" },
+  { name: "C", icon: Terminal, level: 82, color: "accent" },
   { name: "Nodejs", icon: Server, level: 80, color: "primary" },
-  { name: "Next.js", icon: Globe, level: 78, color: "accent" },
+  { name: "JavaScript", icon: Code2, level: 90, color: "primary" },
+  { name: "Java", icon: Code2, level: 85, color: "primary" },
+  { name: "HTML", icon: Globe, level: 78, color: "accent" },
   { name: "Tailwind CSS", icon: Palette, level: 92, color: "primary" },
-  { name: "PostgreSQL", icon: Database, level: 75, color: "accent" },
+  { name: "CSS", icon: Database, level: 75, color: "accent" },
   { name: "MongoDB", icon: Database, level: 78, color: "primary" },
-  { name: "Docker", icon: Cloud, level: 68, color: "accent" },
+  { name: "Github", icon: Cloud, level: 68, color: "accent" },
   { name: "Git", icon: Wrench, level: 88, color: "primary" },
-  { name: "AWS", icon: Cloud, level: 65, color: "accent" },
-  { name: "GraphQL", icon: Cpu, level: 72, color: "primary" },
-  { name: "React Native", icon: Smartphone, level: 70, color: "accent" },
-  { name: "Vue.js", icon: Layers, level: 68, color: "primary" },
+  { name: "REST API", icon: Cloud, level: 65, color: "accent" },
+  { name: "SEO", icon: Cpu, level: 72, color: "primary" },
+  // { name: "React Native", icon: Smartphone, level: 70, color: "accent" },
+  // { name: "Vue.js", icon: Layers, level: 68, color: "primary" },
   { name: "Express", icon: Server, level: 80, color: "accent" },
 ];
 
@@ -96,37 +99,45 @@ const skillCategories = [
   },
 ];
 
-const SkillBadge = ({ label }) => (
-  <span className="text-[10px] font-semibold tracking-[0.2em] text-white/90">
-    {label}
-  </span>
-);
+const gridLogos = [jsLogo, javaLogo, nodeLogo];
 
-const desktopGridItems = allSkills.map((skill) => ({
+const desktopGridItems = allSkills.map((skill, index) => ({
   id: skill.name,
   label: skill.name,
   meta: `${skill.level}%`,
   tone: skill.color,
+  logo: gridLogos[index % gridLogos.length],
+  logoAlt: skill.name,
 }));
 
 const desktopBentoItems = [
   {
     id: "javascript",
-    title: "JavaScript",
-    icon: <SkillBadge label="JS" />,
+    title: "Repository",
+    subtitle: "Version Control",
+    description: "Secure, scalable code management.",
+    icon: <img src={jsLogo} alt="JavaScript" className="h-6 w-6 object-contain" />,
     tone: "primary",
+    href: "https://github.com/Rishi9822",
+    target: "_blank",
   },
   {
     id: "react",
-    title: "React",
-    icon: <SkillBadge label="REACT" />,
+    title: "Connect",
+    subtitle: "Team Communication",
+    description: "Real-time messaging and collaboration.",
+    icon: <img src={javaLogo} alt="Java" className="h-6 w-6 object-contain" />,
     tone: "accent",
+    href: "#contact",
   },
   {
     id: "node",
-    title: "Node.js",
-    icon: <SkillBadge label="NODE" />,
+    title: "Launch",
+    subtitle: "Product Delivery",
+    description: "Ship polished features with confidence.",
+    icon: <img src={nodeLogo} alt="Node.js" className="h-6 w-6 object-contain" />,
     tone: "primary",
+    href: "#experience",
   },
 ];
 
@@ -545,9 +556,8 @@ const Skills = () => {
   return (
     <section
       id="skills"
-      className={`relative overflow-hidden ${
-        isMobile ? "py-16 sm:py-20 lg:py-28" : "py-10 lg:py-16"
-      }`}
+      className={`relative overflow-hidden ${isMobile ? "py-16 sm:py-20 lg:py-28" : "py-10 lg:py-16"
+        }`}
       ref={containerRef}
     >
       {isMobile ? (
@@ -558,36 +568,34 @@ const Skills = () => {
           {/* Background effects - reduced on mobile */}
           <div className="absolute inset-0 pointer-events-none">
             <motion.div
-              className={`absolute top-1/4 left-1/4 rounded-full blur-3xl bg-primary/5 ${
-                isMobile
+              className={`absolute top-1/4 left-1/4 rounded-full blur-3xl bg-primary/5 ${isMobile
                   ? "w-[250px] h-[250px]"
                   : "w-[400px] h-[400px] lg:w-[500px] lg:h-[500px]"
-              }`}
+                }`}
               animate={
                 isMobile
                   ? {}
                   : {
-                      scale: [1, 1.2, 1],
-                      x: [0, 50, 0],
-                      y: [0, -30, 0],
-                    }
+                    scale: [1, 1.2, 1],
+                    x: [0, 50, 0],
+                    y: [0, -30, 0],
+                  }
               }
               transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div
-              className={`absolute bottom-1/4 right-1/4 rounded-full blur-3xl bg-accent/5 ${
-                isMobile
+              className={`absolute bottom-1/4 right-1/4 rounded-full blur-3xl bg-accent/5 ${isMobile
                   ? "w-[200px] h-[200px]"
                   : "w-[300px] h-[300px] lg:w-[400px] lg:h-[400px]"
-              }`}
+                }`}
               animate={
                 isMobile
                   ? {}
                   : {
-                      scale: [1, 1.3, 1],
-                      x: [0, -40, 0],
-                      y: [0, 40, 0],
-                    }
+                    scale: [1, 1.3, 1],
+                    x: [0, -40, 0],
+                    y: [0, 40, 0],
+                  }
               }
               transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
             />
@@ -598,9 +606,8 @@ const Skills = () => {
             <ScrollReveal direction="up" distance={20}>
               <div className="text-center mb-8 sm:mb-12 lg:mb-16">
                 <motion.span
-                  className={`inline-block font-mono text-primary mb-3 sm:mb-4 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-primary/10 border border-primary/20 ${
-                    isMobile ? "text-xs" : "text-sm"
-                  }`}
+                  className={`inline-block font-mono text-primary mb-3 sm:mb-4 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-primary/10 border border-primary/20 ${isMobile ? "text-xs" : "text-sm"
+                    }`}
                   initial={{ opacity: 0, y: -10 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                 >
@@ -610,9 +617,8 @@ const Skills = () => {
                   Tech Stack & <span className="text-gradient">Expertise</span>
                 </h2>
                 <p
-                  className={`text-muted-foreground max-w-xl mx-auto ${
-                    isMobile ? "text-sm px-4" : "text-base lg:text-lg"
-                  }`}
+                  className={`text-muted-foreground max-w-xl mx-auto ${isMobile ? "text-sm px-4" : "text-base lg:text-lg"
+                    }`}
                 >
                   Technologies I've mastered through projects and continuous
                   learning.
@@ -622,9 +628,8 @@ const Skills = () => {
 
             {/* Infinite carousel section */}
             <div
-              className={`-mx-4 sm:-mx-6 lg:-mx-8 ${
-                isMobile ? "mb-10" : "mb-14 lg:mb-20"
-              }`}
+              className={`-mx-4 sm:-mx-6 lg:-mx-8 ${isMobile ? "mb-10" : "mb-14 lg:mb-20"
+                }`}
             >
               {/* First row - left to right */}
               <CarouselRow
@@ -647,9 +652,8 @@ const Skills = () => {
 
             {/* Category cards grid */}
             <div
-              className={`grid gap-3 sm:gap-4 lg:gap-6 max-w-5xl mx-auto ${
-                isMobile ? "grid-cols-2" : "grid-cols-2 lg:grid-cols-4"
-              }`}
+              className={`grid gap-3 sm:gap-4 lg:gap-6 max-w-5xl mx-auto ${isMobile ? "grid-cols-2" : "grid-cols-2 lg:grid-cols-4"
+                }`}
             >
               {skillCategories.map((category, index) => (
                 <CategoryCard
@@ -664,17 +668,15 @@ const Skills = () => {
 
             {/* Bottom decorative element */}
             <motion.div
-              className={`flex justify-center ${
-                isMobile ? "mt-8" : "mt-10 lg:mt-16"
-              }`}
+              className={`flex justify-center ${isMobile ? "mt-8" : "mt-10 lg:mt-16"
+                }`}
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ delay: 0.4 }}
             >
               <div
-                className={`flex items-center gap-2 sm:gap-3 text-muted-foreground ${
-                  isMobile ? "text-xs" : "text-sm"
-                }`}
+                className={`flex items-center gap-2 sm:gap-3 text-muted-foreground ${isMobile ? "text-xs" : "text-sm"
+                  }`}
               >
                 <motion.div
                   className="w-6 sm:w-8 h-px bg-gradient-to-r from-transparent to-border"
@@ -688,9 +690,8 @@ const Skills = () => {
                   transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                 >
                   <Zap
-                    className={`text-primary ${
-                      isMobile ? "w-3.5 h-3.5" : "w-4 h-4"
-                    }`}
+                    className={`text-primary ${isMobile ? "w-3.5 h-3.5" : "w-4 h-4"
+                      }`}
                   />
                 </motion.div>
                 <motion.div

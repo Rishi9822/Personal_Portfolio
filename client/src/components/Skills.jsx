@@ -1,13 +1,27 @@
 import { motion, useMotionValue, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect, useCallback, useMemo, memo } from "react";
 import {
-  Code2, Palette, Server, Wrench, Database, Globe,
-  Smartphone, Terminal, Cloud, Cpu, Layers, Zap,
-  ArrowRight, Sparkles, ChevronLeft, ChevronRight
+  Code2,
+  Palette,
+  Server,
+  Wrench,
+  Database,
+  Globe,
+  Smartphone,
+  Terminal,
+  Cloud,
+  Cpu,
+  Layers,
+  Zap,
+  ArrowRight,
+  Sparkles,
+  ChevronLeft,
+  ChevronRight,
+  Calendar,
 } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 import { useIsMobile } from "../hooks/use-mobile.js";
-import { Calendar } from "lucide-react";
+import { StaggeredGrid } from "@/components/ui/staggered-grid";
 
 const projectExamples = {
   JavaScript: [
@@ -79,6 +93,40 @@ const skillCategories = [
     icon: Wrench,
     skills: ["Git", "Docker", "AWS", "Linux"],
     gradient: "from-accent/20 to-accent/5",
+  },
+];
+
+const SkillBadge = ({ label }) => (
+  <span className="text-[10px] font-semibold tracking-[0.2em] text-white/90">
+    {label}
+  </span>
+);
+
+const desktopGridItems = allSkills.map((skill) => ({
+  id: skill.name,
+  label: skill.name,
+  meta: `${skill.level}%`,
+  tone: skill.color,
+}));
+
+const desktopBentoItems = [
+  {
+    id: "javascript",
+    title: "JavaScript",
+    icon: <SkillBadge label="JS" />,
+    tone: "primary",
+  },
+  {
+    id: "react",
+    title: "React",
+    icon: <SkillBadge label="REACT" />,
+    tone: "accent",
+  },
+  {
+    id: "node",
+    title: "Node.js",
+    icon: <SkillBadge label="NODE" />,
+    tone: "primary",
   },
 ];
 
@@ -497,133 +545,182 @@ const Skills = () => {
   return (
     <section
       id="skills"
-      className="py-16 sm:py-20 lg:py-28 relative overflow-hidden"
+      className={`relative overflow-hidden ${
+        isMobile ? "py-16 sm:py-20 lg:py-28" : "py-10 lg:py-16"
+      }`}
       ref={containerRef}
     >
-      {/* Section divider */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+      {isMobile ? (
+        <>
+          {/* Section divider */}
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
-      {/* Background effects - reduced on mobile */}
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          className={`absolute top-1/4 left-1/4 rounded-full blur-3xl bg-primary/5 ${isMobile ? 'w-[250px] h-[250px]' : 'w-[400px] h-[400px] lg:w-[500px] lg:h-[500px]'
-            }`}
-          animate={isMobile ? {} : {
-            scale: [1, 1.2, 1],
-            x: [0, 50, 0],
-            y: [0, -30, 0],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className={`absolute bottom-1/4 right-1/4 rounded-full blur-3xl bg-accent/5 ${isMobile ? 'w-[200px] h-[200px]' : 'w-[300px] h-[300px] lg:w-[400px] lg:h-[400px]'
-            }`}
-          animate={isMobile ? {} : {
-            scale: [1, 1.3, 1],
-            x: [0, -40, 0],
-            y: [0, 40, 0],
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
+          {/* Background effects - reduced on mobile */}
+          <div className="absolute inset-0 pointer-events-none">
+            <motion.div
+              className={`absolute top-1/4 left-1/4 rounded-full blur-3xl bg-primary/5 ${
+                isMobile
+                  ? "w-[250px] h-[250px]"
+                  : "w-[400px] h-[400px] lg:w-[500px] lg:h-[500px]"
+              }`}
+              animate={
+                isMobile
+                  ? {}
+                  : {
+                      scale: [1, 1.2, 1],
+                      x: [0, 50, 0],
+                      y: [0, -30, 0],
+                    }
+              }
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className={`absolute bottom-1/4 right-1/4 rounded-full blur-3xl bg-accent/5 ${
+                isMobile
+                  ? "w-[200px] h-[200px]"
+                  : "w-[300px] h-[300px] lg:w-[400px] lg:h-[400px]"
+              }`}
+              animate={
+                isMobile
+                  ? {}
+                  : {
+                      scale: [1, 1.3, 1],
+                      x: [0, -40, 0],
+                      y: [0, 40, 0],
+                    }
+              }
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </div>
 
-      <div className="container relative z-10 px-4 sm:px-6">
-        {/* Section header */}
-        <ScrollReveal direction="up" distance={20}>
-          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-            <motion.span
-              className={`inline-block font-mono text-primary mb-3 sm:mb-4 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-primary/10 border border-primary/20 ${isMobile ? 'text-xs' : 'text-sm'
+          <div className="container relative z-10 px-4 sm:px-6">
+            {/* Section header */}
+            <ScrollReveal direction="up" distance={20}>
+              <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+                <motion.span
+                  className={`inline-block font-mono text-primary mb-3 sm:mb-4 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-primary/10 border border-primary/20 ${
+                    isMobile ? "text-xs" : "text-sm"
+                  }`}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                >
+                  // my skills
+                </motion.span>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-5">
+                  Tech Stack & <span className="text-gradient">Expertise</span>
+                </h2>
+                <p
+                  className={`text-muted-foreground max-w-xl mx-auto ${
+                    isMobile ? "text-sm px-4" : "text-base lg:text-lg"
+                  }`}
+                >
+                  Technologies I've mastered through projects and continuous
+                  learning.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            {/* Infinite carousel section */}
+            <div
+              className={`-mx-4 sm:-mx-6 lg:-mx-8 ${
+                isMobile ? "mb-10" : "mb-14 lg:mb-20"
+              }`}
+            >
+              {/* First row - left to right */}
+              <CarouselRow
+                skills={firstRowSkills}
+                direction="left"
+                speed={35}
+                isMobile={isMobile}
+                onSkillClick={handleSkillClick}
+              />
+
+              {/* Second row - right to left */}
+              <CarouselRow
+                skills={secondRowSkills}
+                direction="right"
+                speed={40}
+                isMobile={isMobile}
+                onSkillClick={handleSkillClick}
+              />
+            </div>
+
+            {/* Category cards grid */}
+            <div
+              className={`grid gap-3 sm:gap-4 lg:gap-6 max-w-5xl mx-auto ${
+                isMobile ? "grid-cols-2" : "grid-cols-2 lg:grid-cols-4"
+              }`}
+            >
+              {skillCategories.map((category, index) => (
+                <CategoryCard
+                  key={category.title}
+                  category={category}
+                  index={index}
+                  isInView={isInView}
+                  isMobile={isMobile}
+                />
+              ))}
+            </div>
+
+            {/* Bottom decorative element */}
+            <motion.div
+              className={`flex justify-center ${
+                isMobile ? "mt-8" : "mt-10 lg:mt-16"
+              }`}
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.4 }}
+            >
+              <div
+                className={`flex items-center gap-2 sm:gap-3 text-muted-foreground ${
+                  isMobile ? "text-xs" : "text-sm"
                 }`}
-              initial={{ opacity: 0, y: -10 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-            >
-              // my skills
-            </motion.span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-5">
-              Tech Stack &{" "}
-              <span className="text-gradient">Expertise</span>
-            </h2>
-            <p className={`text-muted-foreground max-w-xl mx-auto ${isMobile ? 'text-sm px-4' : 'text-base lg:text-lg'
-              }`}>
-              Technologies I've mastered through projects and continuous learning.
-            </p>
-          </div>
-        </ScrollReveal>
-
-        {/* Infinite carousel section */}
-        <div className={`-mx-4 sm:-mx-6 lg:-mx-8 ${isMobile ? 'mb-10' : 'mb-14 lg:mb-20'}`}>
-          {/* First row - left to right */}
-          <CarouselRow
-            skills={firstRowSkills}
-            direction="left"
-            speed={35}
-            isMobile={isMobile}
-            onSkillClick={handleSkillClick}
-          />
-
-          {/* Second row - right to left */}
-          <CarouselRow
-            skills={secondRowSkills}
-            direction="right"
-            speed={40}
-            isMobile={isMobile}
-            onSkillClick={handleSkillClick}
-          />
-        </div>
-
-        {/* Category cards grid */}
-        <div className={`grid gap-3 sm:gap-4 lg:gap-6 max-w-5xl mx-auto ${isMobile ? 'grid-cols-2' : 'grid-cols-2 lg:grid-cols-4'
-          }`}>
-          {skillCategories.map((category, index) => (
-            <CategoryCard
-              key={category.title}
-              category={category}
-              index={index}
-              isInView={isInView}
-              isMobile={isMobile}
-            />
-          ))}
-        </div>
-
-        {/* Bottom decorative element */}
-        <motion.div
-          className={`flex justify-center ${isMobile ? 'mt-8' : 'mt-10 lg:mt-16'}`}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.4 }}
-        >
-          <div className={`flex items-center gap-2 sm:gap-3 text-muted-foreground ${isMobile ? 'text-xs' : 'text-sm'
-            }`}>
-            <motion.div
-              className="w-6 sm:w-8 h-px bg-gradient-to-r from-transparent to-border"
-              initial={{ scaleX: 0 }}
-              animate={isInView ? { scaleX: 1 } : {}}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            />
-            <span className="font-mono">Always learning</span>
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-            >
-              <Zap className={`text-primary ${isMobile ? 'w-3.5 h-3.5' : 'w-4 h-4'}`} />
+              >
+                <motion.div
+                  className="w-6 sm:w-8 h-px bg-gradient-to-r from-transparent to-border"
+                  initial={{ scaleX: 0 }}
+                  animate={isInView ? { scaleX: 1 } : {}}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                />
+                <span className="font-mono">Always learning</span>
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                >
+                  <Zap
+                    className={`text-primary ${
+                      isMobile ? "w-3.5 h-3.5" : "w-4 h-4"
+                    }`}
+                  />
+                </motion.div>
+                <motion.div
+                  className="w-6 sm:w-8 h-px bg-gradient-to-l from-transparent to-border"
+                  initial={{ scaleX: 0 }}
+                  animate={isInView ? { scaleX: 1 } : {}}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                />
+              </div>
             </motion.div>
-            <motion.div
-              className="w-6 sm:w-8 h-px bg-gradient-to-l from-transparent to-border"
-              initial={{ scaleX: 0 }}
-              animate={isInView ? { scaleX: 1 } : {}}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            />
           </div>
-        </motion.div>
-      </div>
 
-      <SkillDetailModal
-        skill={selectedSkill}
-        isOpen={isModalOpen}
-        onClose={handleModalClose}
-        isMobile={isMobile}
-      />
-
+          <SkillDetailModal
+            skill={selectedSkill}
+            isOpen={isModalOpen}
+            onClose={handleModalClose}
+            isMobile={isMobile}
+          />
+        </>
+      ) : (
+        <div className="relative z-10 px-4 sm:px-6">
+          <StaggeredGrid
+            gridItems={desktopGridItems}
+            bentoItems={desktopBentoItems}
+            centerText="Expertise"
+            showFooter={false}
+            className="mx-auto"
+          />
+        </div>
+      )}
     </section>
   );
 };

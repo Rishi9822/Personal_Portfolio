@@ -7,7 +7,6 @@ import {
   Wrench,
   Database,
   Globe,
-  Smartphone,
   Terminal,
   Cloud,
   Cpu,
@@ -25,6 +24,20 @@ import { StaggeredGrid } from "@/components/ui/staggered-grid";
 import nodeLogo from "@/assets/nodejs.png";
 import javaLogo from "@/assets/java.gif";
 import jsLogo from "@/assets/js.gif";
+import htmlLogo from "@/assets/Html.png";
+import mongodbLogo from "@/assets/mongodb.png";
+import reactLogo from "@/assets/react.gif";
+import GithubLogo from "@/assets/GitHub.png";
+import CSSLogo from "@/assets/CSS.png";
+import CLogo from "@/assets/C.png";
+import ExpressLogo from "@/assets/Express.png";
+import GitLogo from "@/assets/Git.png";
+import RestAPILogo from "@/assets/RestAPI.png";
+import SEOLogo from "@/assets/SEO.gif";
+import TailwindCSSLogo from "@/assets/TailwindCSS.png";
+
+
+
 
 const projectExamples = {
   JavaScript: [
@@ -56,15 +69,15 @@ const allSkills = [
   { name: "React", icon: Layers, level: 88, color: "accent" },
   { name: "C", icon: Terminal, level: 82, color: "accent" },
   { name: "Nodejs", icon: Server, level: 80, color: "primary" },
+  { name: "MongoDB", icon: Database, level: 78, color: "primary" },
   { name: "JavaScript", icon: Code2, level: 90, color: "primary" },
+  { name: "TailwindCSS", icon: Palette, level: 92, color: "primary" },
+  { name: "CSS", icon: Database, level: 75, color: "accent" },
   { name: "Java", icon: Code2, level: 85, color: "primary" },
   { name: "HTML", icon: Globe, level: 78, color: "accent" },
-  { name: "Tailwind CSS", icon: Palette, level: 92, color: "primary" },
-  { name: "CSS", icon: Database, level: 75, color: "accent" },
-  { name: "MongoDB", icon: Database, level: 78, color: "primary" },
   { name: "Github", icon: Cloud, level: 68, color: "accent" },
   { name: "Git", icon: Wrench, level: 88, color: "primary" },
-  { name: "REST API", icon: Cloud, level: 65, color: "accent" },
+  { name: "RestAPI", icon: Cloud, level: 65, color: "accent" },
   { name: "SEO", icon: Cpu, level: 72, color: "primary" },
   // { name: "React Native", icon: Smartphone, level: 70, color: "accent" },
   // { name: "Vue.js", icon: Layers, level: 68, color: "primary" },
@@ -99,14 +112,28 @@ const skillCategories = [
   },
 ];
 
-const gridLogos = [jsLogo, javaLogo, nodeLogo];
+const skillLogoMap = {
+  JavaScript: jsLogo,
+  React: reactLogo,
+  Java: javaLogo,
+  Nodejs: nodeLogo,
+  HTML: htmlLogo,
+  CSS: CSSLogo,
+  Github: GithubLogo,
+  MongoDB: mongodbLogo,
+  Express: ExpressLogo,
+  Git: GitLogo,
+  RestAPI: RestAPILogo,
+  SEO: SEOLogo,
+  TailwindCSS: TailwindCSSLogo,
+};
 
-const desktopGridItems = allSkills.map((skill, index) => ({
+const desktopGridItems = allSkills.map((skill) => ({
   id: skill.name,
   label: skill.name,
   meta: `${skill.level}%`,
   tone: skill.color,
-  logo: gridLogos[index % gridLogos.length],
+  logo: skillLogoMap[skill.name],
   logoAlt: skill.name,
 }));
 
@@ -116,7 +143,7 @@ const desktopBentoItems = [
     title: "Repository",
     subtitle: "Version Control",
     description: "Secure, scalable code management.",
-    icon: <img src={jsLogo} alt="JavaScript" className="h-6 w-6 object-contain" />,
+    icon: <img src={GithubLogo} alt="JavaScript" className="h-6 w-6 object-contain" />,
     tone: "primary",
     href: "https://github.com/Rishi9822",
     target: "_blank",
@@ -569,8 +596,8 @@ const Skills = () => {
           <div className="absolute inset-0 pointer-events-none">
             <motion.div
               className={`absolute top-1/4 left-1/4 rounded-full blur-3xl bg-primary/5 ${isMobile
-                  ? "w-[250px] h-[250px]"
-                  : "w-[400px] h-[400px] lg:w-[500px] lg:h-[500px]"
+                ? "w-[250px] h-[250px]"
+                : "w-[400px] h-[400px] lg:w-[500px] lg:h-[500px]"
                 }`}
               animate={
                 isMobile
@@ -585,8 +612,8 @@ const Skills = () => {
             />
             <motion.div
               className={`absolute bottom-1/4 right-1/4 rounded-full blur-3xl bg-accent/5 ${isMobile
-                  ? "w-[200px] h-[200px]"
-                  : "w-[300px] h-[300px] lg:w-[400px] lg:h-[400px]"
+                ? "w-[200px] h-[200px]"
+                : "w-[300px] h-[300px] lg:w-[400px] lg:h-[400px]"
                 }`}
               animate={
                 isMobile

@@ -49,6 +49,13 @@ export function StaggeredGrid({
     ));
   };
 
+  const renderIcon = (icon, className) => {
+    if (!React.isValidElement(icon)) return icon;
+    return React.cloneElement(icon, {
+      className: cn(icon.props?.className, className),
+    });
+  };
+
   useEffect(() => {
     const raf = requestAnimationFrame(() => setIsLoaded(true));
     return () => cancelAnimationFrame(raf);
@@ -250,20 +257,23 @@ export function StaggeredGrid({
                                 />
                               )}
                             </div>
-                            <div className="absolute bottom-0 left-0 w-full px-5 pb-4 pt-6 z-20">
+                            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center z-20">
+                              <div className="h-16 w-16 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+                                {renderIcon(
+                                  bentoItem.icon,
+                                  "h-10 w-10 object-contain"
+                                )}
+                              </div>
                               {bentoItem.subtitle ? (
-                                <p className="text-[10px] uppercase tracking-[0.2em] text-white/60">
+                                <p className="text-[10px] uppercase tracking-[0.25em] text-white/60">
                                   {bentoItem.subtitle}
                                 </p>
                               ) : null}
-                              <div className="flex items-center justify-between gap-3">
-                                <h3 className="text-sm font-bold text-white drop-shadow-md">
-                                  {bentoItem.title}
-                                </h3>
-                                <div className="text-white/90">{bentoItem.icon}</div>
-                              </div>
+                              <h3 className="text-sm font-bold text-white drop-shadow-md">
+                                {bentoItem.title}
+                              </h3>
                               {bentoItem.description ? (
-                                <p className="mt-1 text-[11px] text-white/70 leading-snug">
+                                <p className="text-[11px] text-white/70 leading-snug max-w-[220px]">
                                   {bentoItem.description}
                                 </p>
                               ) : null}
@@ -278,8 +288,13 @@ export function StaggeredGrid({
                               : "opacity-100 scale-100"
                           )}
                         >
-                          <div className="text-white/70">{bentoItem.icon}</div>
-                          <span className="text-[10px] font-medium text-zinc-400 uppercase tracking-wider">
+                          <div className="h-10 w-10 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center">
+                            {renderIcon(
+                              bentoItem.icon,
+                              "h-6 w-6 object-contain"
+                            )}
+                          </div>
+                          <span className="text-[10px] font-medium text-zinc-300 uppercase tracking-wider">
                             {bentoItem.title}
                           </span>
                         </div>
@@ -310,11 +325,13 @@ export function StaggeredGrid({
                     )}
                     <div className="relative z-10 flex flex-col items-center justify-center gap-2 px-2 text-center">
                       {item.logo ? (
-                        <img
-                          src={item.logo}
-                          alt={item.logoAlt || item.label}
-                          className="h-6 w-6 object-contain opacity-90"
-                        />
+                        <div className="h-10 w-10 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center shadow-[0_8px_18px_rgba(0,0,0,0.35)]">
+                          <img
+                            src={item.logo}
+                            alt={item.logoAlt || item.label}
+                            className="h-6 w-6 object-contain opacity-95"
+                          />
+                        </div>
                       ) : null}
                       <span className="block text-[10px] font-medium text-white/70 uppercase tracking-wider">
                         Skill

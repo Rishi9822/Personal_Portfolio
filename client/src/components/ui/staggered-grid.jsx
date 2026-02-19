@@ -198,8 +198,8 @@ export function StaggeredGrid({
                     const isActive = activeBento === index;
                     const toneClass =
                       bentoItem.tone === "accent"
-                        ? "from-accent/30 via-black/60 to-primary/30"
-                        : "from-primary/30 via-black/60 to-accent/30";
+                        ? "from-accent/20 via-background/80 to-primary/20"
+                        : "from-primary/20 via-background/80 to-accent/20";
                     const Tag = bentoItem.href ? "a" : "button";
                     const tagProps = bentoItem.href
                       ? {
@@ -213,8 +213,10 @@ export function StaggeredGrid({
                       <Tag
                         key={bentoItem.id}
                         className={cn(
-                          "relative cursor-pointer overflow-hidden rounded-2xl h-full transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] border-0 p-0 text-left no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60",
-                          isActive ? "bg-zinc-900/10 shadow-2xl" : "bg-zinc-950"
+                          "relative cursor-pointer overflow-hidden rounded-2xl h-full transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] border-0 p-0 text-left no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 backdrop-blur-xl",
+                          isActive
+                            ? "bg-card/90 shadow-[0_24px_60px_rgba(2,6,23,0.55)]"
+                            : "bg-card/70 shadow-[0_12px_30px_rgba(2,6,23,0.45)]"
                         )}
                         style={{ width: isActive ? "60%" : "20%" }}
                         onMouseEnter={() => setActiveBento(index)}
@@ -226,7 +228,7 @@ export function StaggeredGrid({
                         <div
                           className={cn(
                             "absolute inset-0 rounded-2xl border z-50 pointer-events-none transition-colors duration-700",
-                            isActive ? "border-zinc-500/50" : "border-zinc-800/50"
+                            isActive ? "border-primary/30" : "border-border/60"
                           )}
                         />
                         <div className="relative z-10 w-full h-full flex flex-col p-0">
@@ -238,7 +240,7 @@ export function StaggeredGrid({
                                 : "opacity-0 translate-y-4 pointer-events-none"
                             )}
                           >
-                            <div className="absolute inset-0 bg-zinc-950 overflow-hidden z-0 group/img">
+                            <div className="absolute inset-0 bg-background/80 overflow-hidden z-0 group/img">
                               {bentoItem.image ? (
                                 <>
                                   <img
@@ -258,22 +260,22 @@ export function StaggeredGrid({
                               )}
                             </div>
                             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center z-20">
-                              <div className="h-16 w-16 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+                              <div className="h-16 w-16 rounded-2xl bg-card/80 border border-border/50 flex items-center justify-center shadow-[0_12px_28px_rgba(2,6,23,0.45)]">
                                 {renderIcon(
                                   bentoItem.icon,
                                   "h-10 w-10 object-contain"
                                 )}
                               </div>
                               {bentoItem.subtitle ? (
-                                <p className="text-[10px] uppercase tracking-[0.25em] text-white/60">
+                                <p className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
                                   {bentoItem.subtitle}
                                 </p>
                               ) : null}
-                              <h3 className="text-sm font-bold text-white drop-shadow-md">
+                              <h3 className="text-sm font-semibold text-foreground">
                                 {bentoItem.title}
                               </h3>
                               {bentoItem.description ? (
-                                <p className="text-[11px] text-white/70 leading-snug max-w-[220px]">
+                                <p className="text-[11px] text-muted-foreground leading-snug max-w-[220px]">
                                   {bentoItem.description}
                                 </p>
                               ) : null}
@@ -288,13 +290,13 @@ export function StaggeredGrid({
                               : "opacity-100 scale-100"
                           )}
                         >
-                          <div className="h-10 w-10 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center">
+                          <div className="h-10 w-10 rounded-xl bg-card/80 border border-border/50 flex items-center justify-center">
                             {renderIcon(
                               bentoItem.icon,
                               "h-6 w-6 object-contain"
                             )}
                           </div>
-                          <span className="text-[10px] font-medium text-zinc-300 uppercase tracking-wider">
+                          <span className="text-[10px] font-medium text-foreground/70 uppercase tracking-wider">
                             {bentoItem.title}
                           </span>
                         </div>
@@ -308,24 +310,24 @@ export function StaggeredGrid({
             if (item && typeof item === "object") {
               const toneClass =
                 item.tone === "accent"
-                  ? "from-accent/30 via-black/60 to-primary/20"
-                  : "from-primary/30 via-black/60 to-accent/20";
+                  ? "from-accent/15 via-background/80 to-primary/15"
+                  : "from-primary/15 via-background/80 to-accent/15";
               return (
                 <figure
                   key={`grid-item-${item.id}-${i}`}
                   className="grid__item m-0 relative z-10 [perspective:800px] will-change-[transform,opacity] group cursor-pointer"
                 >
                   <div
-                    className="grid__item-img w-full h-full [backface-visibility:hidden] will-change-transform rounded-xl overflow-hidden shadow-sm border border-zinc-200/10 bg-zinc-950 bg-cover bg-center bg-no-repeat flex items-center justify-center transition-all duration-500 ease-out group-hover:scale-105 group-hover:shadow-xl"
+                    className="grid__item-img w-full h-full [backface-visibility:hidden] will-change-transform rounded-xl overflow-hidden shadow-sm border border-border/60 bg-card/70 backdrop-blur-md bg-cover bg-center bg-no-repeat flex items-center justify-center transition-all duration-500 ease-out group-hover:scale-105 group-hover:shadow-xl"
                     style={item.image ? { backgroundImage: `url(${item.image})` } : undefined}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/80 to-black opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/80 to-background opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0" />
                     {!item.image && (
                       <div className={cn("absolute inset-0 bg-gradient-to-br", toneClass)} />
                     )}
                     <div className="relative z-10 flex flex-col items-center justify-center gap-2 px-2 text-center">
                       {item.logo ? (
-                        <div className="h-10 w-10 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center shadow-[0_8px_18px_rgba(0,0,0,0.35)]">
+                        <div className="h-10 w-10 rounded-xl bg-card/80 border border-border/50 flex items-center justify-center shadow-[0_10px_22px_rgba(2,6,23,0.45)]">
                           <img
                             src={item.logo}
                             alt={item.logoAlt || item.label}
@@ -333,14 +335,14 @@ export function StaggeredGrid({
                           />
                         </div>
                       ) : null}
-                      <span className="block text-[10px] font-medium text-white/70 uppercase tracking-wider">
+                      <span className="block text-[10px] font-medium text-foreground/70 uppercase tracking-wider">
                         Skill
                       </span>
-                      <span className="block text-sm font-semibold text-white">
+                      <span className="block text-sm font-semibold text-foreground">
                         {item.label}
                       </span>
                       {item.meta ? (
-                        <span className="text-[10px] text-white/60 font-mono">
+                        <span className="text-[10px] text-muted-foreground font-mono">
                           {item.meta}
                         </span>
                       ) : null}

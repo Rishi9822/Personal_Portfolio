@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
 import ReactLenis from "lenis/react";
+import { TestimonialsCard } from "@/components/ui/testimonials-card";
 
 const projects = [
   {
@@ -54,11 +55,35 @@ const projects = [
   }
 ];
 
+const clientProjects = [
+  {
+    id: "client-1",
+    title: "Elios Finance",
+    description: "Revamped digital presence with motion-led storytelling.",
+    image: projects[0].image,
+    liveUrl: projects[0].liveUrl,
+  },
+  {
+    id: "client-2",
+    title: "Greenlam MFC",
+    description: "Modern product showcase for a manufacturing leader.",
+    image: projects[1].image,
+    liveUrl: projects[1].liveUrl,
+  },
+  {
+    id: "client-3",
+    title: "Maruti Ropes",
+    description: "Industrial catalog experience with technical clarity.",
+    image: projects[2].image,
+    liveUrl: projects[2].liveUrl,
+  },
+];
+
 const Projects = () => {
   const containerRef = useRef(null);
   const projectRefs = useRef([]);
 
-    const [isDesktop, setIsDesktop] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
     const checkScreen = () => {
@@ -356,6 +381,28 @@ const Projects = () => {
 
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="bg-neutral-950 text-white pb-24">
+        <div className="container">
+          <div className="text-center mb-12 pt-6">
+            <h3 className="text-3xl md:text-4xl font-semibold mb-3">
+              Client Projects
+            </h3>
+            <p className="text-base md:text-lg text-white/70">
+              A few highlights from recent collaborations.
+            </p>
+          </div>
+          <TestimonialsCard
+            items={clientProjects}
+            width={820}
+            showCounter={true}
+            showNavigation={true}
+            autoPlay={true}
+            autoPlayInterval={4200}
+            className="justify-center"
+          />
         </div>
       </section>
     </ReactLenis>

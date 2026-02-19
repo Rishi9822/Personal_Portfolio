@@ -35,6 +35,9 @@ import GitLogo from "@/assets/Git.png";
 import RestAPILogo from "@/assets/RestAPI.png";
 import SEOLogo from "@/assets/SEO.gif";
 import TailwindCSSLogo from "@/assets/TailwindCSS.png";
+import LinkedINLogo from "@/assets/LinkedIN.png";
+import ProjectsLogo from "@/assets/Projects.png";
+
 
 
 
@@ -126,6 +129,7 @@ const skillLogoMap = {
   RestAPI: RestAPILogo,
   SEO: SEOLogo,
   TailwindCSS: TailwindCSSLogo,
+  C: CLogo,
 };
 
 const desktopGridItems = allSkills.map((skill) => ({
@@ -153,7 +157,7 @@ const desktopBentoItems = [
     title: "Connect",
     subtitle: "Team Communication",
     description: "Real-time messaging and collaboration.",
-    icon: <img src={javaLogo} alt="Java" className="h-6 w-6 object-contain" />,
+    icon: <img src={LinkedINLogo} alt="Java" className="h-6 w-6 object-contain" />,
     tone: "accent",
     href: "#contact",
   },
@@ -162,9 +166,9 @@ const desktopBentoItems = [
     title: "Launch",
     subtitle: "Product Delivery",
     description: "Ship polished features with confidence.",
-    icon: <img src={nodeLogo} alt="Node.js" className="h-6 w-6 object-contain" />,
+    icon: <img src={ProjectsLogo} alt="Projects" className="h-6 w-6 object-contain" />,
     tone: "primary",
-    href: "#experience",
+    href: "#projects",
   },
 ];
 

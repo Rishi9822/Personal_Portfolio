@@ -99,21 +99,22 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
   const motionOff = reduceMotion ?? prefersReduced;
 
   // Split words for center title
-  const tempWordBucket = useRef([]);
   const splitWords = (text) => {
     const words = text.split(/\s+/).filter(Boolean);
     return words.map((w, i) => (
       <span className="fx-word-mask" key={i}>
-        <span className="fx-word" ref={(el) => el && tempWordBucket.current.push(el)}>
+        <span className="fx-word">
           {w}
         </span>
         {i < words.length - 1 ? " " : null}
       </span>
     ));
   };
-  const WordsCollector = ({ onReady }) => {
-    useEffect(() => onReady(), []); // eslint-disable-line
-    return null;
+  const collectWordsBySection = () => {
+    if (!rootRef.current) return [];
+    return sections.map((_, i) =>
+      Array.from(rootRef.current.querySelectorAll(`[data-fx-section="${i}"] .fx-word`))
+    );
   };
 
   const measureRAF = (fn) => {
@@ -175,6 +176,7 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
     gsap.set(bgRefs.current, { opacity: 0, scale: 1.04, yPercent: 0 });
     if (bgRefs.current[0]) gsap.set(bgRefs.current[0], { opacity: 1, scale: 1 });
 
+    wordRefs.current = collectWordsBySection();
     wordRefs.current.forEach((words, sIdx) => {
       words.forEach((w) => {
         gsap.set(w, {
@@ -247,6 +249,7 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
     }
 
     const D = durations.change ?? 0.7;
+    wordRefs.current = collectWordsBySection();
 
     const outWords = wordRefs.current[from] || [];
     const inWords = wordRefs.current[to] || [];
@@ -458,24 +461,16 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
 
                 <div className="fx-center">
                   {sections.map((s, sIdx) => {
-                    tempWordBucket.current = [];
                     const isString = typeof s.title === "string";
                     return (
                       <div
                         key={`C-${s.id ?? sIdx}`}
+                        data-fx-section={sIdx}
                         className={`fx-featured ${sIdx === index ? "active" : ""}`}
                       >
                         <h3 className="fx-featured-title">
                           {isString ? splitWords(s.title) : s.title}
                         </h3>
-                        <WordsCollector
-                          onReady={() => {
-                            if (tempWordBucket.current.length) {
-                              wordRefs.current[sIdx] = [...tempWordBucket.current];
-                            }
-                            tempWordBucket.current = [];
-                          }}
-                        />
                       </div>
                     );
                   })}

@@ -1,49 +1,20 @@
-import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { Code, GraduationCap, Rocket, Coffee, Sparkles, Terminal, Zap } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { memo, useRef } from "react";
+import { Sparkles } from "lucide-react";
 
 import ScrollReveal from "./ScrollReveal";
-import { cinematicEasing, springConfigs } from "@/hooks/useScrollVelocity";
-
-const stats = [
-  { icon: Code, value: "15+", label: "Projects Completed", color: "primary" },
-  { icon: GraduationCap, value: "3rd", label: "Year CS Student", color: "accent" },
-  { icon: Rocket, value: "3+", label: "Years Coding", color: "primary" },
-  { icon: Coffee, value: "∞", label: "Coffee Consumed", color: "accent" },
-];
-
-const technologies = [
-  { name: "React", category: "frontend" },
-  { name: "TypeScript", category: "language" },
-  { name: "Python", category: "language" },
-  { name: "Node.js", category: "backend" },
-  { name: "PostgreSQL", category: "database" },
-  { name: "Docker", category: "devops" },
-  { name: "Tailwind", category: "frontend" },
-  { name: "Next.js", category: "frontend" },
-  { name: "Git", category: "tool" },
-  { name: "AWS", category: "cloud" },
-  { name: "MongoDB", category: "database" },
-  { name: "GraphQL", category: "backend" },
-];
+import { LogoCloud } from "@/components/ui/logo-cloud-2";
+import aboutPhotoSrc from "@/assets/photo.png";
 
 const About = () => {
-  const containerRef = useRef(null);
   const visualRef = useRef(null);
-  const isInView = useInView(containerRef, { once: true, margin: "-150px" });
   const visualInView = useInView(visualRef, { once: true, margin: "-100px" });
-  const [hoveredTech, setHoveredTech] = useState(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
-  const smoothProgress = useSpring(scrollYProgress, springConfigs.smooth);
-  const rotate = useTransform(smoothProgress, [0, 1], [-5, 5]);
 
   return (
-    <section id="about" className="py-32 relative overflow-hidden" ref={containerRef}>
+    <section
+      id="about"
+      className="relative overflow-hidden py-16 md:py-20 lg:min-h-screen lg:py-10 lg:flex lg:items-center"
+    >
       {/* Section divider with animation */}
       <motion.div
         className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent"
@@ -52,169 +23,74 @@ const About = () => {
         transition={{ duration: 1, ease: "easeInOut" }}
         style={{ transformOrigin: "center" }}
       />
-      
-      <div className="container relative">
-        <div className="grid lg:grid-cols-2 gap-24 items-center">
-          {/* Left column - Premium Visual */}
+
+      <div className="container relative w-full">
+        <div className="grid items-center gap-12 md:gap-14 lg:grid-cols-[minmax(0,460px)_minmax(0,1fr)] lg:gap-16 xl:grid-cols-[minmax(0,500px)_minmax(0,1fr)] xl:gap-20">
+          {/* Left column - Cinematic Portrait */}
           <ScrollReveal direction="left" distance={80} blur scale>
-            <motion.div
-              ref={visualRef}
-              className="relative"
-            >
-              <motion.div 
-                className="relative aspect-square max-w-lg mx-auto"
-                style={{ perspective: "1200px" }}
+            <motion.div ref={visualRef} className="relative mx-auto w-full max-w-[420px] sm:max-w-[460px] xl:max-w-[500px]">
+              <motion.div
+                initial={{ opacity: 0, y: 35, scale: 0.97 }}
+                animate={visualInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                transition={{ duration: 0.9, ease: "easeOut" }}
+                whileHover={{ y: -4, scale: 1.01 }}
+                className="group relative aspect-[4/5] overflow-hidden rounded-[32px] border border-white/15 bg-black/40 shadow-[0_45px_120px_rgba(0,0,0,0.6)]"
               >
-                {/* Outer rotating ring */}
-                <motion.div
-                  className="absolute inset-0 rounded-3xl"
-                  style={{
-                    background: "conic-gradient(from 0deg at 50% 50%, hsl(var(--primary)) 0%, hsl(var(--accent)) 50%, hsl(var(--primary)) 100%)",
-                    rotate,
-                  }}
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                >
-                  <div className="absolute inset-[3px] rounded-3xl bg-card" />
-                </motion.div>
-                
-                {/* Inner glass container */}
-                <motion.div
-                  className="absolute inset-5 rounded-2xl glass border border-border/30 overflow-hidden"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", ...springConfigs.snappy }}
-                >
-                  {/* Grid overlay */}
-                  <div className="absolute inset-0 grid-background opacity-20" />
-                  
-                  {/* Central animated element */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <motion.div
-                      className="relative"
-                      animate={{ rotateY: 360 }}
-                      transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                      style={{ transformStyle: "preserve-3d" }}
-                    >
-                      <Terminal className="w-32 h-32 text-primary/20 stroke-[1]" />
-                    </motion.div>
-                  </div>
+                <img
+                  src={aboutPhotoSrc}
+                  alt="Portrait of Rishi"
+                  loading="lazy"
+                  decoding="async"
+                  fetchPriority="low"
+                  sizes="(max-width: 640px) 86vw, (max-width: 1024px) 55vw, 500px"
+                  className="h-full w-full object-cover object-center saturate-[1.05] contrast-[1.03] transition-transform duration-700 group-hover:scale-[1.03]"
+                />
 
-                  {/* Floating code snippets */}
-                  {[
-                    { code: "const", top: "15%", left: "10%", delay: 0 },
-                    { code: "build()", top: "25%", right: "15%", delay: 0.5 },
-                    { code: "async", bottom: "30%", left: "15%", delay: 1 },
-                    { code: "=>", bottom: "20%", right: "20%", delay: 1.5 },
-                  ].map((snippet, i) => (
-                    <motion.span
-                      key={i}
-                      className="absolute font-mono text-sm text-primary/40"
-                      style={{ top: snippet.top, left: snippet.left, right: snippet.right, bottom: snippet.bottom }}
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={visualInView ? { 
-                        opacity: [0.3, 0.6, 0.3],
-                        scale: 1,
-                        y: [0, -10, 0],
-                      } : {}}
-                      transition={{
-                        opacity: { duration: 3, repeat: Infinity, delay: snippet.delay },
-                        scale: { duration: 0.5, delay: snippet.delay + 0.5 },
-                        y: { duration: 4, repeat: Infinity, delay: snippet.delay },
-                      }}
-                    >
-                      {snippet.code}
-                    </motion.span>
-                  ))}
+                <div className="pointer-events-none absolute inset-[1px] rounded-[30px] border border-white/20" />
+                <div className="pointer-events-none absolute inset-0 rounded-[32px] shadow-[inset_0_-48px_100px_rgba(0,0,0,0.45)]" />
+                <div className="pointer-events-none absolute inset-0 noise opacity-[0.12]" />
 
-                  {/* Ambient particles */}
-                  {[...Array(12)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute w-1.5 h-1.5 rounded-full"
-                      style={{
-                        left: `${15 + Math.random() * 70}%`,
-                        top: `${15 + Math.random() * 70}%`,
-                        background: i % 2 === 0 
-                          ? "hsl(var(--primary) / 0.5)" 
-                          : "hsl(var(--accent) / 0.5)",
-                      }}
-                      animate={{
-                        y: [0, -25, 0],
-                        opacity: [0.2, 0.7, 0.2],
-                        scale: [1, 1.3, 1],
-                      }}
-                      transition={{
-                        duration: 3 + Math.random() * 2,
-                        repeat: Infinity,
-                        delay: i * 0.2,
-                        ease: "easeInOut",
-                      }}
-                    />
-                  ))}
-                </motion.div>
-
-                {/* Floating badges with 3D tilt */}
                 <motion.div
-                  className="absolute -top-4 -right-4 px-5 py-3 rounded-2xl glass border border-primary/30 shadow-lg"
-                  initial={{ opacity: 0, y: 30, rotateX: -45 }}
-                  animate={visualInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-                  transition={{ delay: 0.6, type: "spring", ...springConfigs.bouncy }}
-                  whileHover={{ scale: 1.1, rotateY: 15, z: 50 }}
-                  style={{ transformStyle: "preserve-3d" }}
+                  className="absolute left-3 top-3 rounded-full border border-white/20 bg-black/35 px-3 py-1.5 backdrop-blur-md sm:left-5 sm:top-5 sm:px-4 sm:py-2"
+                  initial={{ opacity: 0, y: -12 }}
+                  animate={visualInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 0.45, duration: 0.5 }}
                 >
-                  <motion.span
-                    className="font-mono text-primary text-sm flex items-center gap-2"
-                    animate={{ y: [0, -4, 0] }}
-                    transition={{ duration: 2.5, repeat: Infinity }}
-                  >
-                    <Sparkles className="w-4 h-4" />
-                    React Expert
-                  </motion.span>
-                </motion.div>
-                
-                <motion.div
-                  className="absolute -bottom-4 -left-4 px-5 py-3 rounded-2xl glass border border-accent/30 shadow-lg"
-                  initial={{ opacity: 0, y: -30, rotateX: 45 }}
-                  animate={visualInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-                  transition={{ delay: 0.8, type: "spring", ...springConfigs.bouncy }}
-                  whileHover={{ scale: 1.1, rotateY: -15, z: 50 }}
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  <motion.span
-                    className="font-mono text-accent text-sm flex items-center gap-2"
-                    animate={{ y: [0, 4, 0] }}
-                    transition={{ duration: 2.5, repeat: Infinity }}
-                  >
-                    <Zap className="w-4 h-4" />
-                    Fast Learner
-                  </motion.span>
+                  <span className="flex items-center gap-1.5 font-mono text-[10px] text-white/85 sm:gap-2 sm:text-xs">
+                    <Sparkles className="h-3 w-3 text-primary sm:h-3.5 sm:w-3.5" />
+                    Creative Developer
+                  </span>
                 </motion.div>
 
                 <motion.div
-                  className="absolute top-1/2 -right-8 px-4 py-2 rounded-xl glass border border-primary/20"
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={visualInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 1, type: "spring" }}
-                  whileHover={{ scale: 1.05 }}
+                  className="absolute bottom-3 left-3 right-3 rounded-xl border border-white/15 bg-black/35 px-3 py-2 backdrop-blur-md sm:bottom-5 sm:left-5 sm:right-auto sm:max-w-[290px] sm:rounded-2xl sm:px-4 sm:py-3"
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={visualInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 0.6, duration: 0.5 }}
                 >
-                  <span className="font-mono text-xs text-muted-foreground">TypeScript →</span>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/60 sm:text-[11px] sm:tracking-[0.2em]">
+                    ABOUT
+                  </p>
+                  <p className="mt-1 max-w-[28ch] text-xs leading-snug text-white/90 sm:max-w-none sm:text-sm sm:leading-normal">
+                    Building premium digital experiences.
+                  </p>
                 </motion.div>
               </motion.div>
             </motion.div>
           </ScrollReveal>
 
           {/* Right column - Content */}
-          <div>
+          <div className="mx-auto w-full max-w-[680px]">
             <ScrollReveal direction="right" distance={60} delay={0.2}>
-              <motion.span 
-                className="font-mono text-primary text-sm mb-6 block"
+              <motion.span
+                className="mb-5 block font-mono text-sm tracking-[0.16em] text-primary/90"
               >
                 // about me
               </motion.span>
             </ScrollReveal>
-            
+
             <ScrollReveal direction="up" distance={40} delay={0.3}>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
+              <h2 className="mb-7 max-w-[18ch] text-4xl font-bold leading-[1.06] md:text-5xl xl:text-6xl">
                 Passionate about
                 <br />
                 <span className="text-gradient">
@@ -222,89 +98,32 @@ const About = () => {
                 </span>
               </h2>
             </ScrollReveal>
-            
+
             <ScrollReveal direction="up" distance={30} delay={0.5}>
-              <div className="space-y-5 text-muted-foreground text-lg mb-10 leading-relaxed">
+              <div className="mb-9 max-w-[64ch] space-y-4 text-base leading-relaxed text-muted-foreground md:text-lg">
                 <p>
-                  I'm a third-year Computer Science student with a deep passion for 
-                  creating elegant solutions to complex problems. My journey in tech 
-                  started with curiosity and has evolved into a love for full-stack 
+                  I'm a third-year Computer Science student with a deep passion for
+                  creating elegant solutions to complex problems. My journey in tech
+                  started with curiosity and has evolved into a love for full-stack
                   development.
                 </p>
                 <p>
-                  When I'm not coding, you'll find me exploring new technologies, 
-                  contributing to open-source projects, or sharing knowledge with 
+                  When I'm not coding, you'll find me exploring new technologies,
+                  contributing to open-source projects, or sharing knowledge with
                   fellow developers.
                 </p>
               </div>
             </ScrollReveal>
 
-            {/* Technology pills */}
-            <ScrollReveal direction="up" distance={30} delay={0.6}>
-              <div className="flex flex-wrap gap-2 mb-12">
-                {technologies.map((tech, i) => (
-                  <motion.span
-                    key={tech.name}
-                    className={`px-4 py-2 rounded-full text-sm font-mono cursor-default transition-all duration-300 ${
-                      hoveredTech === tech.name 
-                        ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
-                        : "bg-secondary/50 text-muted-foreground hover:bg-secondary"
-                    }`}
-                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                    animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
-                    transition={{ 
-                      delay: 0.8 + i * 0.03,
-                      type: "spring",
-                      ...springConfigs.snappy,
-                    }}
-                    onMouseEnter={() => setHoveredTech(tech.name)}
-                    onMouseLeave={() => setHoveredTech(null)}
-                    whileHover={{ y: -4, scale: 1.05 }}
-                  >
-                    {tech.name}
-                  </motion.span>
-                ))}
+            {/* Core skills logo cloud */}
+            <ScrollReveal direction="up" distance={35} delay={0.6}>
+              <div className="w-full">
+                <p className="mb-4 text-sm font-mono tracking-[0.14em] text-primary/80">
+                  // core skills
+                </p>
+                <LogoCloud />
               </div>
             </ScrollReveal>
-
-            {/* Stats grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {stats.map((stat, i) => (
-                <ScrollReveal key={stat.label} direction="up" distance={40} delay={0.9 + i * 0.1}>
-                  <motion.div
-                    whileHover={{ 
-                      y: -8, 
-                      scale: 1.02,
-                      transition: { type: "spring", ...springConfigs.snappy }
-                    }}
-                    className="group relative p-5 rounded-2xl glass border border-border/50 text-center overflow-hidden cursor-default"
-                  >
-                    {/* Hover gradient */}
-                    <motion.div
-                      className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-                        stat.color === "primary" 
-                          ? "bg-gradient-to-br from-primary/15 to-transparent" 
-                          : "bg-gradient-to-br from-accent/15 to-transparent"
-                      }`}
-                    />
-                    
-                    <motion.div
-                      whileHover={{ rotate: 360, scale: 1.2 }}
-                      transition={{ duration: 0.6, ease: cinematicEasing.smooth }}
-                    >
-                      <stat.icon className={`w-7 h-7 mx-auto mb-3 ${
-                        stat.color === "primary" ? "text-primary" : "text-accent"
-                      }`} />
-                    </motion.div>
-                    
-                    <div className="text-3xl font-bold text-foreground mb-1 relative z-10">
-                      {stat.value}
-                    </div>
-                    <div className="text-xs text-muted-foreground relative z-10">{stat.label}</div>
-                  </motion.div>
-                </ScrollReveal>
-              ))}
-            </div>
           </div>
         </div>
       </div>
@@ -312,4 +131,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default memo(About);

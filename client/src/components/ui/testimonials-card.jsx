@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 
 export function TestimonialsCard({
   items,
@@ -46,18 +46,18 @@ export function TestimonialsCard({
   if (!items || items.length === 0) return null;
 
   return (
-    <div className={cn("flex items-center justify-center p-8", className)}>
+    <div className={cn("flex items-center justify-center px-4 py-6 sm:px-6 sm:py-8", className)}>
       <div
-        className="relative grid grid-cols-[1fr_1fr] grid-rows-[auto_auto_auto] gap-x-8 gap-y-2 w-full"
+        className="relative grid w-full grid-cols-1 gap-y-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:grid-rows-[auto_auto_auto] md:gap-x-8 md:gap-y-2"
         style={{ perspective: "1400px", maxWidth: `${width}px` }}
       >
         {showCounter && (
-          <div className="col-start-2 row-start-1 text-right font-mono text-sm text-neutral-500">
+          <div className="order-3 md:order-none md:col-start-2 md:row-start-1 text-left md:text-right font-mono text-sm text-neutral-500">
             {activeIndex + 1} / {items.length}
           </div>
         )}
 
-        <div className="col-start-1 row-start-1 row-span-3 relative w-full aspect-square">
+        <div className="order-1 md:order-none md:col-start-1 md:row-start-1 md:row-span-3 relative w-full aspect-[16/10] min-h-[220px] sm:min-h-[280px] md:min-h-[320px] lg:min-h-[360px]">
           <AnimatePresence custom={direction}>
             {items.map((item, index) => {
               const isActive = index === activeIndex;
@@ -65,7 +65,7 @@ export function TestimonialsCard({
               return (
                 <motion.div
                   key={item.id}
-                  className="absolute inset-0 w-full h-full overflow-hidden border-[6px] bg-neutral-200 dark:bg-neutral-800 border-white dark:border-neutral-700 shadow-2xl rounded-lg"
+                  className="absolute inset-0 h-full w-full overflow-hidden rounded-2xl sm:rounded-3xl lg:rounded-[32px] border border-white/15 bg-neutral-900 shadow-[0_30px_80px_rgba(0,0,0,0.4)] ring-1 ring-white/10"
                   initial={{
                     x: offset * 15,
                     y: Math.abs(offset) * 6,
@@ -102,14 +102,16 @@ export function TestimonialsCard({
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
                 </motion.div>
               );
             })}
           </AnimatePresence>
         </div>
 
-        <div className="col-start-2 row-start-2 flex flex-col justify-center min-h-[120px]">
+        <div className="order-2 md:order-none md:col-start-2 md:row-start-2 flex flex-col justify-center min-h-[120px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeItem.id}
@@ -125,15 +127,15 @@ export function TestimonialsCard({
                 {activeItem.description}
               </p>
               {activeItem.liveUrl ? (
-                <div className="mt-3 flex items-center gap-2 text-xs font-medium">
+                <div className="mt-4 flex items-center gap-2">
                   <a
                     href={activeItem.liveUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 text-emerald-300 bg-emerald-400/10 px-2.5 py-1 transition-colors hover:bg-emerald-400/20"
+                    className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-white/90"
                   >
-                    <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                    Live
+                    Visit Live
+                    <ExternalLink className="h-4 w-4" />
                   </a>
                 </div>
               ) : null}
@@ -142,10 +144,11 @@ export function TestimonialsCard({
         </div>
 
         {showNavigation && items.length > 1 && (
-          <div className="col-start-2 row-start-3 flex gap-2 mt-4">
+          <div className="order-4 md:order-none md:col-start-2 md:row-start-3 flex gap-2 mt-1 md:mt-4">
             <button
               disabled={activeIndex === 0}
               onClick={handlePrev}
+              aria-label="Previous project"
               className={cn(
                 "flex items-center justify-center w-10 h-10 rounded-full border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 transition-all",
                 activeIndex === 0
@@ -158,6 +161,7 @@ export function TestimonialsCard({
             <button
               disabled={activeIndex === items.length - 1}
               onClick={handleNext}
+              aria-label="Next project"
               className={cn(
                 "flex items-center justify-center w-10 h-10 rounded-full border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 transition-all",
                 activeIndex === items.length - 1

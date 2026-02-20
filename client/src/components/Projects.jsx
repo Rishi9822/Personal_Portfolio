@@ -396,12 +396,12 @@ const Projects = () => {
           </div>
           <TestimonialsCard
             items={clientProjects}
-            width={820}
+            width={1040}
             showCounter={true}
             showNavigation={true}
             autoPlay={true}
             autoPlayInterval={4200}
-            className="justify-center"
+            className="w-full justify-center"
           />
         </div>
       </section>

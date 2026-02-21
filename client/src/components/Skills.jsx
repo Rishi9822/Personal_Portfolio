@@ -813,7 +813,7 @@ const Skills = () => {
           />
         </>
       ) : (
-        <div className="relative z-10 px-4 sm:px-6">
+        <div className="relative z-10 px-4 sm:px-7 lg:px-10">
           <StaggeredGrid
             gridItems={desktopGridItems}
             bentoItems={desktopBentoItems}

@@ -30,11 +30,11 @@ const GridSkillItem = memo(function GridSkillItem({ item, index, isPerformanceCo
 
   return (
     <figure
-      className="grid__item m-0 relative z-10 [perspective:800px] will-change-[transform,opacity] group cursor-pointer"
+      className="grid__item m-0 p-1 sm:p-1.5 lg:p-2 relative z-10 [perspective:800px] will-change-[transform,opacity] group cursor-pointer"
     >
       <div
         className={cn(
-          "grid__item-img w-full h-full [backface-visibility:hidden] will-change-transform rounded-xl overflow-hidden border border-border/60 bg-card/70 bg-cover bg-center bg-no-repeat flex items-center justify-center ease-out",
+          "grid__item-img w-full h-full [backface-visibility:hidden] will-change-transform rounded-lg sm:rounded-xl overflow-hidden border border-border/60 bg-card/70 bg-cover bg-center bg-no-repeat flex items-center justify-center ease-out",
           isPerformanceConstrained
             ? "shadow-sm transition-[opacity,box-shadow] duration-300 backdrop-blur-0"
             : "shadow-sm transition-all duration-500 backdrop-blur-md group-hover:scale-105 group-hover:shadow-xl"
@@ -45,13 +45,13 @@ const GridSkillItem = memo(function GridSkillItem({ item, index, isPerformanceCo
         {!item.image && (
           <div className={cn("absolute inset-0 bg-gradient-to-br", toneClass)} />
         )}
-        <div className="relative z-10 flex flex-col items-center justify-center gap-2 px-2 text-center">
+        <div className="relative z-10 flex flex-col items-center justify-center gap-1.5 px-1.5 sm:px-2 text-center">
           {item.logo ? (
-            <div className="h-10 w-10 rounded-xl bg-card/80 border border-border/50 flex items-center justify-center shadow-[0_10px_22px_rgba(2,6,23,0.45)]">
+            <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-lg sm:rounded-xl bg-card/80 border border-border/50 flex items-center justify-center shadow-[0_10px_22px_rgba(2,6,23,0.45)]">
               <img
                 src={item.logo}
                 alt={item.logoAlt || item.label}
-                className="h-6 w-6 object-contain opacity-95"
+                className="h-4 w-4 sm:h-5 sm:w-5 object-contain opacity-95"
                 loading="lazy"
                 decoding="async"
               />
@@ -60,7 +60,7 @@ const GridSkillItem = memo(function GridSkillItem({ item, index, isPerformanceCo
           <span className="block text-[10px] font-medium text-foreground/70 uppercase tracking-wider">
             Skill
           </span>
-          <span className="block text-sm font-semibold text-foreground">
+          <span className="block text-xs sm:text-[13px] font-semibold text-foreground">
             {item.label}
           </span>
           {item.meta ? (
@@ -370,7 +370,7 @@ export function StaggeredGrid({
         containIntrinsicSize: "1px 960px",
       }}
     >
-      <section className="grid place-items-center w-full relative mt-[8vh]">
+      <section className="grid place-items-center w-full relative mt-[4vh]">
         <div
           ref={textRef}
           className="text uppercase flex content-center text-[clamp(3rem,14vw,10rem)] leading-[0.7] text-foreground/90 font-semibold"
@@ -382,7 +382,7 @@ export function StaggeredGrid({
       <section className="grid place-items-center w-full relative">
         <div
           ref={gridFullRef}
-          className="grid--full relative w-full my-[10vh] h-auto aspect-[1.1] max-w-none p-4 grid gap-4 grid-cols-7 grid-rows-5"
+          className="grid--full relative w-full my-[2vh] h-auto aspect-[1.1] max-w-none px-2 sm:px-3 lg:px-4 py-3 sm:py-4 grid gap-3 sm:gap-4 grid-cols-7 grid-rows-5"
         >
           <div className="grid-overlay absolute inset-0 z-[15] pointer-events-none opacity-0 bg-background/80 rounded-lg transition-opacity duration-500" />
           {mixedGridItems.map((item, i) => {

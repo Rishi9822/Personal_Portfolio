@@ -217,6 +217,7 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
     }
 
     const ro = new ResizeObserver(() => {
+      wordRefs.current = collectWordsBySection();
       computePositions();
       measureAndCenterLists(lastIndexRef.current, false);
       ScrollTrigger.refresh();
@@ -249,7 +250,6 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
     }
 
     const D = durations.change ?? 0.7;
-    wordRefs.current = collectWordsBySection();
 
     const outWords = wordRefs.current[from] || [];
     const inWords = wordRefs.current[to] || [];
@@ -429,6 +429,12 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
                         src={s.background}
                         alt=""
                         className="fx-bg-img"
+                        style={s.imageStyle}
+                        loading={i === 0 ? "eager" : "lazy"}
+                        decoding="async"
+                        fetchPriority={i === 0 ? "high" : "low"}
+                        draggable={false}
+                        aria-hidden="true"
                       />
                       <div className="fx-bg-overlay" />
                     </>

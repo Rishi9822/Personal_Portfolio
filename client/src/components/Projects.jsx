@@ -1,7 +1,6 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { useRef, useState, useEffect, useCallback, useMemo, memo } from "react";
 import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
-import ReactLenis from "lenis/react";
 import { TestimonialsCard } from "@/components/ui/testimonials-card";
 
 const projects = [
@@ -79,68 +78,39 @@ const clientProjects = [
   },
 ];
 
-const Projects = () => {
-  const containerRef = useRef(null);
-  const projectRefs = useRef([]);
+const isLowEndClient = () => {
+  if (typeof window === "undefined") return false;
+  const cores = navigator.hardwareConcurrency ?? 8;
+  const memory = navigator.deviceMemory ?? 8;
+  return cores <= 4 || memory <= 4;
+};
 
-  const [isDesktop, setIsDesktop] = useState(false);
+const StickyCard = memo(function StickyCard({
+  project,
+  progress,
+  range,
+  targetScale,
+  isDesktop,
+  reduceMotion,
+  isPriorityImage,
+}) {
+  const scale = useTransform(progress, range, [1.05, targetScale]);
+  const opacity = useTransform(progress, range, [0.6, 1]);
+  const y = useTransform(progress, range, [80, 0]);
 
-  useEffect(() => {
-    const checkScreen = () => {
-      setIsDesktop(window.innerWidth >= 1024);
-    };
+  const motionStyle =
+    reduceMotion || !isDesktop ? undefined : { scale, opacity, y };
 
-    checkScreen();
-    window.addEventListener("resize", checkScreen);
-    return () => window.removeEventListener("resize", checkScreen);
-  }, []);
-
-
-  // Scroll progress for sticky card animation
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-
-
-  // Track active project based on scroll progress
-  const [activeProject, setActiveProject] = useState(0);
-
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (latest) => {
-      // Calculate which project should be active based on scroll progress
-      const projectIndex = Math.floor(latest * projects.length);
-      const clampedIndex = Math.max(0, Math.min(projectIndex, projects.length - 1));
-      setActiveProject(clampedIndex);
-    });
-
-    return unsubscribe;
-  }, [scrollYProgress]);
-
-  const scrollToProject = (index) => {
-    projectRefs.current[index]?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center'
-    });
-  };
-
-  const currentProject = projects[activeProject];
-
-  // Sticky Card Component - Exactly like 21st.dev
-  const StickyCard = ({ project, progress, range, targetScale }) => {
-    const scale = useTransform(progress, range, [1.05, targetScale]);
-    const opacity = useTransform(progress, range, [0.6, 1]);
-    const y = useTransform(progress, range, [80, 0]);
-
-    return (
-      <div className={`
+  return (
+    <div
+      className={`
   ${isDesktop ? "sticky top-0 h-screen" : "relative h-auto"}
   flex items-center justify-center
-`}>
-        <motion.div
-          style={{ scale, opacity, y }}
-          className="
+`}
+    >
+      <motion.div
+        style={motionStyle}
+        className="
   relative
   w-full sm:w-[92vw] max-w-[960px]
   h-[240px] sm:h-[360px] lg:h-[56vh]
@@ -150,62 +120,129 @@ const Projects = () => {
   bg-neutral-900
   shadow-[0_30px_80px_rgba(0,0,0,0.4)]
 "
+      >
+        <img
+          src={project.image}
+          alt={project.title}
+          loading={isPriorityImage ? "eager" : "lazy"}
+          decoding="async"
+          fetchPriority={isPriorityImage ? "high" : "auto"}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
 
-        >
-          {/* Image */}
-          <img
-            src={project.image}
-            alt={project.title}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
 
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
+        <div className="relative z-10 flex h-full flex-col justify-end p-6 sm:p-10 lg:p-12">
+          <span className="text-[11px] sm:text-xs uppercase tracking-[0.3em] text-white/50">
+            {project.subtitle}
+          </span>
 
-          {/* Content */}
-          <div className="relative z-10 flex h-full flex-col justify-end p-6 sm:p-10 lg:p-12">
-            <span className="text-[11px] sm:text-xs uppercase tracking-[0.3em] text-white/50">
-              {project.subtitle}
-            </span>
+          <h3 className="mt-3 text-2xl sm:text-3xl md:text-5xl font-semibold tracking-tight">
+            {project.title}
+          </h3>
 
-            <h3 className="mt-3 text-2xl sm:text-3xl md:text-5xl font-semibold tracking-tight">
-              {project.title}
-            </h3>
+          <div className="mt-5 sm:mt-6 flex items-center gap-6">
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 text-sm font-medium"
+            >
+              View Project
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </a>
 
-            <div className="mt-5 sm:mt-6 flex items-center gap-6">
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                className="group inline-flex items-center gap-2 text-sm font-medium"
-              >
-                View Project
-                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </a>
-
-              <span className="text-white/40 text-sm">
-                {project.number}
-              </span>
-            </div>
+            <span className="text-white/40 text-sm">{project.number}</span>
           </div>
-        </motion.div>
-      </div>
-    );
-  };
+        </div>
+      </motion.div>
+    </div>
+  );
+});
+
+const Projects = () => {
+  const containerRef = useRef(null);
+  const projectRefs = useRef([]);
+  const activeProjectRef = useRef(0);
+
+  const [isDesktop, setIsDesktop] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+  const [isLowEndDevice] = useState(() => isLowEndClient());
+  const shouldConstrainMotion = prefersReducedMotion || isLowEndDevice;
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const media = window.matchMedia("(min-width: 1024px)");
+    const updateScreen = () => setIsDesktop(media.matches);
+
+    updateScreen();
+    if (media.addEventListener) {
+      media.addEventListener("change", updateScreen);
+      return () => media.removeEventListener("change", updateScreen);
+    }
+
+    media.addListener(updateScreen);
+    return () => media.removeListener(updateScreen);
+  }, []);
 
 
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  const [activeProject, setActiveProject] = useState(0);
+
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (latest) => {
+      const projectIndex = Math.floor(latest * projects.length);
+      const clampedIndex = Math.max(0, Math.min(projectIndex, projects.length - 1));
+      if (activeProjectRef.current !== clampedIndex) {
+        activeProjectRef.current = clampedIndex;
+        setActiveProject(clampedIndex);
+      }
+    });
+
+    return unsubscribe;
+  }, [scrollYProgress]);
+
+  const scrollToProject = useCallback((index) => {
+    projectRefs.current[index]?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  }, []);
+
+  const currentProject = projects[activeProject];
+  const projectRanges = useMemo(
+    () =>
+      projects.map((_, i) => {
+        const start = i / projects.length;
+        const end = (i + 1) / projects.length;
+        const targetScale = isDesktop ? 1 - (projects.length - i - 1) * 0.06 : 1;
+        return {
+          range: isDesktop ? [start, end] : [0, 1],
+          targetScale,
+        };
+      }),
+    [isDesktop]
+  );
 
   return (
-    <ReactLenis root>
-      <section className="min-h-screen bg-neutral-950 text-white">
+    <>
+      <section
+        className="min-h-screen bg-neutral-950 text-white"
+        style={{ contentVisibility: "auto", containIntrinsicSize: isDesktop ? "1px 2600px" : "1px 3600px" }}
+      >
         <div className="container">
           {/* Section Header */}
-          <div className="text-center mb-16 pt-20">
+          <div className="text-center mb-4 pt-20">
             <h2 className="text-4xl lg:text-6xl font-bold mb-4">Featured Projects</h2>
             <p className="text-xl text-white/70">Scroll to explore my work</p>
           </div>
 
           {/* Progress Indicators */}
-          <div className="hidden lg:flex justify-center gap-2 mb-16">
+          <div className="hidden lg:flex justify-center gap-2 mb-4">
             {projects.map((_, index) => (
               <button
                 key={index}
@@ -228,7 +265,11 @@ const Projects = () => {
                 key={currentProject.id}
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                transition={
+                  shouldConstrainMotion
+                    ? { duration: 0.25, ease: "linear" }
+                    : { duration: 0.6, ease: "easeOut" }
+                }
                 className="space-y-8 px-6 lg:px-0"
               >
                 {/* Project Number */}
@@ -308,16 +349,24 @@ const Projects = () => {
               }}
             >
               {projects.map((project, i) => {
-                const start = i / projects.length;
-                const end = (i + 1) / projects.length;
+                const { range, targetScale } = projectRanges[i];
 
                 return (
-                  <div key={project.id} className="space-y-6">
+                  <div
+                    key={project.id}
+                    ref={(el) => {
+                      projectRefs.current[i] = el;
+                    }}
+                    className="space-y-6"
+                  >
                     <StickyCard
                       project={project}
                       progress={scrollYProgress}
-                      range={isDesktop ? [start, end] : [0, 1]}
-                      targetScale={isDesktop ? 1 - (projects.length - i - 1) * 0.06 : 1}
+                      range={range}
+                      targetScale={targetScale}
+                      isDesktop={isDesktop}
+                      reduceMotion={shouldConstrainMotion}
+                      isPriorityImage={i === 0}
                     />
 
                     {/* Mobile Details */}
@@ -384,7 +433,10 @@ const Projects = () => {
         </div>
       </section>
 
-      <section className="bg-neutral-950 text-white pb-24">
+      <section
+        className="bg-neutral-950 text-white pb-24"
+        style={{ contentVisibility: "auto", containIntrinsicSize: "1px 700px" }}
+      >
         <div className="container">
           <div className="text-center mb-12 pt-6">
             <h3 className="text-3xl md:text-4xl font-semibold mb-3">
@@ -405,7 +457,7 @@ const Projects = () => {
           />
         </div>
       </section>
-    </ReactLenis>
+    </>
   );
 };
 

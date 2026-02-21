@@ -9,6 +9,7 @@ import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import CursorFollower from "@/components/CursorFollower";
+import { MouseFollowingEyes } from "@/components/ui/mouse-following-eyes";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 import { ReactLenis } from "lenis/react";
 
@@ -88,6 +89,9 @@ const Index = () => {
 
         {/* Footer */}
         <Footer />
+
+        {/* Persistent bottom-right mascot */}
+        <MouseFollowingEyes />
       </motion.div>
     </>
   );

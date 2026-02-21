@@ -48,11 +48,6 @@ const Contact = () => {
         {/* Section header */}
         <ScrollReveal direction="up" distance={40} blur>
           <div className="text-center mb-20">
-            <motion.span 
-              className="font-mono text-primary text-sm mb-4 block"
-            >
-              // get in touch
-            </motion.span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Let's Work
               <span className="text-gradient">

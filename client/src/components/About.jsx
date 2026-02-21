@@ -82,21 +82,22 @@ const About = () => {
           {/* Right column - Content */}
           <div className="mx-auto w-full max-w-[680px]">
             <ScrollReveal direction="right" distance={60} delay={0.2}>
-              <motion.span
-                className="mb-5 block font-mono text-sm tracking-[0.16em] text-primary/90"
-              >
-                // about me
-              </motion.span>
+              <motion.div className="mb-8">
+                <h2 className="text-4xl font-bold leading-none tracking-tight text-foreground sm:text-5xl">
+                  About
+                </h2>
+                <div className="mt-3 h-px w-24 bg-border" />
+              </motion.div>
             </ScrollReveal>
 
             <ScrollReveal direction="up" distance={40} delay={0.3}>
-              <h2 className="mb-7 max-w-[18ch] text-4xl font-bold leading-[1.06] md:text-5xl xl:text-6xl">
+              <h3 className="mb-7 max-w-[20ch] text-2xl font-bold leading-[1.12] md:text-3xl xl:text-4xl">
                 Passionate about
                 <br />
                 <span className="text-gradient">
                   building things
                 </span>
-              </h2>
+              </h3>
             </ScrollReveal>
 
             <ScrollReveal direction="up" distance={30} delay={0.5}>
@@ -132,4 +133,3 @@ const About = () => {
 };
 
 export default memo(About);
-

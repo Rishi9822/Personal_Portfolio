@@ -157,7 +157,6 @@
     filter: none !important;
   }
 
-  [class*="bg-black"],
   [class*="bg-white"],
   [class*="bg-neutral"] {
     background-color: hsl(var(--card)) !important;

@@ -508,13 +508,6 @@ const Experience = () => {
         <div className="relative h-full flex flex-col">
           {/* Header - fixed at top */}
           <div className="pt-16 lg:pt-20 pb-6 text-center relative z-20">
-            <motion.span
-              className="font-mono text-primary text-sm mb-3 block"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-                // my professional journey
-            </motion.span>
             <motion.h2
               className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-3"
               initial={{ opacity: 0, y: 20 }}

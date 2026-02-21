@@ -26,19 +26,19 @@ const Navbar = () => {
     if (rafRef.current) return;
     rafRef.current = requestAnimationFrame(() => {
       const scrollY = window.scrollY;
-      
+
       // Show navbar on scroll
       setIsVisible(true);
       if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
       if (scrollY >= 100) {
         hideTimeoutRef.current = setTimeout(() => setIsVisible(false), 2000);
       }
-      
+
       // Set home as active if at top of page
       if (scrollY < 100) {
         setActiveSection("home");
       }
-      
+
       rafRef.current = null;
     });
   }, []);
@@ -60,7 +60,7 @@ const Navbar = () => {
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
-    
+
     const sections = navLinks.map(link => document.getElementById(link.href.replace("#", ""))).filter(Boolean);
     sections.forEach(section => observer.observe(section));
 
@@ -173,18 +173,21 @@ const Navbar = () => {
             hideTimeoutRef.current = setTimeout(() => setIsVisible(false), 2000);
           }
         }}
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 bg-transparent"
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-2.5 bg-black/85 backdrop-blur-xl border-b border-gray-800"
       >
+        <div className="pointer-events-none absolute inset-0 bg-black/20" />
         <div className="container flex items-center justify-between">
           {/* Logo */}
           <MagneticButton strength={0.2}>
             <motion.a
               href="#"
-              className="font-mono text-xl md:text-2xl font-bold"
+              className="font-mono text-sm md:text-lg font-bold"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <span className="text-gradient">&lt;dev /&gt;</span>
+              <span className="inline-flex items-center px-3 py-1 text-foreground shadow-[0_0_30px_rgba(37,99,235,0.35)]">
+                Rishi Patel             
+              </span>
             </motion.a>
           </MagneticButton>
 
@@ -192,7 +195,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-1.5">
             {navLinks.map((link, i) => {
               const isActive = activeSection === link.href.replace("#", "");
-              
+
               return (
                 <MagneticButton key={link.name} strength={0.12}>
                   <motion.a
@@ -201,14 +204,13 @@ const Navbar = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 + i * 0.08, duration: 0.4 }}
                     style={{ textShadow: '0 0 2px rgba(0,0,0,0.8)' }}
-                    className={`relative px-4 py-2.5 rounded-lg font-medium text-base transition-colors duration-200 ${
-                      isActive
+                    className={`relative px-4 py-2.5 rounded-lg font-medium text-base transition-colors duration-200 ${isActive
                         ? "text-foreground"
                         : "text-muted-foreground hover:text-foreground"
-                    }`}
+                      }`}
                   >
                     <span className="relative z-10">{link.name}</span>
-                    
+
                     {isActive && (
                       <motion.span
                         layoutId="activeNav"
@@ -293,7 +295,7 @@ const Navbar = () => {
               onClick={() => setMobileMenuOpen(false)}
               className="fixed inset-0 bg-background/95 backdrop-blur-md z-40 md:hidden"
             />
-            
+
             <motion.div
               variants={menuVariants}
               initial="closed"
@@ -314,7 +316,7 @@ const Navbar = () => {
                   </motion.a>
                 ))}
               </div>
-              
+
               <motion.a
                 href="#contact"
                 variants={menuItemVariants}

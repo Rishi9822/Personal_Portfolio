@@ -39,7 +39,7 @@ const App = () => {
         {/* Loader Overlay */}
         {loading && (
           <RevealLoader
-            text="WELCOME"
+            text="WELCOME TO MY PORTFOLIO"
             bgColors={["#1F2A38", "#16202C"]}
             staggerOrder="center-out"
             textFadeDelay={0.5}

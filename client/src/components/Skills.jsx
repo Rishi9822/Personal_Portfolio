@@ -75,22 +75,22 @@ const projectExamples = {
 
 // Extended skill data for rich carousel
 const allSkills = [
-  { name: "React", icon: Layers, level: 88, color: "accent" },
   { name: "C", icon: Terminal, level: 82, color: "accent" },
   { name: "Nodejs", icon: Server, level: 80, color: "primary" },
   { name: "MongoDB", icon: Database, level: 78, color: "primary" },
+  { name: "React", icon: Layers, level: 88, color: "accent" },
   { name: "JavaScript", icon: Code2, level: 90, color: "primary" },
   { name: "TailwindCSS", icon: Palette, level: 92, color: "primary" },
   { name: "CSS", icon: Database, level: 75, color: "accent" },
   { name: "Java", icon: Code2, level: 85, color: "primary" },
   { name: "HTML", icon: Globe, level: 78, color: "accent" },
   { name: "Github", icon: Cloud, level: 68, color: "accent" },
+  { name: "Express", icon: Server, level: 80, color: "accent" },
   { name: "Git", icon: Wrench, level: 88, color: "primary" },
   { name: "RestAPI", icon: Cloud, level: 65, color: "accent" },
   { name: "SEO", icon: Cpu, level: 72, color: "primary" },
   // { name: "React Native", icon: Smartphone, level: 70, color: "accent" },
   // { name: "Vue.js", icon: Layers, level: 68, color: "primary" },
-  { name: "Express", icon: Server, level: 80, color: "accent" },
 ];
 
 // Skill categories for the bottom section

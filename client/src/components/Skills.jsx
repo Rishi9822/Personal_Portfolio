@@ -1,4 +1,4 @@
-import { motion, useMotionValue, AnimatePresence } from "framer-motion";
+import { motion, useMotionValue, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useRef, useState, useEffect, useCallback, useMemo, memo } from "react";
 import {
   Code2,
@@ -38,6 +38,12 @@ import TailwindCSSLogo from "@/assets/TailwindCSS.png";
 import LinkedINLogo from "@/assets/LinkedIN.png";
 import ProjectsLogo from "@/assets/Projects.png";
 
+const isLowEndClient = () => {
+  if (typeof window === "undefined") return false;
+  const cores = navigator.hardwareConcurrency ?? 8;
+  const memory = navigator.deviceMemory ?? 8;
+  return cores <= 4 || memory <= 4;
+};
 
 
 
@@ -173,10 +179,22 @@ const desktopBentoItems = [
 ];
 
 // Individual skill card for the carousel
-const SkillCard = memo(({ skill, isActive, isMobile, onClick }) => {
+const SkillCard = memo(({ skill, isActive, isMobile, onClick, reduceMotion, isSectionInView }) => {
   const IconComponent = skill.icon;
   const [isHovered, setIsHovered] = useState(false);
-  const showEffects = isActive || isHovered;
+  const touchEndTimeoutRef = useRef(null);
+  const showEffects = !reduceMotion && (isActive || isHovered);
+
+  const handleTouchEnd = useCallback(() => {
+    if (touchEndTimeoutRef.current) clearTimeout(touchEndTimeoutRef.current);
+    touchEndTimeoutRef.current = setTimeout(() => setIsHovered(false), 200);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (touchEndTimeoutRef.current) clearTimeout(touchEndTimeoutRef.current);
+    };
+  }, []);
 
   return (
     <motion.div
@@ -186,12 +204,12 @@ const SkillCard = memo(({ skill, isActive, isMobile, onClick }) => {
         }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onTouchStart={() => setIsHovered(true)}
-      onTouchEnd={() => setTimeout(() => setIsHovered(false), 300)}
+      onTouchStart={isMobile ? () => setIsHovered(true) : undefined}
+      onTouchEnd={isMobile ? handleTouchEnd : undefined}
       onClick={() => onClick?.(skill)}
-      whileHover={isMobile || !showEffects ? {} : { y: -8, scale: 1.02 }}
+      whileHover={isMobile || reduceMotion || !showEffects ? {} : { y: -8, scale: 1.02 }}
       whileTap={isMobile ? { scale: 0.98 } : {}}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 400, damping: 25 }}
     >
       <div className={`relative rounded-2xl bg-card/80 backdrop-blur-xl border transition-all duration-300 overflow-hidden group ${isMobile ? 'p-4' : 'p-5 sm:p-6'
         } ${showEffects
@@ -278,16 +296,26 @@ const SkillCard = memo(({ skill, isActive, isMobile, onClick }) => {
           </div>
 
           <div className={`rounded-full bg-secondary overflow-hidden ${isMobile ? 'h-1' : 'h-1.5'}`}>
-            <motion.div
-              className={`h-full rounded-full ${skill.color === 'primary'
-                ? 'bg-gradient-to-r from-primary to-primary/70'
-                : 'bg-gradient-to-r from-accent to-accent/70'
-                }`}
-              initial={{ width: 0 }}
-              whileInView={{ width: `${skill.level}%` }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            />
+            {reduceMotion ? (
+              <div
+                className={`h-full rounded-full ${skill.color === 'primary'
+                  ? 'bg-gradient-to-r from-primary to-primary/70'
+                  : 'bg-gradient-to-r from-accent to-accent/70'
+                  }`}
+                style={{ width: `${skill.level}%` }}
+              />
+            ) : (
+              <motion.div
+                className={`h-full rounded-full ${skill.color === 'primary'
+                  ? 'bg-gradient-to-r from-primary to-primary/70'
+                  : 'bg-gradient-to-r from-accent to-accent/70'
+                  }`}
+                style={{ width: `${skill.level}%`, transformOrigin: "left center" }}
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: isSectionInView ? 1 : 0 }}
+                transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -296,32 +324,42 @@ const SkillCard = memo(({ skill, isActive, isMobile, onClick }) => {
 });
 
 // Infinite carousel row with improved touch support
-const CarouselRow = memo(({ skills, direction, speed, isMobile, onSkillClick }) => {
+const CarouselRow = memo(({ skills, direction, speed, isMobile, onSkillClick, reduceMotion, isSectionInView }) => {
   const [isPaused, setIsPaused] = useState(false);
   const containerRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
+  const resumeTimeoutRef = useRef(null);
   const dragX = useMotionValue(0);
 
-  // Duplicate skills for seamless loop
-  const duplicatedSkills = useMemo(() => [...skills, ...skills, ...skills], [skills]);
+  // Duplicate skills for seamless loop with lower DOM cost
+  const duplicatedSkills = useMemo(() => [...skills, ...skills], [skills]);
 
   // Calculate total width for animation
   const cardWidth = isMobile ? 143 : 206; // width + margin
-  const totalWidth = skills.length * cardWidth;
+  const totalWidth = useMemo(() => skills.length * cardWidth, [skills.length, cardWidth]);
 
   // Adjusted speed for mobile - slower for better readability
-  const adjustedSpeed = isMobile ? speed * 1.5 : speed;
+  const adjustedSpeed = useMemo(() => (isMobile ? speed * 1.5 : speed), [isMobile, speed]);
 
   const handleDragStart = useCallback(() => {
     setIsDragging(true);
     setIsPaused(true);
+    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
   }, []);
 
   const handleDragEnd = useCallback(() => {
     setIsDragging(false);
     // Resume animation after a delay
-    setTimeout(() => setIsPaused(false), 1000);
+    resumeTimeoutRef.current = setTimeout(() => setIsPaused(false), 1000);
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    };
+  }, []);
+
+  const shouldAutoScroll = !reduceMotion && !isPaused && !isDragging;
 
   return (
     <div
@@ -344,12 +382,12 @@ const CarouselRow = memo(({ skills, direction, speed, isMobile, onSkillClick }) 
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         style={{ x: dragX }}
-        animate={!isPaused && !isDragging ? {
+        animate={shouldAutoScroll ? {
           x: direction === 'left'
             ? [0, -totalWidth]
             : [-totalWidth, 0]
         } : {}}
-        transition={!isPaused && !isDragging ? {
+        transition={shouldAutoScroll ? {
           x: {
             duration: adjustedSpeed,
             repeat: Infinity,
@@ -365,6 +403,8 @@ const CarouselRow = memo(({ skills, direction, speed, isMobile, onSkillClick }) 
             isActive={false}
             isMobile={isMobile}
             onClick={onSkillClick}
+            reduceMotion={reduceMotion}
+            isSectionInView={isSectionInView}
           />
         ))}
       </motion.div>
@@ -387,27 +427,39 @@ const CarouselRow = memo(({ skills, direction, speed, isMobile, onSkillClick }) 
 });
 
 // Category card component
-const CategoryCard = memo(({ category, index, isInView, isMobile }) => {
+const CategoryCard = memo(({ category, index, isInView, isMobile, reduceMotion }) => {
   const IconComponent = category.icon;
   const [isHovered, setIsHovered] = useState(false);
+  const touchEndTimeoutRef = useRef(null);
+
+  const handleTouchEnd = useCallback(() => {
+    if (touchEndTimeoutRef.current) clearTimeout(touchEndTimeoutRef.current);
+    touchEndTimeoutRef.current = setTimeout(() => setIsHovered(false), 200);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (touchEndTimeoutRef.current) clearTimeout(touchEndTimeoutRef.current);
+    };
+  }, []);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.4, delay: index * 0.08 }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onTouchStart={() => setIsHovered(true)}
-      onTouchEnd={() => setTimeout(() => setIsHovered(false), 200)}
+      transition={reduceMotion ? { duration: 0 } : { duration: 0.4, delay: index * 0.08 }}
+      onMouseEnter={reduceMotion ? undefined : () => setIsHovered(true)}
+      onMouseLeave={reduceMotion ? undefined : () => setIsHovered(false)}
+      onTouchStart={reduceMotion ? undefined : () => setIsHovered(true)}
+      onTouchEnd={reduceMotion ? undefined : handleTouchEnd}
       className="group"
     >
       <motion.div
         className={`relative rounded-xl sm:rounded-2xl bg-gradient-to-br ${category.gradient} backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all duration-300 overflow-hidden h-full ${isMobile ? 'p-3.5' : 'p-4 sm:p-5 lg:p-6'
           }`}
-        whileHover={isMobile ? {} : { y: -4, scale: 1.01 }}
+        whileHover={isMobile || reduceMotion ? {} : { y: -4, scale: 1.01 }}
         whileTap={isMobile ? { scale: 0.98 } : {}}
-        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+        transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 400, damping: 25 }}
       >
         {/* Animated background pattern */}
         <div className="absolute inset-0 opacity-5">
@@ -424,8 +476,8 @@ const CategoryCard = memo(({ category, index, isInView, isMobile }) => {
           <motion.div
             className={`rounded-lg sm:rounded-xl bg-card/80 border border-border/50 ${isMobile ? 'p-1.5' : 'p-2 sm:p-2.5'
               }`}
-            animate={isHovered && !isMobile ? { rotate: [0, 10, -10, 0] } : {}}
-            transition={{ duration: 0.4 }}
+            animate={isHovered && !isMobile && !reduceMotion ? { rotate: [0, 10, -10, 0] } : {}}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.4 }}
           >
             <IconComponent className={`text-primary ${isMobile ? 'w-4 h-4' : 'w-4 h-4 sm:w-5 sm:h-5'}`} />
           </motion.div>
@@ -437,8 +489,8 @@ const CategoryCard = memo(({ category, index, isInView, isMobile }) => {
           {!isMobile && (
             <motion.div
               className="ml-auto"
-              animate={isHovered ? { x: 4 } : { x: 0 }}
-              transition={{ duration: 0.2 }}
+              animate={!reduceMotion && isHovered ? { x: 4 } : { x: 0 }}
+              transition={reduceMotion ? { duration: 0 } : { duration: 0.2 }}
             >
               <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground group-hover:text-primary transition-colors" />
             </motion.div>
@@ -454,7 +506,7 @@ const CategoryCard = memo(({ category, index, isInView, isMobile }) => {
                 }`}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: index * 0.08 + i * 0.03 }}
+              transition={reduceMotion ? { duration: 0 } : { delay: index * 0.08 + i * 0.03 }}
             >
               {skill}
             </motion.span>
@@ -465,7 +517,7 @@ const CategoryCard = memo(({ category, index, isInView, isMobile }) => {
   );
 });
 
-const SkillDetailModal = ({ skill, isOpen, onClose, isMobile }) => {
+const SkillDetailModal = memo(({ skill, isOpen, onClose, isMobile, reduceMotion }) => {
   if (!skill) return null;
 
   const Icon = skill.icon;
@@ -477,7 +529,7 @@ const SkillDetailModal = ({ skill, isOpen, onClose, isMobile }) => {
         <motion.div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1, backdropFilter: "blur(6px)" }}
+          animate={reduceMotion ? { opacity: 1 } : { opacity: 1, backdropFilter: "blur(6px)" }}
           exit={{ opacity: 0 }}
           onClick={onClose}
         >
@@ -487,7 +539,7 @@ const SkillDetailModal = ({ skill, isOpen, onClose, isMobile }) => {
             initial={{ scale: 0.9, y: 40 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.9, y: 40 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
@@ -537,7 +589,7 @@ const SkillDetailModal = ({ skill, isOpen, onClose, isMobile }) => {
       )}
     </AnimatePresence>
   );
-};
+});
 
 
 
@@ -545,6 +597,10 @@ const Skills = () => {
   const containerRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
   const isMobile = useIsMobile();
+  const prefersReducedMotion = useReducedMotion();
+  const [isLowEndDevice] = useState(() => isLowEndClient());
+  const modalClearTimeoutRef = useRef(null);
+  const shouldConstrainMotion = prefersReducedMotion || isLowEndDevice;
 
   const [selectedSkill, setSelectedSkill] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -557,7 +613,8 @@ const Skills = () => {
 
   const handleModalClose = useCallback(() => {
     setIsModalOpen(false);
-    setTimeout(() => setSelectedSkill(null), 200);
+    if (modalClearTimeoutRef.current) clearTimeout(modalClearTimeoutRef.current);
+    modalClearTimeoutRef.current = setTimeout(() => setSelectedSkill(null), 200);
   }, []);
 
 
@@ -580,6 +637,12 @@ const Skills = () => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (modalClearTimeoutRef.current) clearTimeout(modalClearTimeoutRef.current);
+    };
+  }, []);
+
   // Split skills for two rows
   const firstRowSkills = useMemo(() => allSkills.slice(0, 8), []);
   const secondRowSkills = useMemo(() => allSkills.slice(8), []);
@@ -590,6 +653,7 @@ const Skills = () => {
       className={`relative overflow-hidden ${isMobile ? "py-16 sm:py-20 lg:py-28" : "py-10 lg:py-16"
         }`}
       ref={containerRef}
+      style={{ contentVisibility: "auto", containIntrinsicSize: isMobile ? "1px 1400px" : "1px 900px" }}
     >
       {isMobile ? (
         <>
@@ -669,6 +733,8 @@ const Skills = () => {
                 speed={35}
                 isMobile={isMobile}
                 onSkillClick={handleSkillClick}
+                reduceMotion={shouldConstrainMotion}
+                isSectionInView={isInView}
               />
 
               {/* Second row - right to left */}
@@ -678,6 +744,8 @@ const Skills = () => {
                 speed={40}
                 isMobile={isMobile}
                 onSkillClick={handleSkillClick}
+                reduceMotion={shouldConstrainMotion}
+                isSectionInView={isInView}
               />
             </div>
 
@@ -693,6 +761,7 @@ const Skills = () => {
                   index={index}
                   isInView={isInView}
                   isMobile={isMobile}
+                  reduceMotion={shouldConstrainMotion}
                 />
               ))}
             </div>
@@ -717,8 +786,8 @@ const Skills = () => {
                 />
                 <span className="font-mono">Always learning</span>
                 <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                  animate={shouldConstrainMotion ? {} : { rotate: 360 }}
+                  transition={shouldConstrainMotion ? { duration: 0 } : { duration: 8, repeat: Infinity, ease: "linear" }}
                 >
                   <Zap
                     className={`text-primary ${isMobile ? "w-3.5 h-3.5" : "w-4 h-4"
@@ -740,6 +809,7 @@ const Skills = () => {
             isOpen={isModalOpen}
             onClose={handleModalClose}
             isMobile={isMobile}
+            reduceMotion={shouldConstrainMotion}
           />
         </>
       ) : (

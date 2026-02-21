@@ -1,47 +1,62 @@
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 const CursorFollower = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isEnabled] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(pointer: fine)").matches
+  );
   const [isHovering, setIsHovering] = useState(false);
+  const hoverRef = useRef(false);
+  const x = useMotionValue(-100);
+  const y = useMotionValue(-100);
+  const mainX = useSpring(x, { stiffness: 900, damping: 45, mass: 0.18 });
+  const mainY = useSpring(y, { stiffness: 900, damping: 45, mass: 0.18 });
+  const trailX = useSpring(x, { stiffness: 320, damping: 34, mass: 0.3 });
+  const trailY = useSpring(y, { stiffness: 320, damping: 34, mass: 0.3 });
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    if (!isEnabled) return;
+
+    const interactiveSelector =
+      "a,button,[role='button'],input,textarea,select,[data-cursor='interactive'],.grid__item,.bento-container";
+
+    const handlePointerMove = (e) => {
+      x.set(e.clientX);
+      y.set(e.clientY);
     };
 
-    const handleMouseOver = (e) => {
+    const handlePointerOver = (e) => {
       const target = e.target;
-      if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a, button')) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
+      if (!(target instanceof Element)) return;
+      const nextHover = !!target.closest(interactiveSelector);
+      if (hoverRef.current !== nextHover) {
+        hoverRef.current = nextHover;
+        setIsHovering(nextHover);
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseover', handleMouseOver);
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerover", handlePointerOver, { passive: true });
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerover", handlePointerOver);
     };
-  }, []);
+  }, [isEnabled, x, y]);
+
+  if (!isEnabled) return null;
 
   return (
     <>
       {/* Main cursor */}
       <motion.div
-        className="fixed w-4 h-4 bg-primary rounded-full pointer-events-none z-50"
-        animate={{
-          x: mousePosition.x - 8,
-          y: mousePosition.y - 8,
-          scale: isHovering ? 2 : 1,
-        }}
+        className="fixed left-0 top-0 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full pointer-events-none z-50 will-change-transform"
+        style={{ x: mainX, y: mainY }}
+        initial={false}
+        animate={{ scale: isHovering ? 1.7 : 1 }}
         transition={{
-          type: "spring",
-          stiffness: 500,
-          damping: 28,
+          type: "tween",
+          duration: 0.14,
           scale: {
             type: "spring",
             stiffness: 800,
@@ -52,20 +67,17 @@ const CursorFollower = () => {
       
       {/* Cursor trail */}
       <motion.div
-        className="fixed w-8 h-8 border-2 border-primary/30 rounded-full pointer-events-none z-40"
-        animate={{
-          x: mousePosition.x - 16,
-          y: mousePosition.y - 16,
-          scale: isHovering ? 1.5 : 1,
-        }}
+        className="fixed left-0 top-0 -translate-x-1/2 -translate-y-1/2 w-8 h-8 border-2 border-primary/30 rounded-full pointer-events-none z-40 will-change-transform"
+        style={{ x: trailX, y: trailY }}
+        initial={false}
+        animate={{ scale: isHovering ? 1.35 : 1 }}
         transition={{
-          type: "spring",
-          stiffness: 200,
-          damping: 20,
+          type: "tween",
+          duration: 0.18,
           scale: {
             type: "spring",
-            stiffness: 300,
-            damping: 25,
+            stiffness: 380,
+            damping: 28,
           },
         }}
       />

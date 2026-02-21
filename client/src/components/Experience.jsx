@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform, useMotionValueEvent, useSpring } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, useMotionValueEvent, useSpring, useReducedMotion } from "framer-motion";
+import { memo, useRef, useState, useEffect } from "react";
 import { Calendar, MapPin, ExternalLink, Briefcase, ArrowRight, Code, Zap, TrendingUp, Award } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 
@@ -54,30 +54,54 @@ const experiences = [
   }
 ];
 
-const ExperienceCard = ({ exp, index, isActive, direction, totalCards }) => {
+const seeded = (seed) => {
+  const x = Math.sin(seed * 12.9898) * 43758.5453;
+  return x - Math.floor(x);
+};
 
+const bgParticles = Array.from({ length: 8 }, (_, i) => ({
+  left: 10 + seeded(i + 1) * 80,
+  top: 10 + seeded(i + 11) * 80,
+  driftX: seeded(i + 21) * 40 - 20,
+  duration: 4 + seeded(i + 31) * 3,
+  delay: seeded(i + 41) * 2,
+}));
+
+const timelineParticles = Array.from({ length: 8 }, (_, i) => ({
+  left: 30 + seeded(i + 51) * 60,
+  top: seeded(i + 61) * 100,
+  duration: 3 + seeded(i + 71) * 2,
+  delay: seeded(i + 81) * 2,
+}));
+
+const ExperienceCard = memo(function ExperienceCard({ exp, index, isActive, direction, totalCards, isPerfConstrained }) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: direction === 'left' ? -150 : 150, scale: 0.8, rotateY: direction === 'left' ? -15 : 15 }}
+      initial={{
+        opacity: 0,
+        y: "calc(-50% + 140px)",
+        x: direction === "left" ? -40 : 40,
+        scale: 0.96,
+      }}
       animate={{
         opacity: isActive ? 1 : 0,
-        x: isActive ? 0 : direction === 'left' ? -150 : 150,
-        scale: isActive ? 1 : 0.9,
-        filter: isActive ? "blur(0px)" : "blur(2px)",
-        rotateY: isActive ? 0 : (direction === 'left' ? -15 : 15),
-        y: '-50%',
+        y: isActive ? "-50%" : "calc(-50% + 120px)",
+        x: isActive ? 0 : direction === "left" ? -40 : 40,
+        scale: isActive ? 1 : 0.96,
       }}
       transition={{
-        duration: 0.8,
-        ease: [0.32, 0.72, 0, 1],
+        type: "spring",
+        stiffness: 120,
+        damping: 24,
+        mass: 0.8,
       }}
-      className={`absolute top-1/2 w-full max-w-lg xl:max-w-xl ${direction === 'left'
+      className={`absolute top-1/2 w-full max-w-lg xl:max-w-xl will-change-transform ${direction === 'left'
         ? 'left-4 lg:left-12 xl:left-20'
         : 'right-4 lg:right-12 xl:right-20'
         } ${isActive ? 'pointer-events-auto z-20' : 'pointer-events-none z-0'}`}
     >
       <motion.div
-        className="group relative p-6 lg:p-8 rounded-2xl bg-card/95 backdrop-blur-xl border border-border/50 hover:border-primary/50 transition-all duration-500 overflow-hidden shadow-2xl shadow-background/50"
+        className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/95 p-6 shadow-2xl shadow-background/50 backdrop-blur-xl transition-[border-color,box-shadow,transform] duration-500 lg:p-8"
         whileHover={isActive ? { 
           scale: 1.02,
           boxShadow: "0 25px 50px -10px hsl(var(--primary) / 0.15), 0 0 0 1px hsl(var(--primary) / 0.1)",
@@ -106,51 +130,23 @@ const ExperienceCard = ({ exp, index, isActive, direction, totalCards }) => {
           <>
             <motion.div
               className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary/50"
-              animate={{
-                width: [32, 40, 32],
-                height: [32, 40, 32],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
+              animate={isPerfConstrained ? undefined : { scale: [1, 1.25, 1] }}
+              transition={isPerfConstrained ? undefined : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div
               className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary/50"
-              animate={{
-                width: [32, 40, 32],
-                height: [32, 40, 32],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
+              animate={isPerfConstrained ? undefined : { scale: [1, 1.25, 1] }}
+              transition={isPerfConstrained ? undefined : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div
               className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary/50"
-              animate={{
-                width: [32, 40, 32],
-                height: [32, 40, 32],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
+              animate={isPerfConstrained ? undefined : { scale: [1, 1.25, 1] }}
+              transition={isPerfConstrained ? undefined : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div
               className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-primary/50"
-              animate={{
-                width: [32, 40, 32],
-                height: [32, 40, 32],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
+              animate={isPerfConstrained ? undefined : { scale: [1, 1.25, 1] }}
+              transition={isPerfConstrained ? undefined : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
             />
           </>
         )}
@@ -181,15 +177,8 @@ const ExperienceCard = ({ exp, index, isActive, direction, totalCards }) => {
               {isActive && (
                 <motion.div
                   className="inline-block ml-2 w-2 h-2 bg-primary rounded-full"
-                  animate={{
-                    scale: [1, 1.5, 1],
-                    opacity: [1, 0.5, 1],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
+                  animate={isPerfConstrained ? undefined : { scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                  transition={isPerfConstrained ? undefined : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
                 />
               )}
             </h3>
@@ -229,19 +218,13 @@ const ExperienceCard = ({ exp, index, isActive, direction, totalCards }) => {
         {/* Achievements with enhanced styling */}
         <div className="mb-5">
           <h4 className="font-bold mb-3 text-sm flex items-center gap-2">
-            <motion.div
-              className="p-1 rounded-lg bg-gradient-to-br from-primary/15 to-accent/10"
-              animate={{
-                rotate: [0, 5, 0],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              <Award className="w-4 h-4 text-primary" />
-            </motion.div>
+          <motion.div
+            className="p-1 rounded-lg bg-gradient-to-br from-primary/15 to-accent/10"
+            animate={isPerfConstrained ? undefined : { rotate: [0, 5, 0] }}
+            transition={isPerfConstrained ? undefined : { duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <Award className="w-4 h-4 text-primary" />
+          </motion.div>
             Key Achievements
           </h4>
           <ul className="space-y-2">
@@ -255,15 +238,8 @@ const ExperienceCard = ({ exp, index, isActive, direction, totalCards }) => {
               >
                 <motion.div
                   className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-primary to-accent mt-2 flex-shrink-0"
-                  animate={{
-                    scale: [1, 1.3, 1],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: i * 0.2,
-                    ease: "easeInOut"
-                  }}
+                  animate={isPerfConstrained ? undefined : { scale: [1, 1.3, 1] }}
+                  transition={isPerfConstrained ? undefined : { duration: 2, repeat: Infinity, delay: i * 0.2, ease: "easeInOut" }}
                 />
                 <span className="text-sm leading-relaxed">{achievement}</span>
               </motion.li>
@@ -310,12 +286,8 @@ const ExperienceCard = ({ exp, index, isActive, direction, totalCards }) => {
               <ExternalLink className="w-4 h-4" />
               View Details
               <motion.div
-                animate={{ x: [0, 4, 0] }}
-                transition={{
-                  duration: 1,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
+                animate={isPerfConstrained ? undefined : { x: [0, 4, 0] }}
+                transition={isPerfConstrained ? undefined : { duration: 1, repeat: Infinity, ease: "easeInOut" }}
               >
                 <ArrowRight className="w-4 h-4" />
               </motion.div>
@@ -325,16 +297,16 @@ const ExperienceCard = ({ exp, index, isActive, direction, totalCards }) => {
       </motion.div>
     </motion.div>
   );
-};
+});
 
 // Mobile card component for normal scrolling
-const MobileExperienceCard = ({ exp, index }) => {
+const MobileExperienceCard = memo(function MobileExperienceCard({ exp, index }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      transition={{ type: "spring", stiffness: 120, damping: 20, delay: index * 0.1 }}
       className="relative pl-8 sm:pl-12"
     >
       {/* Timeline dot */}
@@ -385,30 +357,41 @@ const MobileExperienceCard = ({ exp, index }) => {
       </div>
     </motion.div>
   );
-};
+});
 
 const Experience = () => {
   const containerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isDesktop, setIsDesktop] = useState(true);
+  const [isLowPerfDesktop, setIsLowPerfDesktop] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+  const isPerfConstrained = prefersReducedMotion || isLowPerfDesktop;
   const totalSteps = experiences.length;
   const progress = totalSteps > 1 ? activeIndex / (totalSteps - 1) : 0;
+  const activeBgParticles = isPerfConstrained ? bgParticles.slice(0, 5) : bgParticles;
+  const activeTimelineParticles = isPerfConstrained ? timelineParticles.slice(0, 5) : timelineParticles;
 
   const smoothProgress = useSpring(progress, {
-    stiffness: 60,  // Reduced from 140 for smoother, slower transitions
-    damping: 20,   // Reduced from 28 for more damping
-    mass: 0.8,      // Increased from 0.35 for slower movement
+    stiffness: 52,
+    damping: 22,
+    mass: 0.9,
   });
 
-  const progressHeight = useTransform(
-  smoothProgress,
-  v => `${v * 70}vh`
-);
+  const progressHeight = useTransform(smoothProgress, (v) => `${v * 70}vh`);
 
 
   // SSR-safe responsive detection
   useEffect(() => {
-    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
+    const checkDesktop = () => {
+      const desktop = window.innerWidth >= 1024;
+      setIsDesktop(desktop);
+
+      const cores = navigator.hardwareConcurrency ?? 8;
+      const memory = navigator.deviceMemory ?? 8;
+      const lowPerf = desktop && (cores <= 4 || memory <= 4);
+      setIsLowPerfDesktop(lowPerf);
+    };
+
     checkDesktop();
     window.addEventListener('resize', checkDesktop);
     return () => window.removeEventListener('resize', checkDesktop);
@@ -428,13 +411,13 @@ const Experience = () => {
       Math.floor((latest + buffered) / step),
       experiences.length - 1
     );
-    if (newIndex !== activeIndex && newIndex >= 0) {
-      setActiveIndex(newIndex);
+    if (newIndex >= 0) {
+      setActiveIndex((prev) => (prev !== newIndex ? newIndex : prev));
     }
   });
 
   // Background parallax
-  const bgY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, isPerfConstrained ? -18 : -50]);
 
   // Mobile/Tablet: Normal scrolling layout
   if (!isDesktop) {
@@ -494,52 +477,26 @@ const Experience = () => {
           {/* Premium gradient orbs with animation */}
           <motion.div
             className="absolute top-20 left-20 w-[600px] h-[600px] bg-gradient-to-br from-primary/8 to-purple-500/6 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.3, 1],
-              x: [0, 50, 0],
-              y: [0, -30, 0],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
+            animate={isPerfConstrained ? undefined : { scale: [1, 1.3, 1], x: [0, 50, 0], y: [0, -30, 0] }}
+            transition={isPerfConstrained ? undefined : { duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
             className="absolute bottom-20 right-20 w-[500px] h-[500px] bg-gradient-to-tr from-accent/8 to-cyan-500/6 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.4, 1],
-              x: [0, -60, 0],
-              y: [0, 40, 0],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
+            animate={isPerfConstrained ? undefined : { scale: [1, 1.4, 1], x: [0, -60, 0], y: [0, 40, 0] }}
+            transition={isPerfConstrained ? undefined : { duration: 10, repeat: Infinity, ease: "easeInOut" }}
           />
           
           {/* Floating geometric shapes */}
-          {[...Array(8)].map((_, i) => (
+          {activeBgParticles.map((particle, i) => (
             <motion.div
               key={i}
               className="absolute w-2 h-2 rounded-full bg-primary/20"
               style={{
-                left: `${10 + Math.random() * 80}%`,
-                top: `${10 + Math.random() * 80}%`,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
               }}
-              animate={{
-                y: [0, -30, 0],
-                x: [0, Math.random() * 40 - 20, 0],
-                opacity: [0.1, 0.4, 0.1],
-                scale: [1, 2, 1],
-              }}
-              transition={{
-                duration: 4 + Math.random() * 3,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-                ease: "easeInOut"
-              }}
+              animate={isPerfConstrained ? undefined : { y: [0, -30, 0], x: [0, particle.driftX, 0], opacity: [0.1, 0.4, 0.1], scale: [1, 2, 1] }}
+              transition={isPerfConstrained ? undefined : { duration: particle.duration, repeat: Infinity, delay: particle.delay, ease: "easeInOut" }}
             />
           ))}
           
@@ -587,25 +544,16 @@ const Experience = () => {
                 <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-accent/10 rounded-full blur-2xl" />
                 
                 {/* Animated floating particles for premium feel */}
-                {[...Array(8)].map((_, i) => (
+                {activeTimelineParticles.map((particle, i) => (
                   <motion.div
                     key={i}
                     className="absolute w-2 h-2 rounded-full bg-primary/50"
                     style={{
-                      left: `${30 + Math.random() * 60}px`,
-                      top: `${Math.random() * 100}%`,
+                      left: `${particle.left}px`,
+                      top: `${particle.top}%`,
                     }}
-                    animate={{
-                      y: [0, -25, 0],
-                      opacity: [0.3, 1, 0.3],
-                      scale: [1, 1.8, 1],
-                    }}
-                    transition={{
-                      duration: 3 + Math.random() * 2,
-                      repeat: Infinity,
-                      delay: Math.random() * 2,
-                      ease: "easeInOut"
-                    }}
+                    animate={isPerfConstrained ? undefined : { y: [0, -25, 0], opacity: [0.3, 1, 0.3], scale: [1, 1.8, 1] }}
+                    transition={isPerfConstrained ? undefined : { duration: particle.duration, repeat: Infinity, delay: particle.delay, ease: "easeInOut" }}
                   />
                 ))}
 
@@ -649,15 +597,8 @@ const Experience = () => {
                       {isCurrent && (
                         <motion.div
                           className="absolute inset-0 rounded-full border-3 border-primary"
-                          animate={{
-                            scale: [1, 2.5, 1],
-                            opacity: [1, 0.3, 1],
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                          }}
+                          animate={isPerfConstrained ? undefined : { scale: [1, 2.5, 1], opacity: [1, 0.3, 1] }}
+                          transition={isPerfConstrained ? undefined : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
                           style={{
                             width: '40px',
                             height: '40px',
@@ -688,15 +629,8 @@ const Experience = () => {
                             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/50 to-transparent" />
                             <motion.div
                               className="absolute inset-0 rounded-full bg-primary"
-                              animate={{
-                                scale: [1, 0.6, 1],
-                                opacity: [1, 0.3, 1],
-                              }}
-                              transition={{
-                                duration: 1.5,
-                                repeat: Infinity,
-                                ease: "easeInOut"
-                              }}
+                              animate={isPerfConstrained ? undefined : { scale: [1, 0.6, 1], opacity: [1, 0.3, 1] }}
+                              transition={isPerfConstrained ? undefined : { duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                             />
                           </>
                         )}
@@ -728,15 +662,9 @@ const Experience = () => {
 
                 {/* Progress percentage indicator */}
                 <motion.div
-                  className="absolute -right-24 top-1/2 -translate-y-1/2 text-primary font-mono text-sm font-bold bg-card/90 backdrop-blur-sm px-4 py-2 rounded-full border-2 border-primary/40 shadow-lg"
-                  animate={{
-                    opacity: [0.8, 1, 0.8],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
+                  className="absolute -right-9 lg:-right-10 top-1/2 -translate-y-1/2 text-primary font-mono text-sm font-bold bg-card/90 backdrop-blur-sm px-4 py-2 rounded-full border-2 border-primary/40 shadow-lg"
+                  animate={isPerfConstrained ? undefined : { opacity: [0.8, 1, 0.8] }}
+                  transition={isPerfConstrained ? undefined : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
                 >
                   {Math.round(progress * 100)}%
                 </motion.div>
@@ -752,6 +680,7 @@ const Experience = () => {
                     isActive={activeIndex === index}
                     direction={index % 2 === 0 ? 'left' : 'right'}
                     totalCards={experiences.length}
+                    isPerfConstrained={isPerfConstrained}
                   />
                 ))}
               </div>
@@ -793,13 +722,13 @@ const Experience = () => {
                 {/* Scroll hint */}
                 <motion.div
                   className="flex items-center gap-2 text-muted-foreground text-sm"
-                  animate={{ opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  animate={isPerfConstrained ? undefined : { opacity: [0.5, 1, 0.5] }}
+                  transition={isPerfConstrained ? undefined : { duration: 2, repeat: Infinity }}
                 >
                   <span>Scroll</span>
                   <motion.div
-                    animate={{ y: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
+                    animate={isPerfConstrained ? undefined : { y: [0, 4, 0] }}
+                    transition={isPerfConstrained ? undefined : { duration: 1.5, repeat: Infinity }}
                   >
                     ↓
                   </motion.div>
@@ -814,3 +743,4 @@ const Experience = () => {
 };
 
 export default Experience;
+

@@ -1,8 +1,7 @@
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Menu, X } from "lucide-react";
 import MagneticButton from "./MagneticButton";
-import ThemeToggle from "./ThemeToggle";
 import { springConfigs } from "@/hooks/useScrollVelocity";
 
 const navLinks = [
@@ -15,12 +14,9 @@ const navLinks = [
 ];
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [isVisible, setIsVisible] = useState(true);
-  
-  const { scrollY } = useScroll();
 
   const hideTimeoutRef = useRef(null);
   const rafRef = useRef(null);
@@ -30,7 +26,6 @@ const Navbar = () => {
     if (rafRef.current) return;
     rafRef.current = requestAnimationFrame(() => {
       const scrollY = window.scrollY;
-      setScrolled(scrollY > 50);
       
       // Show navbar on scroll
       setIsVisible(true);
@@ -208,8 +203,8 @@ const Navbar = () => {
                     style={{ textShadow: '0 0 2px rgba(0,0,0,0.8)' }}
                     className={`relative px-4 py-2.5 rounded-lg font-medium text-base transition-colors duration-200 ${
                       isActive
-                        ? "text-white"
-                        : "text-gray-200 hover:text-white"
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     <span className="relative z-10">{link.name}</span>
@@ -229,9 +224,6 @@ const Navbar = () => {
 
           {/* Right side actions */}
           <div className="flex items-center gap-3">
-            {/* Theme toggle */}
-            <ThemeToggle />
-
             {/* CTA Button - Desktop */}
             <MagneticButton strength={0.25}>
               <motion.a
@@ -241,14 +233,14 @@ const Navbar = () => {
                 transition={{ delay: 0.5 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm bg-primary text-primary-foreground shadow-md shadow-primary/20"
+                className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm bg-primary text-primary-foreground border border-border hover:bg-hover transition-colors duration-200"
               >
                 <span>Let's Talk</span>
                 <motion.span
                   animate={{ x: [0, 3, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 >
-                  →
+                  {"->"}
                 </motion.span>
               </motion.a>
             </MagneticButton>
@@ -258,7 +250,7 @@ const Navbar = () => {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden group relative w-11 h-11 flex items-center justify-center rounded-xl bg-card/80 backdrop-blur-sm border border-border hover:border-primary/30 hover:bg-primary/10 transition-all duration-300 shadow-sm hover:shadow-md"
+              className="md:hidden group relative w-11 h-11 flex items-center justify-center rounded-xl bg-card border border-border hover:bg-hover transition-all duration-300"
               aria-label="Toggle menu"
             >
               <AnimatePresence mode="wait">
@@ -327,7 +319,7 @@ const Navbar = () => {
                 href="#contact"
                 variants={menuItemVariants}
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-4 rounded-xl bg-primary text-primary-foreground font-semibold text-center shadow-lg"
+                className="w-full py-4 rounded-xl bg-primary text-primary-foreground font-semibold text-center border border-border hover:bg-hover transition-colors duration-200"
               >
                 Let's Talk
               </motion.a>

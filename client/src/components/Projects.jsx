@@ -13,7 +13,7 @@ const projects = [
     image: "https://framerusercontent.com/images/cESHCUNY7OxTpoEynSgXDBfOoM.webp?width=800&height=600",
     liveUrl: "https://eliosfin.com/",
     githubUrl: "#",
-    color: "#eb5939",
+    color: "hsl(var(--muted-foreground))",
     tags: ["React", "Node.js", "MongoDB", "Framer Motion"]
   },
   {
@@ -25,7 +25,7 @@ const projects = [
     image: "https://framerusercontent.com/images/lg4aCbGnRwMMK59qe2r950OXo8.webp?width=800&height=600",
     liveUrl: "https://www.greenlammfc.com/",
     githubUrl: "#",
-    color: "#eb5939",
+    color: "hsl(var(--muted-foreground))",
     tags: ["Next.js", "TypeScript", "PostgreSQL", "Tailwind"]
   },
   {
@@ -37,7 +37,7 @@ const projects = [
     image: "https://framerusercontent.com/images/z6OwSiDnezWln6hQuqA8APzwo.webp?width=800&height=600",
     liveUrl: "https://www.marutiropes.com/",
     githubUrl: "#",
-    color: "#eb5939",
+    color: "hsl(var(--muted-foreground))",
     tags: ["React", "Express", "MySQL", "Canvas API"]
   },
   {
@@ -49,7 +49,7 @@ const projects = [
     image: "https://framerusercontent.com/images/7bfqXM2Kq5sRrSbxdgbIKnosqw.webp?width=800&height=600",
     liveUrl: "https://cuprumquirks.com/",
     githubUrl: "#",
-    color: "#eb5939",
+    color: "hsl(var(--muted-foreground))",
     tags: ["Gatsby", "GraphQL", "Contentful", "GSAP"]
   }
 ];
@@ -117,8 +117,7 @@ const StickyCard = memo(function StickyCard({
   min-h-0 lg:min-h-[420px]
   overflow-hidden
   rounded-2xl lg:rounded-[32px]
-  bg-neutral-900
-  shadow-[0_30px_80px_rgba(0,0,0,0.4)]
+  bg-card border border-border
 "
       >
         <img
@@ -130,10 +129,10 @@ const StickyCard = memo(function StickyCard({
           className="absolute inset-0 h-full w-full object-cover"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-background/55" />
 
         <div className="relative z-10 flex h-full flex-col justify-end p-6 sm:p-10 lg:p-12">
-          <span className="text-[11px] sm:text-xs uppercase tracking-[0.3em] text-white/50">
+          <span className="text-[11px] sm:text-xs uppercase tracking-[0.3em] text-muted-foreground">
             {project.subtitle}
           </span>
 
@@ -152,7 +151,7 @@ const StickyCard = memo(function StickyCard({
               <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
             </a>
 
-            <span className="text-white/40 text-sm">{project.number}</span>
+            <span className="text-muted-foreground text-sm">{project.number}</span>
           </div>
         </div>
       </motion.div>
@@ -231,14 +230,14 @@ const Projects = () => {
   return (
     <>
       <section
-        className="min-h-screen bg-neutral-950 text-white"
+        className="min-h-screen bg-background text-foreground"
         style={{ contentVisibility: "auto", containIntrinsicSize: isDesktop ? "1px 2600px" : "1px 3600px" }}
       >
         <div className="container">
           {/* Section Header */}
           <div className="text-center mb-4 pt-20">
             <h2 className="text-4xl lg:text-6xl font-bold mb-4">Featured Projects</h2>
-            <p className="text-xl text-white/70">Scroll to explore my work</p>
+            <p className="text-xl text-muted-foreground">Scroll to explore my work</p>
           </div>
 
           {/* Progress Indicators */}
@@ -248,8 +247,8 @@ const Projects = () => {
                 key={index}
                 onClick={() => scrollToProject(index)}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${activeProject === index
-                  ? 'bg-orange-500 w-8'
-                  : 'bg-white/30 hover:bg-white/50'
+                  ? 'bg-primary w-8'
+                  : 'bg-primary/50 hover:bg-hover'
                   }`}
               />
             ))}
@@ -280,24 +279,24 @@ const Projects = () => {
                   >
                     {currentProject.number}
                   </span>
-                  <div className="h-px bg-white/20 w-20"></div>
+                  <div className="h-px bg-primary/20 w-20"></div>
                 </div>
 
                 {/* Project Title */}
                 <p className="
   text-sm sm:text-base lg:text-lg
-  text-white/60 leading-relaxed
+  text-muted-foreground leading-relaxed
 ">
                   {currentProject.title}
                 </p>
 
                 {/* Subtitle */}
-                <p className="text-xl lg:text-2xl text-white/70 font-light">
+                <p className="text-xl lg:text-2xl text-muted-foreground font-light">
                   {currentProject.subtitle}
                 </p>
 
                 {/* Description */}
-                <p className="text-lg text-white/60 leading-relaxed">
+                <p className="text-lg text-muted-foreground leading-relaxed">
                   {currentProject.description}
                 </p>
 
@@ -306,7 +305,7 @@ const Projects = () => {
                   {currentProject.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1.5 rounded-lg text-xs font-mono bg-white/10 text-white/80 border border-white/20"
+                      className="px-3 py-1.5 rounded-lg text-xs font-mono bg-primary/10 text-muted-foreground border border-border"
                     >
                       {tag}
                     </span>
@@ -319,7 +318,7 @@ const Projects = () => {
                     href={currentProject.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition-colors"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground border border-border font-semibold hover:bg-hover transition-colors duration-200"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -329,7 +328,7 @@ const Projects = () => {
 
                   <motion.a
                     href={currentProject.githubUrl}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-white hover:bg-white/10 transition-colors"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border text-foreground bg-card hover:bg-hover transition-colors duration-200"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -378,18 +377,18 @@ const Projects = () => {
                         >
                           {project.number}
                         </span>
-                        <div className="h-px bg-white/20 flex-1"></div>
+                        <div className="h-px bg-primary/20 flex-1"></div>
                       </div>
 
-                      <p className="text-base text-white/80 font-medium">
+                      <p className="text-base text-muted-foreground font-medium">
                         {project.title}
                       </p>
 
-                      <p className="text-sm text-white/60">
+                      <p className="text-sm text-muted-foreground">
                         {project.subtitle}
                       </p>
 
-                      <p className="text-sm text-white/60 leading-relaxed">
+                      <p className="text-sm text-muted-foreground leading-relaxed">
                         {project.description}
                       </p>
 
@@ -397,7 +396,7 @@ const Projects = () => {
                         {project.tags.map((tag) => (
                           <span
                             key={tag}
-                            className="px-3 py-1 rounded-lg text-[11px] font-mono bg-white/10 text-white/80 border border-white/20"
+                            className="px-3 py-1 rounded-lg text-[11px] font-mono bg-primary/10 text-muted-foreground border border-border"
                           >
                             {tag}
                           </span>
@@ -409,7 +408,7 @@ const Projects = () => {
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition-colors w-full sm:w-auto"
+                          className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-primary text-primary-foreground border border-border text-sm font-semibold hover:bg-hover transition-colors duration-200 w-full sm:w-auto"
                         >
                           <ExternalLink className="w-4 h-4" />
                           Live Site
@@ -417,7 +416,7 @@ const Projects = () => {
 
                         <a
                           href={project.githubUrl}
-                          className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-white/20 text-white text-sm hover:bg-white/10 transition-colors w-full sm:w-auto"
+                          className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-border bg-card text-foreground text-sm hover:bg-hover transition-colors duration-200 w-full sm:w-auto"
                         >
                           <Github className="w-4 h-4" />
                           Source
@@ -434,7 +433,7 @@ const Projects = () => {
       </section>
 
       <section
-        className="bg-neutral-950 text-white pb-24"
+        className="bg-background text-foreground pb-24"
         style={{ contentVisibility: "auto", containIntrinsicSize: "1px 700px" }}
       >
         <div className="container">
@@ -442,7 +441,7 @@ const Projects = () => {
             <h3 className="text-3xl md:text-4xl font-semibold mb-3">
               Client Projects
             </h3>
-            <p className="text-base md:text-lg text-white/70">
+            <p className="text-base md:text-lg text-muted-foreground">
               A few highlights from recent collaborations.
             </p>
           </div>
@@ -462,3 +461,4 @@ const Projects = () => {
 };
 
 export default Projects;
+

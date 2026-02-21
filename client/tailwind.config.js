@@ -1,7 +1,6 @@
 import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
-  darkMode: ["class"],
   content: ["./pages/**/*.{js,jsx}", "./components/**/*.{js,jsx}", "./app/**/*.{js,jsx}", "./src/**/*.{js,jsx}"],
   prefix: "",
   theme: {
@@ -42,6 +41,9 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+        },
+        hover: {
+          DEFAULT: "hsl(var(--hover-bg))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",

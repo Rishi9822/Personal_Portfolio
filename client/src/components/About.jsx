@@ -17,7 +17,7 @@ const About = () => {
     >
       {/* Section divider with animation */}
       <motion.div
-        className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent"
+        className="absolute top-0 left-0 right-0 h-px bg-border"
         initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
         transition={{ duration: 1, ease: "easeInOut" }}
@@ -34,7 +34,7 @@ const About = () => {
                 animate={visualInView ? { opacity: 1, y: 0, scale: 1 } : {}}
                 transition={{ duration: 0.9, ease: "easeOut" }}
                 whileHover={{ y: -4, scale: 1.01 }}
-                className="group relative aspect-[4/5] overflow-hidden rounded-[32px] border border-white/15 bg-black/40 shadow-[0_45px_120px_rgba(0,0,0,0.6)]"
+                className="group relative aspect-[4/5] overflow-hidden rounded-[32px] border border-border bg-card"
               >
                 <img
                   src={aboutPhotoSrc}
@@ -46,32 +46,32 @@ const About = () => {
                   className="h-full w-full object-cover object-center saturate-[1.05] contrast-[1.03] transition-transform duration-700 group-hover:scale-[1.03]"
                 />
 
-                <div className="pointer-events-none absolute inset-[1px] rounded-[30px] border border-white/20" />
-                <div className="pointer-events-none absolute inset-0 rounded-[32px] shadow-[inset_0_-48px_100px_rgba(0,0,0,0.45)]" />
+                <div className="pointer-events-none absolute inset-[1px] rounded-[30px] border border-border" />
+                <div className="pointer-events-none absolute inset-0 rounded-[32px] bg-background/30" />
                 <div className="pointer-events-none absolute inset-0 noise opacity-[0.12]" />
 
                 <motion.div
-                  className="absolute left-3 top-3 rounded-full border border-white/20 bg-black/35 px-3 py-1.5 backdrop-blur-md sm:left-5 sm:top-5 sm:px-4 sm:py-2"
+                  className="absolute left-3 top-3 rounded-full border border-border bg-card/90 px-3 py-1.5 backdrop-blur-md sm:left-5 sm:top-5 sm:px-4 sm:py-2"
                   initial={{ opacity: 0, y: -12 }}
                   animate={visualInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.45, duration: 0.5 }}
                 >
-                  <span className="flex items-center gap-1.5 font-mono text-[10px] text-white/85 sm:gap-2 sm:text-xs">
+                  <span className="flex items-center gap-1.5 font-mono text-[10px] text-foreground/85 sm:gap-2 sm:text-xs">
                     <Sparkles className="h-3 w-3 text-primary sm:h-3.5 sm:w-3.5" />
                     Creative Developer
                   </span>
                 </motion.div>
 
                 <motion.div
-                  className="absolute bottom-3 left-3 right-3 rounded-xl border border-white/15 bg-black/35 px-3 py-2 backdrop-blur-md sm:bottom-5 sm:left-5 sm:right-auto sm:max-w-[290px] sm:rounded-2xl sm:px-4 sm:py-3"
+                  className="absolute bottom-3 left-3 right-3 rounded-xl border border-border bg-card/90 px-3 py-2 backdrop-blur-md sm:bottom-5 sm:left-5 sm:right-auto sm:max-w-[290px] sm:rounded-2xl sm:px-4 sm:py-3"
                   initial={{ opacity: 0, y: 18 }}
                   animate={visualInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.6, duration: 0.5 }}
                 >
-                  <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/60 sm:text-[11px] sm:tracking-[0.2em]">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground sm:text-[11px] sm:tracking-[0.2em]">
                     ABOUT
                   </p>
-                  <p className="mt-1 max-w-[28ch] text-xs leading-snug text-white/90 sm:max-w-none sm:text-sm sm:leading-normal">
+                  <p className="mt-1 max-w-[28ch] text-xs leading-snug text-foreground/90 sm:max-w-none sm:text-sm sm:leading-normal">
                     Building premium digital experiences.
                   </p>
                 </motion.div>
@@ -132,3 +132,4 @@ const About = () => {
 };
 
 export default memo(About);
+

@@ -7,9 +7,8 @@ gsap.registerPlugin(useGSAP);
 const RevealLoader = ({
   text = "WELCOME",
   textSize = "100px",
-  textColor = "black",
-  bgColors = ["#ffffff"],
-  angle = 0,
+  textColor = "#E6EDF3",
+  bgColors = ["#1F2A38"],
   staggerOrder = "left-to-right",
   movementDirection = "bottom-up",
   textFadeDelay = 0.8,
@@ -18,12 +17,7 @@ const RevealLoader = ({
   const preloaderRef = useRef(null);
 
   const getBackgroundStyle = () => {
-    if (bgColors.length === 1) {
-      return { backgroundColor: bgColors[0] };
-    }
-    return {
-      backgroundImage: `linear-gradient(${angle}deg, ${bgColors.join(", ")})`,
-    };
+    return { backgroundColor: bgColors[0] };
   };
 
   const getStaggerFrom = (type) => {

@@ -28,7 +28,7 @@ const Index = () => {
           content="developer, portfolio, computer science, web development, react, full-stack"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#0a0c10" />
+        <meta name="theme-color" content="#0B0F14" />
 
         <meta property="og:title" content="Rishi Patel | CS Student & Developer" />
         <meta

@@ -47,10 +47,10 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
     initialIndex = 0,
 
     colors = {
-      text: "rgba(245,245,245,0.92)",
-      overlay: "rgba(0,0,0,0.35)",
-      pageBg: "#ffffff",
-      stageBg: "#000000",
+      text: "rgba(230,237,243,0.92)",
+      overlay: "rgba(11,15,20,0.35)",
+      pageBg: "#0B0F14",
+      stageBg: "#121821",
     },
     sizes = {},
     topPadding = 4,
@@ -387,10 +387,10 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
 
   const cssVars = {
     "--fx-font": fontFamily,
-    "--fx-text": colors.text ?? "rgba(245,245,245,0.92)",
-    "--fx-overlay": colors.overlay ?? "rgba(0,0,0,0.35)",
-    "--fx-page-bg": colors.pageBg ?? "#fff",
-    "--fx-stage-bg": colors.stageBg ?? "#000",
+    "--fx-text": colors.text ?? "rgba(230,237,243,0.92)",
+    "--fx-overlay": colors.overlay ?? "rgba(11,15,20,0.35)",
+    "--fx-page-bg": colors.pageBg ?? "#0B0F14",
+    "--fx-stage-bg": colors.stageBg ?? "#121821",
     "--fx-gap": `${gap}rem`,
     "--fx-grid-px": `${gridPaddingX}rem`,
     "--fx-row-gap": "10px",
@@ -531,14 +531,14 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
           width: 100%;
           overflow: hidden;
           background: var(--fx-page-bg);
-          color: #000;
+          color: var(--fx-text);
           font-family: var(--fx-font);
           text-transform: none;
           letter-spacing: 0;
         }
         .fx-debug {
           position: fixed; bottom: 10px; right: 10px; z-index: 9999;
-          background: rgba(255,255,255,0.8); color: #000; padding: 6px 8px; font: 12px/1 monospace; border-radius: 4px;
+          background: rgba(31,42,56,0.85); color: var(--fx-text); padding: 6px 8px; font: 12px/1 monospace; border-radius: 4px;
         }
         .fx-fixed-section { height: ${Math.max(1, total + endPad)}00vh; position: relative; }
         .fx-fixed { position: sticky; top: 0; height: 100vh; width: 100%; overflow: hidden; background: var(--fx-page-bg); }
@@ -628,7 +628,7 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
           margin: 0; color: var(--fx-text);
           font-weight: 900; letter-spacing: -0.01em;
           font-size: var(--fx-title-size, clamp(2rem, 7.5vw, 6rem));
-          text-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+          text-shadow: none;
           line-height: 0.92;
           text-transform: uppercase;
         }
@@ -648,11 +648,11 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
           font-weight: 900; letter-spacing: -0.01em; line-height: 0.9;
           text-transform: uppercase;
         }
-        .fx-progress { width: 200px; height: 2px; margin: 1rem auto 0; background: rgba(245,245,245,0.28); position: relative; }
+        .fx-progress { width: 200px; height: 2px; margin: 1rem auto 0; background: rgba(157,167,179,0.28); position: relative; }
         .fx-progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; background: var(--fx-text); height: 100%; transition: width 0.3s ease; }
         .fx-progress-numbers { position: absolute; inset: auto 0 100% 0; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--fx-text); }
         .fx-end { height: 100vh; display: grid; place-items: center; }
-        .fx-fin { transform: rotate(90deg); color: #111; }
+        .fx-fin { transform: rotate(90deg); color: var(--fx-text); }
         @media (max-width: 900px) {
           .fx-content {
             grid-template-columns: 1fr; row-gap: 3vh;

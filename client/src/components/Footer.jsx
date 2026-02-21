@@ -28,7 +28,7 @@ const Footer = () => {
     <footer ref={containerRef} className="py-16 border-t border-border/50 relative overflow-hidden">
       {/* Section divider with animation */}
       <motion.div
-        className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent"
+        className="absolute top-0 left-0 right-0 h-px bg-border"
         initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
         transition={{ duration: 1, ease: "easeInOut" }}
@@ -36,7 +36,7 @@ const Footer = () => {
       />
       
       {/* Subtle gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-card/20 pointer-events-none" />
       
       <div className="container relative">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
@@ -72,14 +72,14 @@ const Footer = () => {
                   href={social.href}
                   whileHover={{ scale: 1.2, y: -3 }}
                   whileTap={{ scale: 0.9 }}
-                  className="group relative p-3 rounded-full glass border border-border/30 text-muted-foreground hover:text-primary hover:border-primary/30 hover:bg-primary/10 transition-all duration-300 shadow-sm hover:shadow-md overflow-hidden"
+                  className="group relative p-3 rounded-full glass border border-border text-muted-foreground hover:text-foreground hover:bg-hover transition-all duration-200 overflow-hidden"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 + i * 0.1 }}
                 >
                   {/* Hover gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-hover opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                   
                   {/* Icon with enhanced animation */}
                   <social.icon className="w-5 h-5 relative z-10 transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-sm" />
@@ -116,7 +116,7 @@ const Footer = () => {
           className="text-center mt-10 pt-8 border-t border-border/30"
         >
           <p className="text-xs text-muted-foreground font-mono">
-            © {new Date().getFullYear()} Your Name. All rights reserved.
+            (c) {new Date().getFullYear()} Your Name. All rights reserved.
           </p>
         </motion.div>
 
@@ -130,7 +130,7 @@ const Footer = () => {
               onClick={scrollToTop}
               whileHover={{ scale: 1.1, y: -3 }}
               whileTap={{ scale: 0.9 }}
-              className="group p-4 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-300"
+              className="group p-4 rounded-full bg-primary text-primary-foreground border border-border hover:bg-hover transition-all duration-200"
             >
               <ArrowUp className="w-5 h-5 transition-transform duration-300 group-hover:-translate-y-1" />
             </motion.button>

@@ -147,7 +147,7 @@ const Contact = () => {
                   />
                 ))}
                 
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-card/30" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <motion.div 
                     className="flex items-center gap-2 mb-2"
@@ -246,11 +246,11 @@ const Contact = () => {
                   disabled={isSubmitting}
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group w-full py-5 rounded-xl font-semibold text-lg flex items-center justify-center gap-3 relative overflow-hidden disabled:opacity-70 disabled:cursor-not-allowed bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-300"
+                  className="group w-full py-5 rounded-xl font-semibold text-lg flex items-center justify-center gap-3 relative overflow-hidden disabled:opacity-70 disabled:cursor-not-allowed bg-primary text-primary-foreground border border-border hover:bg-hover transition-all duration-200"
                 >
-                  {/* Animated gradient background */}
+                  {/* Subtle hover layer */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    className="absolute inset-0 bg-hover opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                   />
                   
                   <span className="relative z-10">

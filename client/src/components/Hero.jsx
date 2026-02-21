@@ -47,24 +47,24 @@ const Hero = () => {
   const heroHeader = useMemo(
     () => (
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center normal-case">
-        <span className="text-xs tracking-[0.45em] text-white/60">HELLO, I AM</span>
-        <div className="text-[clamp(2.2rem,5.2vw,4.6rem)] font-black leading-tight text-white">
+        <span className="text-xs tracking-[0.45em] text-muted-foreground">HELLO, I AM</span>
+        <div className="text-[clamp(2.2rem,5.2vw,4.6rem)] font-black leading-tight text-foreground">
           Rishi Patel
         </div>
-        <p className="mx-auto max-w-2xl text-center text-sm sm:text-base md:text-lg text-white/70 leading-relaxed">
+        <p className="mx-auto max-w-2xl text-center text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed">
           Full-stack developer focused on building fast, elegant, and scalable
           digital products.
         </p>
         <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
           <a
             href="/resume.pdf"
-            className="inline-flex items-center gap-2 rounded-full bg-white text-black px-5 py-2.5 text-sm font-semibold transition-transform duration-300 hover:scale-[1.03]"
+            className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground border border-border px-5 py-2.5 text-sm font-semibold transition-all duration-200 hover:bg-hover"
           >
             Resume
           </a>
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 rounded-full border border-white/30 text-white px-5 py-2.5 text-sm font-semibold transition-colors duration-300 hover:border-white hover:bg-white/10"
+            className="inline-flex items-center gap-2 rounded-full border border-border text-foreground bg-card px-5 py-2.5 text-sm font-semibold transition-colors duration-200 hover:bg-hover"
           >
             Connect
           </a>
@@ -90,10 +90,10 @@ const Hero = () => {
 
   const fxColors = useMemo(
     () => ({
-      text: "rgba(245,245,245,0.92)",
-      overlay: "rgba(0,0,0,0.45)",
-      pageBg: "hsl(225 25% 5%)",
-      stageBg: "#000000",
+      text: "rgba(230,237,243,0.92)",
+      overlay: "rgba(11,15,20,0.45)",
+      pageBg: "#0B0F14",
+      stageBg: "#121821",
     }),
     []
   );
@@ -112,10 +112,11 @@ const Hero = () => {
         sizes={fxSizes}
         durations={fxDurations}
         colors={fxColors}
-        className="bg-neutral-950"
+        className="bg-background text-foreground"
       />
     </section>
   );
 };
 
 export default memo(Hero);
+

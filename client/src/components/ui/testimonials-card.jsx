@@ -52,7 +52,7 @@ export function TestimonialsCard({
         style={{ perspective: "1400px", maxWidth: `${width}px` }}
       >
         {showCounter && (
-          <div className="order-3 md:order-none md:col-start-2 md:row-start-1 text-left md:text-right font-mono text-sm text-neutral-500">
+          <div className="order-3 md:order-none md:col-start-2 md:row-start-1 text-left md:text-right font-mono text-sm text-muted-foreground">
             {activeIndex + 1} / {items.length}
           </div>
         )}
@@ -65,7 +65,7 @@ export function TestimonialsCard({
               return (
                 <motion.div
                   key={item.id}
-                  className="absolute inset-0 h-full w-full overflow-hidden rounded-2xl sm:rounded-3xl lg:rounded-[32px] border border-white/15 bg-neutral-900 shadow-[0_30px_80px_rgba(0,0,0,0.4)] ring-1 ring-white/10"
+                  className="absolute inset-0 h-full w-full overflow-hidden rounded-2xl sm:rounded-3xl lg:rounded-[32px] border border-border bg-card ring-1 ring-border"
                   initial={{
                     x: offset * 15,
                     y: Math.abs(offset) * 6,
@@ -104,7 +104,7 @@ export function TestimonialsCard({
                     className="w-full h-full object-cover"
                     loading="lazy"
                   />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
+                  <div className="pointer-events-none absolute inset-0 bg-background/50" />
                 </motion.div>
               );
             })}
@@ -120,10 +120,10 @@ export function TestimonialsCard({
               exit={{ opacity: 0, y: -25 }}
               transition={{ duration: 0.35 }}
             >
-              <h3 className="text-xl font-bold dark:text-white">
+              <h3 className="text-xl font-bold text-foreground">
                 {activeItem.title}
               </h3>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-2">
+              <p className="text-sm text-muted-foreground mt-2">
                 {activeItem.description}
               </p>
               {activeItem.liveUrl ? (
@@ -132,7 +132,7 @@ export function TestimonialsCard({
                     href={activeItem.liveUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-white/90"
+                    className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground border border-border transition-colors duration-200 hover:bg-hover"
                   >
                     Visit Live
                     <ExternalLink className="h-4 w-4" />
@@ -150,26 +150,26 @@ export function TestimonialsCard({
               onClick={handlePrev}
               aria-label="Previous project"
               className={cn(
-                "flex items-center justify-center w-10 h-10 rounded-full border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 transition-all",
+                "flex items-center justify-center w-10 h-10 rounded-full border border-border bg-primary transition-all",
                 activeIndex === 0
                   ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-neutral-100 dark:hover:bg-neutral-700 hover:scale-105"
+                  : "hover:bg-hover hover:scale-105"
               )}
             >
-              <ArrowLeft className="w-4 h-4 text-neutral-700 dark:text-neutral-300" />
+              <ArrowLeft className="w-4 h-4 text-foreground" />
             </button>
             <button
               disabled={activeIndex === items.length - 1}
               onClick={handleNext}
               aria-label="Next project"
               className={cn(
-                "flex items-center justify-center w-10 h-10 rounded-full border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 transition-all",
+                "flex items-center justify-center w-10 h-10 rounded-full border border-border bg-primary transition-all",
                 activeIndex === items.length - 1
                   ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-neutral-100 dark:hover:bg-neutral-700 hover:scale-105"
+                  : "hover:bg-hover hover:scale-105"
               )}
             >
-              <ArrowRight className="w-4 h-4 text-neutral-700 dark:text-neutral-300" />
+              <ArrowRight className="w-4 h-4 text-foreground" />
             </button>
           </div>
         )}
@@ -179,3 +179,4 @@ export function TestimonialsCard({
 }
 
 export default TestimonialsCard;
+

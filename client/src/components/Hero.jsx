@@ -14,8 +14,9 @@ const Hero = () => {
         rightLabel: "Build",
         background: heroBg1,
         imageStyle: {
-          filter: "brightness(1.35) contrast(1.05) saturate(1.05)",
+          filter: "brightness(2.1) contrast(1.18) saturate(1.1)",
         },
+        overlayStyle: { background: "rgba(0,0,0,0.16)" },
       },
       {
         leftLabel: "Code",
@@ -23,8 +24,9 @@ const Hero = () => {
         rightLabel: "Ship",
         background: heroBg2,
         imageStyle: {
-          filter: "brightness(1.25) contrast(1.05) saturate(1.05)",
+          filter: "brightness(1.8) contrast(1.15) saturate(1.08)",
         },
+        overlayStyle: { background: "rgba(0,0,0,0.2)" },
       },
       {
         leftLabel: "Story",

@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Menu, X } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import ThemeToggle from "./ThemeToggle";
@@ -17,36 +17,84 @@ const navLinks = [
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
+  const [activeSection, setActiveSection] = useState("home");
+  const [isVisible, setIsVisible] = useState(true);
   
   const { scrollY } = useScroll();
-  const navBorderOpacity = useTransform(scrollY, [0, 100], [0, 1]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+  const hideTimeoutRef = useRef(null);
+  const rafRef = useRef(null);
+
+  // Throttled scroll handler
+  const handleScroll = useCallback(() => {
+    if (rafRef.current) return;
+    rafRef.current = requestAnimationFrame(() => {
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 50);
       
-      const sections = navLinks.map(link => link.href.replace("#", ""));
-      for (const section of sections.reverse()) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            setActiveSection(section);
-            break;
-          }
-        }
+      // Show navbar on scroll
+      setIsVisible(true);
+      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+      if (scrollY >= 100) {
+        hideTimeoutRef.current = setTimeout(() => setIsVisible(false), 2000);
       }
       
       // Set home as active if at top of page
-      if (window.scrollY < 100) {
+      if (scrollY < 100) {
         setActiveSection("home");
       }
+      
+      rafRef.current = null;
+    });
+  }, []);
+
+  // IntersectionObserver for active section
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50% 0px -50% 0px',
+      threshold: 0
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    
+    const sections = navLinks.map(link => document.getElementById(link.href.replace("#", ""))).filter(Boolean);
+    sections.forEach(section => observer.observe(section));
+
+    return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [handleScroll]);
+
+  // Show navbar on user interaction
+  const handleUserInteraction = useCallback(() => {
+    setIsVisible(true);
+    if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+    if (window.scrollY >= 100) {
+      hideTimeoutRef.current = setTimeout(() => setIsVisible(false), 2000);
+    }
+  }, []);
+
+  useEffect(() => {
+    const events = ['touchstart', 'mousedown'];
+    events.forEach(event => document.addEventListener(event, handleUserInteraction, { passive: true }));
+    return () => events.forEach(event => document.removeEventListener(event, handleUserInteraction));
+  }, [handleUserInteraction]);
 
   useEffect(() => {
     const handleEscape = (e) => {
@@ -67,6 +115,29 @@ const Navbar = () => {
       document.body.style.overflow = "";
     };
   }, [mobileMenuOpen]);
+
+  // Force navbar visible in home section
+  useEffect(() => {
+    if (activeSection === "home") {
+      setIsVisible(true);
+      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+    }
+  }, [activeSection]);
+
+  // Show navbar on cursor movement when hidden
+  useEffect(() => {
+    const handleMouseMove = () => {
+      if (!isVisible) {
+        setIsVisible(true);
+        if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+        if (window.scrollY >= 100) {
+          hideTimeoutRef.current = setTimeout(() => setIsVisible(false), 2000);
+        }
+      }
+    };
+    document.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => document.removeEventListener('mousemove', handleMouseMove);
+  }, [isVisible]);
 
   const menuVariants = {
     closed: {
@@ -96,20 +167,19 @@ const Navbar = () => {
     <>
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+        animate={isVisible ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled 
-            ? "py-3 bg-background/85 backdrop-blur-xl" 
-            : "py-4 bg-transparent"
-        }`}
+        onMouseEnter={() => {
+          setIsVisible(true);
+          if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+        }}
+        onMouseLeave={() => {
+          if (window.scrollY >= 100) {
+            hideTimeoutRef.current = setTimeout(() => setIsVisible(false), 2000);
+          }
+        }}
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 bg-transparent"
       >
-        {/* Bottom border */}
-        <motion.div 
-          className="absolute bottom-0 left-0 right-0 h-px bg-border"
-          style={{ opacity: navBorderOpacity }}
-        />
-
         <div className="container flex items-center justify-between">
           {/* Logo */}
           <MagneticButton strength={0.2}>
@@ -135,10 +205,11 @@ const Navbar = () => {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 + i * 0.08, duration: 0.4 }}
-                    className={`relative px-4 py-2.5 rounded-lg font-medium text-sm transition-colors duration-200 ${
+                    style={{ textShadow: '0 0 2px rgba(0,0,0,0.8)' }}
+                    className={`relative px-4 py-2.5 rounded-lg font-medium text-base transition-colors duration-200 ${
                       isActive
-                        ? "text-primary"
-                        : "text-muted-foreground hover:text-foreground"
+                        ? "text-white"
+                        : "text-gray-200 hover:text-white"
                     }`}
                   >
                     <span className="relative z-10">{link.name}</span>

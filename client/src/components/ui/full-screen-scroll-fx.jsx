@@ -436,7 +436,7 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
                         draggable={false}
                         aria-hidden="true"
                       />
-                      <div className="fx-bg-overlay" />
+                      <div className="fx-bg-overlay" style={s.overlayStyle} />
                     </>
                   )}
                 </div>

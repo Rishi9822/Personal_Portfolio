@@ -9,9 +9,9 @@ const Hero = () => {
   const fxSections = useMemo(
     () => [
       {
-        leftLabel: "Craft",
-        title: "Design-led systems",
-        rightLabel: "Build",
+        leftLabel: "Architect",
+        title: "Scalable Full-Stack Systems",
+        rightLabel: "Deliver",
         background: heroBg1,
         imageStyle: {
           filter: "brightness(2.1) contrast(1.18) saturate(1.1)",
@@ -19,9 +19,9 @@ const Hero = () => {
         overlayStyle: { background: "rgba(0,0,0,0.16)" },
       },
       {
-        leftLabel: "Code",
-        title: "Scalable interfaces",
-        rightLabel: "Ship",
+        leftLabel: "Engineer",
+        title: "Production-Ready Applications",
+        rightLabel: "Deploy",
         background: heroBg2,
         imageStyle: {
           filter: "brightness(1.8) contrast(1.15) saturate(1.08)",
@@ -29,14 +29,14 @@ const Hero = () => {
         overlayStyle: { background: "rgba(0,0,0,0.2)" },
       },
       {
-        leftLabel: "Story",
-        title: "Human-centered flow",
-        rightLabel: "Impact",
+        leftLabel: "Optimize",
+        title: "High-Performance Platforms",
+        rightLabel: "Scale",
         background: heroBg3,
       },
       {
-        leftLabel: "Growth",
-        title: "Iterate & refine",
+        leftLabel: "Iterate",
+        title: "Clean & Maintainable Code",
         rightLabel: "Evolve",
         background: heroBg4,
       },
@@ -78,10 +78,10 @@ const Hero = () => {
 
   const fxSizes = useMemo(
     () => ({
-      header: "clamp(1.6rem, 4.5vw, 3.8rem)",
-      title: "clamp(2.6rem, 7vw, 6.2rem)",
-      footer: "clamp(1.1rem, 3.6vw, 2.8rem)",
-      item: "clamp(0.9rem, 1.8vw, 1.4rem)",
+      header: "clamp(1.4rem, 3.8vw, 3rem)",
+      title: "clamp(2rem, 5.5vw, 4.6rem)",
+      footer: "clamp(0.9rem, 2.6vw, 1.8rem)",
+      item: "clamp(0.8rem, 1.1vw, 1.1rem)",
     }),
     []
   );
@@ -108,7 +108,7 @@ const Hero = () => {
         showEnd={false}
         smoothScroll
         fontFamily='"Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif'
-        topPadding={7}
+        topPadding={4}
         sizes={fxSizes}
         durations={fxDurations}
         colors={fxColors}

@@ -582,12 +582,12 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
           display: grid; grid-template-columns: 1fr 1.3fr 1fr;
           align-items: center;
           height: 100%;
-          min-height: 55vh;
+          min-height: 38vh;
           padding: 0;
           z-index: 2;
         }
         .fx-left, .fx-right {
-          height: min(60vh, 100%);
+          height: min(48vh, 100%);
           overflow: hidden;
           display: grid; align-content: center;
         }
@@ -620,7 +620,7 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
         .fx-left-item.active::before { left: 0; }
         .fx-right-item.active::after { right: 0; }
         .fx-center {
-          display: grid; place-items: center; text-align: center; height: min(60vh, 100%); overflow: hidden;
+          display: grid; place-items: center; text-align: center; height: min(48vh, 100%); overflow: hidden;
         }
         .fx-featured { position: absolute; opacity: 0; visibility: hidden; }
         .fx-featured.active { opacity: 1; visibility: visible; }

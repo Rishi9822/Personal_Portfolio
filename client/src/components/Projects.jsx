@@ -433,7 +433,7 @@ const Projects = () => {
       </section>
 
       <section
-        className="bg-background text-foreground pb-24"
+        className="bg-background text-foreground pb-12"
         style={{ contentVisibility: "auto", containIntrinsicSize: "1px 700px" }}
       >
         <div className="container">

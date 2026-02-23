@@ -46,8 +46,6 @@ const isLowEndClient = () => {
 };
 
 
-
-
 const projectExamples = {
   JavaScript: [
     {
@@ -408,20 +406,6 @@ const CarouselRow = memo(({ skills, direction, speed, isMobile, onSkillClick, re
           />
         ))}
       </motion.div>
-
-      {/* Touch hint for mobile */}
-      {isMobile && (
-        <motion.div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 flex items-center gap-1 text-muted-foreground/50 text-[10px]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2 }}
-        >
-          <ChevronLeft className="w-3 h-3" />
-          <span>Swipe</span>
-          <ChevronRight className="w-3 h-3" />
-        </motion.div>
-      )}
     </div>
   );
 });
@@ -700,14 +684,6 @@ const Skills = () => {
             {/* Section header */}
             <ScrollReveal direction="up" distance={20}>
               <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-                <motion.span
-                  className={`inline-block font-mono text-primary mb-3 sm:mb-4 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-primary/10 border border-primary/20 ${isMobile ? "text-xs" : "text-sm"
-                    }`}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                >
-                  // my skills
-                </motion.span>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-5">
                   Tech Stack & <span className="text-gradient">Expertise</span>
                 </h2>

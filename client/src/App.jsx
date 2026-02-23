@@ -15,7 +15,12 @@ const App = () => {
 
   // Lock scroll while loading
   useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = loading ? "hidden" : "auto";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
   }, [loading]);
 
   return (
@@ -40,6 +45,7 @@ const App = () => {
         {loading && (
           <RevealLoader
             text="WELCOME TO MY PORTFOLIO"
+            textSize="clamp(1rem, 4.5vw, 6rem)"
             bgColors={["#1F2A38", "#16202C"]}
             staggerOrder="center-out"
             textFadeDelay={0.5}

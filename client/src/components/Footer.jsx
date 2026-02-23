@@ -25,7 +25,7 @@ const Footer = () => {
   };
 
   return (
-    <footer ref={containerRef} className="pb-20 border-t border-border/50 relative overflow-hidden">
+    <footer ref={containerRef} className="md:pb-20 border-t border-border/50 relative overflow-hidden">
       {/* Section divider with animation */}
       <motion.div
         className="absolute top-0 left-0 right-0 h-px bg-border"

@@ -429,9 +429,6 @@ const Experience = () => {
         <div className="container">
           {/* Header */}
           <div className="text-center mb-12">
-            <span className="font-mono text-primary text-sm mb-4 block">
-              // my professional journey
-            </span>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
               Work <span className="text-gradient">Experience</span>
             </h2>

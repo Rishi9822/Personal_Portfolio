@@ -1,12 +1,12 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(useGSAP);
 
 const RevealLoader = ({
   text = "WELCOME",
-  textSize = "100px",
+  textSize = "clamp(1.1rem, 5.2vw, 6.25rem)",
   textColor = "#E6EDF3",
   bgColors = ["#1F2A38"],
   staggerOrder = "left-to-right",
@@ -15,6 +15,22 @@ const RevealLoader = ({
   onComplete,
 }) => {
   const preloaderRef = useRef(null);
+  const [lineCount, setLineCount] = useState(10);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateLineCount = () => setLineCount(mediaQuery.matches ? 6 : 10);
+
+    updateLineCount();
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", updateLineCount);
+      return () => mediaQuery.removeEventListener("change", updateLineCount);
+    }
+
+    mediaQuery.addListener(updateLineCount);
+    return () => mediaQuery.removeListener(updateLineCount);
+  }, []);
 
   const getBackgroundStyle = () => {
     return { backgroundColor: bgColors[0] };
@@ -79,18 +95,18 @@ useGSAP(() => {
       ref={preloaderRef}
       className="fixed inset-0 z-[200] flex overflow-hidden"
     >
-      {[...Array(10)].map((_, i) => (
+      {[...Array(lineCount)].map((_, i) => (
         <div
           key={i}
-          className="preloader-item h-full w-[10%]"
-          style={getBackgroundStyle()}
+          className="preloader-item h-full"
+          style={{ ...getBackgroundStyle(), width: `${100 / lineCount}%` }}
         />
       ))}
 
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div className="absolute inset-0 flex items-center justify-center px-4 pointer-events-none">
         <div className="overflow-hidden">
           <p
-            className="name-text flex tracking-tight uppercase font-bold"
+            className="name-text flex whitespace-nowrap tracking-tight uppercase font-bold leading-none"
             style={{
               fontSize: textSize,
               color: textColor,
@@ -107,6 +123,10 @@ useGSAP(() => {
           </p>
         </div>
       </div>
+
+      <p className="absolute bottom-4 right-4 text-[10px] uppercase tracking-wide text-white/80 md:hidden pointer-events-none">
+        Best experienced on desktop.
+      </p>
     </div>
   );
 };

@@ -43,7 +43,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-32 relative overflow-hidden" ref={containerRef}>
+    <section id="contact" className="pt-10 pb-24 relative overflow-hidden" ref={containerRef}>
       <div className="container relative">
         {/* Section header */}
         <ScrollReveal direction="up" distance={40} blur>

@@ -373,7 +373,7 @@ export function StaggeredGrid({
       <section className="grid place-items-center w-full relative mt-[4vh]">
         <div
           ref={textRef}
-          className="text uppercase flex content-center text-[clamp(3rem,14vw,10rem)] leading-[0.7] text-foreground/90 font-semibold"
+          className="text uppercase flex content-center text-[clamp(3rem,14vw,8rem)] leading-[0.7] text-foreground/90 font-semibold"
         >
           {splitCenterText}
         </div>

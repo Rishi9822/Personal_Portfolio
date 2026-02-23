@@ -45,7 +45,7 @@ function Footer() {
       />
 
       <div className="container relative">
-        <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between md:gap-8">
+        <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-items-end md:gap-8">
           <div className="space-y-3">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -102,7 +102,7 @@ function Footer() {
               onClick={scrollToTop}
               whileHover={prefersReducedMotion ? {} : { y: -2, scale: 1.03 }}
               whileTap={{ scale: 0.95 }}
-              className="group inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/70 px-5 py-2 text-sm text-foreground transition-colors hover:border-primary/40 hover:bg-hover mt-10"
+              className="group inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/70 px-5 py-2 text-sm text-foreground transition-colors hover:border-primary/40 hover:bg-hover mt-4"
             >
               <ArrowUp className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5" />
               Top

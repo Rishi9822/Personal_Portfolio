@@ -13,6 +13,8 @@ const navLinks = [
   { name: "Contact", href: "#contact" },
 ];
 
+const NAV_HIDE_DELAY_MS = 4500;
+
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
@@ -31,7 +33,7 @@ const Navbar = () => {
       setIsVisible(true);
       if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
       if (scrollY >= 100) {
-        hideTimeoutRef.current = setTimeout(() => setIsVisible(false), 2000);
+        hideTimeoutRef.current = setTimeout(() => setIsVisible(false), NAV_HIDE_DELAY_MS);
       }
 
       // Set home as active if at top of page
@@ -81,7 +83,7 @@ const Navbar = () => {
     setIsVisible(true);
     if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
     if (window.scrollY >= 100) {
-      hideTimeoutRef.current = setTimeout(() => setIsVisible(false), 2000);
+      hideTimeoutRef.current = setTimeout(() => setIsVisible(false), NAV_HIDE_DELAY_MS);
     }
   }, []);
 
@@ -126,7 +128,7 @@ const Navbar = () => {
         setIsVisible(true);
         if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
         if (window.scrollY >= 100) {
-          hideTimeoutRef.current = setTimeout(() => setIsVisible(false), 2000);
+          hideTimeoutRef.current = setTimeout(() => setIsVisible(false), NAV_HIDE_DELAY_MS);
         }
       }
     };
@@ -170,7 +172,7 @@ const Navbar = () => {
         }}
         onMouseLeave={() => {
           if (window.scrollY >= 100) {
-            hideTimeoutRef.current = setTimeout(() => setIsVisible(false), 2000);
+            hideTimeoutRef.current = setTimeout(() => setIsVisible(false), NAV_HIDE_DELAY_MS);
           }
         }}
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-2.5 bg-black/85 backdrop-blur-xl border-b border-gray-800"

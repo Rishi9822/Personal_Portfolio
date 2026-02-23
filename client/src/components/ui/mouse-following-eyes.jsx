@@ -82,7 +82,7 @@ const MouseFollowingEyes = ({
     <div
       aria-hidden="true"
       style={{ bottom: `${offset.bottom}px`, right: `${offset.right}px` }}
-      className={`pointer-events-none fixed z-40 hidden sm:flex items-center gap-2 rounded-full border border-border bg-card/90 p-2 backdrop-blur-sm ${className}`.trim()}
+      className={`pointer-events-none fixed z-40 hidden sm:flex items-center gap-2 rounded-full border border-border p-2 backdrop-blur-sm ${className}`.trim()}
     >
       <div
         ref={leftEyeRef}

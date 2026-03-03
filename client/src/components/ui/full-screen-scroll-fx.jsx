@@ -566,7 +566,7 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
           grid-column: 1 / 13;
           grid-row: 1;
           align-self: start;
-          padding-top: 0;
+          padding-top: 44px;
           margin-bottom: clamp(0.5rem, 2vh, 1.5rem);
           font-size: var(--fx-header-size, clamp(2rem, 9vw, 9rem));
           line-height: 1.05; text-align: center; color: var(--fx-text);
@@ -582,7 +582,7 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
           display: grid; grid-template-columns: 1fr 1.3fr 1fr;
           align-items: center;
           height: 100%;
-          min-height: 38vh;
+          min-height: 26vh;
           padding: 0;
           z-index: 2;
         }

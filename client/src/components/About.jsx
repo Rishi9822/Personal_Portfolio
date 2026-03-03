@@ -3,7 +3,6 @@ import { memo, useRef } from "react";
 import { Sparkles } from "lucide-react";
 
 import ScrollReveal from "./ScrollReveal";
-import { LogoCloud } from "@/components/ui/logo-cloud-2";
 import aboutPhotoSrc from "@/assets/photo.png";
 
 const About = () => {
@@ -103,26 +102,11 @@ const About = () => {
             <ScrollReveal direction="up" distance={30} delay={0.5}>
               <div className="mb-9 max-w-[64ch] space-y-4 text-base leading-relaxed text-muted-foreground md:text-lg">
                 <p>
-                  I'm a third-year Computer Science student with a deep passion for
-                  creating elegant solutions to complex problems. My journey in tech
-                  started with curiosity and has evolved into a love for full-stack
-                  development.
+                  I'm a third-year Computer Science student focused on building scalable, real-world software solutions. I specialize in full-stack development, where I design efficient backend systems and craft clean, responsive user interfaces that deliver seamless user experiences.
                 </p>
                 <p>
-                  When I'm not coding, you'll find me exploring new technologies,
-                  contributing to open-source projects, or sharing knowledge with
-                  fellow developers.
+                  I enjoy solving complex problems, optimizing performance, and continuously refining my understanding of system design and modern development practices. Beyond academics, I actively explore emerging technologies and build projects that challenge me to grow as an engineer.
                 </p>
-              </div>
-            </ScrollReveal>
-
-            {/* Core skills logo cloud */}
-            <ScrollReveal direction="up" distance={35} delay={0.6}>
-              <div className="w-full">
-                <p className="mb-4 text-sm font-mono tracking-[0.14em] text-primary/80">
-                  // core skills
-                </p>
-                <LogoCloud />
               </div>
             </ScrollReveal>
           </div>

@@ -10,7 +10,6 @@ const navLinks = [
   { name: "Experience", href: "#experience" },
   { name: "Skills", href: "#skills" },
   { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
 ];
 
 const NAV_HIDE_DELAY_MS = 4500;
@@ -237,9 +236,9 @@ const Navbar = () => {
                 transition={{ delay: 0.5 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm bg-primary text-primary-foreground border border-border hover:bg-hover transition-colors duration-200"
+                className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm bg-[hsl(var(--button))] text-[hsl(var(--button-foreground))] border border-border hover:bg-[hsl(var(--button-hover))] transition-colors duration-200"
               >
-                <span>Let's Talk</span>
+                <span>Contact</span>
                 <motion.span
                   animate={{ x: [0, 3, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
@@ -323,9 +322,9 @@ const Navbar = () => {
                 href="#contact"
                 variants={menuItemVariants}
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-4 rounded-xl bg-primary text-primary-foreground font-semibold text-center border border-border hover:bg-hover transition-colors duration-200"
+                className="w-full py-4 rounded-xl bg-[hsl(var(--button))] text-[hsl(var(--button-foreground))] font-semibold text-center border border-border hover:bg-[hsl(var(--button-hover))] transition-colors duration-200"
               >
-                Let's Talk
+                Contact
               </motion.a>
             </motion.div>
           </>

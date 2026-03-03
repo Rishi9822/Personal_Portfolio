@@ -4,6 +4,7 @@ import heroBg1 from "@/assets/1.webp";
 import heroBg2 from "@/assets/2.jpg";
 import heroBg3 from "@/assets/3.webp";
 import heroBg4 from "@/assets/4.webp";
+const resumeUrl = new URL("../assets/Rishi Patel Resume.pdf", import.meta.url).href;
 
 const Hero = () => {
   const fxSections = useMemo(
@@ -57,8 +58,8 @@ const Hero = () => {
         </p>
         <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
           <a
-            href="/resume.pdf"
-            className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground border border-border px-5 py-2.5 text-sm font-semibold transition-all duration-200 hover:bg-hover"
+            href={resumeUrl}
+            className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--button))] text-[hsl(var(--button-foreground))] border border-border px-5 py-2.5 text-sm font-semibold transition-all duration-200 hover:bg-[hsl(var(--button-hover))]"
           >
             Resume
           </a>

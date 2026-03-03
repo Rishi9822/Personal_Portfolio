@@ -5,53 +5,53 @@ import MagneticButton from "./MagneticButton";
 
 const experiences = [
   {
-    id: 1,
-    title: "Full-Stack Developer Intern",
-    company: "Tech Solutions Inc.",
-    location: "San Francisco, CA",
-    period: "Jun 2024 - Aug 2024",
-    description: "Developed and maintained full-stack web applications using React, Node.js, and MongoDB. Implemented responsive designs and optimized database queries resulting in 30% performance improvement.",
-    achievements: [
-      "Built RESTful APIs serving 10K+ daily users",
-      "Reduced page load time by 40% through optimization",
-      "Collaborated with cross-functional team of 6 developers"
-    ],
-    technologies: ["React", "Node.js", "MongoDB", "Tailwind CSS", "Git"],
-    link: "#",
-    icon: Code
-  },
-  {
-    id: 2,
-    title: "Frontend Developer Intern",
-    company: "Digital Agency Pro",
-    location: "Remote",
-    period: "Jan 2024 - May 2024",
-    description: "Created responsive and interactive user interfaces for client projects. Worked closely with design team to implement pixel-perfect designs and improve user experience.",
-    achievements: [
-      "Developed 5+ client websites with modern frameworks",
-      "Improved mobile responsiveness across all projects",
-      "Implemented accessibility features meeting WCAG 2.1 standards"
-    ],
-    technologies: ["React", "Next.js", "TypeScript", "Framer Motion", "SASS"],
-    link: "#",
-    icon: Zap
-  },
-  {
-    id: 3,
-    title: "Junior Web Developer",
-    company: "StartUp Hub",
-    location: "New York, NY",
-    period: "Sep 2023 - Dec 2023",
-    description: "Assisted in developing and maintaining company's main web application. Participated in code reviews and contributed to technical documentation.",
-    achievements: [
-      "Contributed to 15+ feature releases",
-      "Improved code coverage by 25% through unit testing",
-      "Mentored 2 junior developers on best practices"
-    ],
-    technologies: ["JavaScript", "React", "Vue.js", "Node.js", "PostgreSQL"],
-    link: "#",
-    icon: TrendingUp
-  }
+  id: 1,
+  title: "Full-Stack Developer",
+  company: "Freelance",
+  location: "Remote",
+  period: "Jun 2024 - Present",
+  description: "Developed full-stack web applications for clients including business websites, booking systems, and management platforms. Handled complete project lifecycle from requirement analysis and UI design to backend development and deployment.",
+  achievements: [
+    "Built custom web solutions including booking and admin dashboards",
+    "Implemented REST APIs and dynamic data management systems",
+    "Delivered responsive, performance-optimized applications"
+  ],
+  technologies: ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS", "JWT", "Git"],
+  link: "#",
+  icon: Code
+},
+{
+  id: 2,
+  title: "Frontend Developer Intern",
+  company: "VirtuNexa",
+  location: "Remote",
+  period: "Jan 2024 - Mar 2024",
+  description: "Completed a task-based frontend development internship focused on building responsive interfaces and implementing modern UI components based on structured project assignments.",
+  achievements: [
+    "Developed multiple UI modules using React and modern CSS practices",
+    "Improved component reusability and code structure",
+    "Successfully delivered assigned tasks within deadlines"
+  ],
+  technologies: ["React", "JavaScript", "HTML", "CSS", "Responsiveness", "Git"],
+  link: "#",
+  icon: Zap
+},
+{
+  id: 3,
+  title: "Web Developer Intern",
+  company: "MotionCut",
+  location: "Remote",
+  period: "Apr 2024 - Jun 2024",
+  description: "Completed a task-based web development internship involving real-world project assignments including website layouts, interactive features, and frontend-backend integration basics.",
+  achievements: [
+    "Built responsive web pages based on given project briefs",
+    "Implemented form validation and interactive UI elements",
+    "Enhanced debugging and problem-solving skills through structured tasks"
+  ],
+  technologies: ["HTML", "CSS", "JavaScript", "Responsiveness", "Git"],
+  link: "#",
+  icon: TrendingUp
+}
 ];
 
 const seeded = (seed) => {
@@ -310,7 +310,7 @@ const MobileExperienceCard = memo(function MobileExperienceCard({ exp, index }) 
       className="relative pl-8 sm:pl-12"
     >
       {/* Timeline dot */}
-      <div className="absolute left-0 top-6 w-3 h-3 rounded-full bg-primary border-2 border-background z-10" />
+      <div className="absolute left-0 top-6 w-3 h-3 rounded-full bg-[hsl(var(--timeline))] border-2 border-background z-10" />
 
       <div className="group p-5 rounded-xl bg-card/80 backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all">
         {/* Header */}
@@ -362,22 +362,13 @@ const MobileExperienceCard = memo(function MobileExperienceCard({ exp, index }) 
 const Experience = () => {
   const containerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [progressPercent, setProgressPercent] = useState(0);
   const [isDesktop, setIsDesktop] = useState(true);
   const [isLowPerfDesktop, setIsLowPerfDesktop] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const isPerfConstrained = prefersReducedMotion || isLowPerfDesktop;
-  const totalSteps = experiences.length;
-  const progress = totalSteps > 1 ? activeIndex / (totalSteps - 1) : 0;
   const activeBgParticles = isPerfConstrained ? bgParticles.slice(0, 5) : bgParticles;
   const activeTimelineParticles = isPerfConstrained ? timelineParticles.slice(0, 5) : timelineParticles;
-
-  const smoothProgress = useSpring(progress, {
-    stiffness: 52,
-    damping: 22,
-    mass: 0.9,
-  });
-
-  const progressHeight = useTransform(smoothProgress, (v) => `${v * 70}vh`);
 
 
   // SSR-safe responsive detection
@@ -402,13 +393,25 @@ const Experience = () => {
     offset: ["start start", "end end"],
   });
 
+  const clampedTimelineProgress = useTransform(scrollYProgress, (v) => Math.max(0, Math.min(1, v)));
+  const smoothTimelineProgress = useSpring(clampedTimelineProgress, {
+    stiffness: 110,
+    damping: 24,
+    mass: 0.7,
+  });
+  const progressHeight = useTransform(smoothTimelineProgress, (v) => `${v * 100}%`);
+  const progressIndicatorTop = useTransform(smoothTimelineProgress, (v) => `${8 + v * 84}%`);
+
   // Track active experience based on scroll progress with discrete steps
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const safeLatest = Math.max(0, Math.min(1, latest));
+    setProgressPercent(Math.round(safeLatest * 100));
+
     const step = 1 / experiences.length;
     const buffered = step * 0.15;
 
     const newIndex = Math.min(
-      Math.floor((latest + buffered) / step),
+      Math.floor((safeLatest + buffered) / step),
       experiences.length - 1
     );
     if (newIndex >= 0) {
@@ -440,7 +443,7 @@ const Experience = () => {
           {/* Timeline */}
           <div className="relative max-w-2xl mx-auto">
             {/* Vertical line */}
-            <div className="absolute left-1.5 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-accent to-transparent" />
+            <div className="absolute left-1.5 top-0 bottom-0 w-0.5 bg-[hsl(var(--timeline)/0.45)]" />
 
             <div className="space-y-8">
               {experiences.map((exp, index) => (
@@ -504,7 +507,7 @@ const Experience = () => {
         {/* Content container */}
         <div className="relative h-full flex flex-col">
           {/* Header - fixed at top */}
-          <div className="pt-16 lg:pt-20 pb-6 text-center relative z-20">
+          <div className="pt-14 lg:pt-12 pb-6 text-center relative z-20">
             <motion.h2
               className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-3"
               initial={{ opacity: 0, y: 20 }}
@@ -530,14 +533,14 @@ const Experience = () => {
               <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
                 h-[70vh] w-[120px] z-30">
                 
-                {/* Premium ambient gradient background */}
-                <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-accent/10 rounded-full blur-2xl" />
+                {/* Subtle ambient backdrop for the timeline */}
+                <div className="absolute inset-0 rounded-full bg-[hsl(var(--timeline)/0.07)] blur-2xl" />
                 
                 {/* Animated floating particles for premium feel */}
                 {activeTimelineParticles.map((particle, i) => (
                   <motion.div
                     key={i}
-                    className="absolute w-2 h-2 rounded-full bg-primary/50"
+                    className="absolute w-2 h-2 rounded-full bg-[hsl(var(--timeline)/0.35)]"
                     style={{
                       left: `${particle.left}px`,
                       top: `${particle.top}%`,
@@ -547,24 +550,19 @@ const Experience = () => {
                   />
                 ))}
 
-                {/* Progress line container – fixed height */}
-<div
-  className="absolute left-1/2 -translate-x-1/2 top-0
-    w-[12px] h-[70vh] rounded-full overflow-hidden z-40"
->
-  {/* Animated progress fill */}
-  <motion.div
-    className="absolute top-0 left-0 w-full rounded-full"
-    style={{ height: progressHeight }}
-  >
-    {/* Bright core */}
-    <div className="absolute inset-0 bg-gradient-to-b from-primary via-purple-500 to-accent rounded-full">
-      {/* Glow */}
-      <div className="absolute -inset-4 bg-gradient-to-b from-primary/70 via-purple-500/70 to-accent/70 blur-2xl" />
-      <div className="absolute -inset-2 bg-gradient-to-b from-primary/90 via-purple-500/90 to-accent/90 blur-xl" />
-    </div>
-  </motion.div>
-</div>
+                {/* Progress line container - fixed height */}
+                <div
+                  className="absolute left-1/2 -translate-x-1/2 top-0 w-[10px] h-[70vh] rounded-full overflow-hidden z-40 bg-border/85 border border-border/80"
+                >
+                  {/* Animated progress fill */}
+                  <motion.div
+                    className="absolute top-0 left-0 w-full rounded-full bg-[hsl(var(--timeline))]"
+                    style={{
+                      height: progressHeight,
+                      boxShadow: "0 0 14px hsl(var(--timeline) / 0.45)",
+                    }}
+                  />
+                </div>
 
 
                 {/* Step dots - perfectly aligned with premium effects */}
@@ -576,74 +574,59 @@ const Experience = () => {
                   return (
                     <motion.div
                       key={index}
-                      className="absolute left-1/2 -translate-x-1/2 z-50"
+                      className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 z-50"
                       style={{ top: `${dotPosition}%` }}
-                      animate={{
-                        scale: isCurrent ? 1.5 : 1,
-                      }}
-                      transition={{ type: 'spring', stiffness: 500, damping: 20 }}
                     >
                       {/* Outer ring for active state */}
                       {isCurrent && (
                         <motion.div
-                          className="absolute inset-0 rounded-full border-3 border-primary"
-                          animate={isPerfConstrained ? undefined : { scale: [1, 2.5, 1], opacity: [1, 0.3, 1] }}
+                          className="absolute rounded-full border-2 border-[hsl(var(--timeline)/0.7)]"
+                          animate={isPerfConstrained ? undefined : { scale: [1, 1.8, 1], opacity: [1, 0.3, 1] }}
                           transition={isPerfConstrained ? undefined : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
                           style={{
-                            width: '40px',
-                            height: '40px',
-                            left: '-7px',
-                            top: '-7px',
+                            width: '30px',
+                            height: '30px',
+                            left: '50%',
+                            top: '50%',
+                            transform: 'translate(-50%, -50%)',
                           }}
                         />
                       )}
                       
-                      {/* Main dot with premium styling */}
-                      <div
-                        className={`w-4 h-4 rounded-full border-4 transition-all duration-700 relative ${
-                          isCompleted
-                            ? 'bg-primary border-primary shadow-[0_0_40px_hsl(var(--primary))]'
-                            : 'bg-background border-border/80'
+                      {/* Main dot */}
+                      <motion.div
+                        className={`w-5 h-5 rounded-full border-2 transition-all duration-700 relative ${
+                          isCurrent
+                            ? 'bg-background border-[hsl(var(--timeline))]'
+                            : isCompleted
+                              ? 'bg-[hsl(var(--timeline))] border-[hsl(var(--timeline))]'
+                              : 'bg-background border-border/80'
                         }`}
                         style={{
-                          boxShadow: isCurrent 
-                            ? '0 0 50px hsl(var(--primary) / 1), 0 0 25px hsl(var(--primary) / 0.7), inset 0 0 15px hsl(var(--primary) / 0.4)' 
-                            : isCompleted 
-                              ? '0 0 20px hsl(var(--primary) / 0.6), inset 0 0 8px hsl(var(--primary) / 0.3)'
-                              : '0 0 8px hsl(var(--border) / 0.4)'
+                          boxShadow: isCurrent
+                            ? '0 0 18px hsl(var(--timeline) / 0.65)'
+                            : isCompleted
+                              ? '0 0 10px hsl(var(--timeline) / 0.45)'
+                              : 'none'
                         }}
+                        animate={{ scale: isCurrent ? 1.15 : 1 }}
+                        transition={{ type: 'spring', stiffness: 500, damping: 20 }}
                       >
-                        {/* Inner glow for active state */}
                         {isCurrent && (
-                          <>
-                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/50 to-transparent" />
-                            <motion.div
-                              className="absolute inset-0 rounded-full bg-primary"
-                              animate={isPerfConstrained ? undefined : { scale: [1, 0.6, 1], opacity: [1, 0.3, 1] }}
-                              transition={isPerfConstrained ? undefined : { duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                            />
-                          </>
+                          <div className="absolute inset-[4px] rounded-full bg-[hsl(var(--timeline))]" />
                         )}
-                        
-                        {/* Completed state checkmark */}
                         {isCompleted && !isCurrent && (
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-4 h-4 text-primary font-bold" style={{
-                              fontSize: '10px',
-                            }}>
-                              ✓
-                            </div>
-                          </div>
+                          <div className="absolute inset-[5px] rounded-full bg-background/70" />
                         )}
-                      </div>
+                      </motion.div>
 
-                      {/* Connecting line to dot */}
-                      <div 
-                        className="absolute left-1/2 -translate-x-1/2 w-1 bg-gradient-to-b from-primary/60 to-transparent"
+                      {/* Small support stem */}
+                      <div
+                        className="absolute left-1/2 -translate-x-1/2 w-0.5 bg-[hsl(var(--timeline)/0.4)]"
                         style={{
-                          height: '25px',
-                          top: isCurrent ? '-25px' : '-15px',
-                          opacity: isCompleted ? 1 : 0.4,
+                          height: '16px',
+                          top: '-16px',
+                          opacity: isCompleted ? 1 : 0.35,
                         }}
                       />
                     </motion.div>
@@ -652,11 +635,12 @@ const Experience = () => {
 
                 {/* Progress percentage indicator */}
                 <motion.div
-                  className="absolute -right-9 lg:-right-10 top-1/2 -translate-y-1/2 text-primary font-mono text-sm font-bold bg-card/90 backdrop-blur-sm px-4 py-2 rounded-full border-2 border-primary/40 shadow-lg"
-                  animate={isPerfConstrained ? undefined : { opacity: [0.8, 1, 0.8] }}
-                  transition={isPerfConstrained ? undefined : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute -right-12 lg:-right-14 -translate-y-1/2 text-[hsl(var(--timeline))] font-mono text-sm font-bold bg-card/95 backdrop-blur-sm px-4 py-2 rounded-full border border-[hsl(var(--timeline)/0.35)]"
+                  style={{ top: progressIndicatorTop }}
+                  animate={isPerfConstrained ? undefined : { opacity: [0.75, 1, 0.75] }}
+                  transition={isPerfConstrained ? undefined : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  {Math.round(progress * 100)}%
+                  {progressPercent}%
                 </motion.div>
               </div>
 
@@ -688,7 +672,7 @@ const Experience = () => {
                     <motion.div
                       key={index}
                       className={`rounded-full transition-all duration-500 ${activeIndex === index
-                        ? 'w-8 h-2 bg-primary'
+                        ? 'w-8 h-2 bg-[hsl(var(--timeline))]'
                         : 'w-2 h-2 bg-border'
                         }`}
                       animate={{
@@ -700,7 +684,7 @@ const Experience = () => {
 
                 {/* Counter */}
                 <div className="flex items-center gap-2 ml-4 px-4 py-2 rounded-full bg-card/80 backdrop-blur-sm border border-border/50">
-                  <span className="font-mono text-lg font-bold text-primary">
+                  <span className="font-mono text-lg font-bold text-[hsl(var(--timeline))]">
                     {String(activeIndex + 1).padStart(2, '0')}
                   </span>
                   <span className="text-muted-foreground">/</span>
@@ -720,7 +704,7 @@ const Experience = () => {
                     animate={isPerfConstrained ? undefined : { y: [0, 4, 0] }}
                     transition={isPerfConstrained ? undefined : { duration: 1.5, repeat: Infinity }}
                   >
-                    ↓
+                    &darr;
                   </motion.div>
                 </motion.div>
               </motion.div>
@@ -733,4 +717,3 @@ const Experience = () => {
 };
 
 export default Experience;
-

@@ -7,74 +7,74 @@ const projects = [
   {
     id: 1,
     number: "01/04",
-    title: "ELIOS FINANCE",
-    subtitle: "Finance Website",
-    description: "Website revamp that brought an Indian finance advisory firm's story to life through design and motion while highlighting its services.",
-    image: "https://framerusercontent.com/images/cESHCUNY7OxTpoEynSgXDBfOoM.webp?width=800&height=600",
-    liveUrl: "https://eliosfin.com/",
-    githubUrl: "#",
+    title: "smartTable",
+    subtitle: "Multi-Tenant SaaS Timetable Management Platform",
+    description: "Production-ready multi-tenant SaaS platform for schools and colleges to generate conflict-free timetables. Built with a subscription-driven architecture (Trial, Standard, Flex), dual-mode data isolation (School & College), role-based access control, and a Super Admin governance system for cross-tenant management and notifications.",
+    image: new URL("../assets/Personal1.png", import.meta.url).href,
+    liveUrl: "#",
+    githubUrl: "https://github.com/Rishi9822/TimeTable_Organizer",
     color: "hsl(var(--muted-foreground))",
-    tags: ["React", "Node.js", "MongoDB", "Framer Motion"]
+    tags: ["React", "Node.js", "MongoDB", "Express", "SaaS", "Tailwind"]
   },
   {
     id: 2,
     number: "02/04",
-    title: "GREENLAM MFC",
-    subtitle: "Manufacturing Website",
-    description: "Modern manufacturing website showcasing industrial excellence with interactive product galleries and technical specifications.",
-    image: "https://framerusercontent.com/images/lg4aCbGnRwMMK59qe2r950OXo8.webp?width=800&height=600",
-    liveUrl: "https://www.greenlammfc.com/",
-    githubUrl: "#",
+    title: "Rishi Patel",
+    subtitle: "Personal Portfolio Website",
+    description: "I built this personal portfolio to showcase my full-stack development skills, scalable system design, and modern UI practices. It highlights my projects, technical stack, and problem-solving approach while focusing on performance, responsiveness, and clean architecture to deliver a smooth and professional user experience.",
+    image: new URL("../assets/Personal2.png", import.meta.url).href,
+    liveUrl: "#",
+    githubUrl: "https://github.com/Rishi9822/Personal_Portfolio",
     color: "hsl(var(--muted-foreground))",
-    tags: ["Next.js", "TypeScript", "PostgreSQL", "Tailwind"]
+    tags: ["React", "SEO Optimized", "Modern UI", "Tailwind"]
   },
   {
     id: 3,
     number: "03/04",
-    title: "MARUTI ROPES",
-    subtitle: "Industrial Website",
-    description: "Comprehensive industrial website for rope manufacturing with product catalog and technical documentation.",
-    image: "https://framerusercontent.com/images/z6OwSiDnezWln6hQuqA8APzwo.webp?width=800&height=600",
-    liveUrl: "https://www.marutiropes.com/",
-    githubUrl: "#",
+    title: "RoomiPlan",
+    subtitle: "Floor Plan Generator",
+    description: "A web application that generates optimized floor plans based on user-defined room dimensions and layout preferences. It utilizes a custom algorithm to efficiently arrange rooms while maximizing space utilization and adhering to design constraints, providing users with visually appealing and functional floor plan options.",
+    image: new URL("../assets/Personal3.png", import.meta.url).href,
+    liveUrl: "#",
+    githubUrl: "https://github.com/Rishi9822/Roomiplan",
     color: "hsl(var(--muted-foreground))",
-    tags: ["React", "Express", "MySQL", "Canvas API"]
+    tags: ["React", "Express", "MongoDB", "Node.js", "Tailwind" ]
   },
   {
     id: 4,
     number: "04/04",
-    title: "CUPRUM QUIRKS",
-    subtitle: "Creative Portfolio",
-    description: "Creative portfolio website with unique animations and interactive storytelling elements.",
-    image: "https://framerusercontent.com/images/7bfqXM2Kq5sRrSbxdgbIKnosqw.webp?width=800&height=600",
-    liveUrl: "https://cuprumquirks.com/",
-    githubUrl: "#",
+    title: "MyBucket",
+    subtitle: "Personal Bucket List Web Application",
+    description: "A personal bucket list application that allows users to create, manage, and track their life goals and aspirations. Users can add new goals, categorize them, set deadlines, and mark them as completed. The app provides a visually appealing interface with progress tracking and motivational features to help users stay inspired and organized in pursuing their dreams. ",
+    image: new URL("../assets/Personal4.png", import.meta.url).href,
+    liveUrl: "#",
+    githubUrl: "https://github.com/Rishi9822/Rishi-Portfolio",
     color: "hsl(var(--muted-foreground))",
-    tags: ["Gatsby", "GraphQL", "Contentful", "GSAP"]
+    tags: ["HTML", "CSS", "JavaScript"]
   }
 ];
 
 const clientProjects = [
   {
     id: "client-1",
-    title: "Elios Finance",
-    description: "Revamped digital presence with motion-led storytelling.",
-    image: projects[0].image,
-    liveUrl: projects[0].liveUrl,
+    title: "Apna Kabadi Wala",
+    description: "I developed a full-stack web application for a scrap collection business, implementing online pickup booking, dynamic scrap pricing management, and an admin panel to manage orders, update rates, and monitor customer requests efficiently.",
+    image: new URL("../assets/Client1.png", import.meta.url).href,
+    liveUrl: "https://apnakabadiwala.com/",
   },
   {
     id: "client-2",
-    title: "Greenlam MFC",
-    description: "Modern product showcase for a manufacturing leader.",
-    image: projects[1].image,
-    liveUrl: projects[1].liveUrl,
+    title: "Dr. Shiv Clinic",
+    description: "I developed a full-stack clinic management web application with online appointment booking and real-time status tracking. The admin panel enables appointment confirmation, cancellation, completion, holiday management, and monthly report downloads for streamlined clinic operations.",
+    image: new URL("../assets/Client2.png", import.meta.url).href,
+    liveUrl: "https://drshivclinic.netlify.app/",
   },
   {
     id: "client-3",
-    title: "Maruti Ropes",
-    description: "Industrial catalog experience with technical clarity.",
-    image: projects[2].image,
-    liveUrl: projects[2].liveUrl,
+    title: "Sellestial Devs",
+    description: "I developed a modern, responsive website for a software development company to showcase its services, portfolio, and technical expertise. The focus was on clean UI, smooth navigation, performance optimization, and creating a strong digital presence to attract potential clients.",
+    image: new URL("../assets/Client3.png", import.meta.url).href,
+    liveUrl: "#",
   },
 ];
 
@@ -126,7 +126,7 @@ const StickyCard = memo(function StickyCard({
           loading={isPriorityImage ? "eager" : "lazy"}
           decoding="async"
           fetchPriority={isPriorityImage ? "high" : "auto"}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-contain object-center"
         />
 
         <div className="absolute inset-0 bg-background/55" />
@@ -235,7 +235,7 @@ const Projects = () => {
       >
         <div className="container">
           {/* Section Header */}
-          <div className="text-center mb-4 pt-20">
+          <div className="text-center mb-4 pt-14">
             <h2 className="text-4xl lg:text-6xl font-bold mb-4">Featured Projects</h2>
             <p className="text-xl text-muted-foreground">Scroll to explore my work</p>
           </div>
@@ -318,7 +318,7 @@ const Projects = () => {
                     href={currentProject.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground border border-border font-semibold hover:bg-hover transition-colors duration-200"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[hsl(var(--button))] text-[hsl(var(--button-foreground))] border border-border font-semibold hover:bg-[hsl(var(--button-hover))] transition-colors duration-200"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -408,7 +408,7 @@ const Projects = () => {
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-primary text-primary-foreground border border-border text-sm font-semibold hover:bg-hover transition-colors duration-200 w-full sm:w-auto"
+                          className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-[hsl(var(--button))] text-[hsl(var(--button-foreground))] border border-border text-sm font-semibold hover:bg-[hsl(var(--button-hover))] transition-colors duration-200 w-full sm:w-auto"
                         >
                           <ExternalLink className="w-4 h-4" />
                           Live Site
@@ -451,7 +451,7 @@ const Projects = () => {
             showCounter={true}
             showNavigation={true}
             autoPlay={true}
-            autoPlayInterval={4200}
+            autoPlayInterval={8200}
             className="w-full justify-center"
           />
         </div>

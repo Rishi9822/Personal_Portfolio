@@ -106,7 +106,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden py-16 sm:py-20 lg:py-24"
+      className="relative overflow-hidden py-14 sm:py-12 lg:py-18"
       ref={containerRef}
       style={{ contentVisibility: "auto", containIntrinsicSize: "1px 1000px" }}
     >
@@ -261,7 +261,7 @@ const Contact = () => {
                 disabled={isSubmitting}
                 whileHover={{ scale: 1.01, y: -1 }}
                 whileTap={{ scale: 0.985 }}
-                className="group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-xl border border-border bg-primary py-4 text-base font-semibold text-primary-foreground transition-all duration-200 hover:bg-hover disabled:cursor-not-allowed disabled:opacity-70 sm:py-5 sm:text-lg"
+                className="group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-xl border border-border bg-[hsl(var(--button))] py-4 text-base font-semibold text-[hsl(var(--button-foreground))] transition-all duration-200 hover:bg-[hsl(var(--button-hover))] disabled:cursor-not-allowed disabled:opacity-70 sm:py-5 sm:text-lg"
               >
                 <motion.div className="absolute inset-0 bg-hover opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
 
@@ -328,7 +328,7 @@ const Contact = () => {
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
                 onClick={() => setShowSuccessModal(false)}
-                className="mt-6 w-full rounded-xl border border-border bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-hover sm:text-base"
+                className="mt-6 w-full rounded-xl border border-border bg-[hsl(var(--button))] px-5 py-3 text-sm font-medium text-[hsl(var(--button-foreground))] transition-colors hover:bg-[hsl(var(--button-hover))] sm:text-base"
               >
                 Continue Browsing
               </motion.button>

@@ -5,8 +5,8 @@ import { ArrowUp, Github, Heart, Linkedin, Mail } from "lucide-react";
 import { springConfigs } from "@/hooks/useScrollVelocity";
 
 const SOCIALS = Object.freeze([
-  { icon: Github, href: "https://github.com/Rishi9822", label: "GitHub" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
+  { icon: Github, href: "https://github.com/Rishi9822", label: "GitHub", target: "_blank" },
+  { icon: Linkedin, href: "https://linkedin.com/in/rishi-patel-091226291", label: "LinkedIn", target: "_blank" },
   { icon: Mail, href: "mailto:rishipatel9822@gmail.com", label: "Email" },
 ]);
 

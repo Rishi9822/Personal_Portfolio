@@ -12,7 +12,7 @@ export function TestimonialsCard({
   showNavigation = true,
   showCounter = true,
   autoPlay = false,
-  autoPlayInterval = 3000,
+  autoPlayInterval = 6200,
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -101,7 +101,7 @@ export function TestimonialsCard({
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain object-center"
                     loading="lazy"
                   />
                   <div className="pointer-events-none absolute inset-0 bg-background/50" />
@@ -132,7 +132,7 @@ export function TestimonialsCard({
                     href={activeItem.liveUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground border border-border transition-colors duration-200 hover:bg-hover"
+                    className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--button))] px-4 py-2 text-sm font-semibold text-[hsl(var(--button-foreground))] border border-border transition-colors duration-200 hover:bg-[hsl(var(--button-hover))]"
                   >
                     Visit Live
                     <ExternalLink className="h-4 w-4" />
@@ -150,7 +150,7 @@ export function TestimonialsCard({
               onClick={handlePrev}
               aria-label="Previous project"
               className={cn(
-                "flex items-center justify-center w-10 h-10 rounded-full border border-border bg-primary transition-all",
+                "flex items-center justify-center w-10 h-10 rounded-full border border-border transition-all",
                 activeIndex === 0
                   ? "opacity-50 cursor-not-allowed"
                   : "hover:bg-hover hover:scale-105"
@@ -163,7 +163,7 @@ export function TestimonialsCard({
               onClick={handleNext}
               aria-label="Next project"
               className={cn(
-                "flex items-center justify-center w-10 h-10 rounded-full border border-border bg-primary transition-all",
+                "flex items-center justify-center w-10 h-10 rounded-full border border-border transition-all",
                 activeIndex === items.length - 1
                   ? "opacity-50 cursor-not-allowed"
                   : "hover:bg-hover hover:scale-105"

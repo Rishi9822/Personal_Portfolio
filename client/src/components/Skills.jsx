@@ -26,7 +26,7 @@ import javaLogo from "@/assets/java.gif";
 import jsLogo from "@/assets/js.gif";
 import htmlLogo from "@/assets/Html.png";
 import mongodbLogo from "@/assets/mongodb.png";
-import reactLogo from "@/assets/react.gif";
+import reactLogo from "@/assets/react.png";
 import GithubLogo from "@/assets/GitHub.png";
 import CSSLogo from "@/assets/CSS.png";
 import CLogo from "@/assets/C.png";
@@ -163,7 +163,8 @@ const desktopBentoItems = [
     description: "Real-time messaging and collaboration.",
     icon: <img src={LinkedINLogo} alt="Java" className="h-6 w-6 object-contain" />,
     tone: "accent",
-    href: "#contact",
+    href: "https://linkedin.com/in/rishi-patel-091226291",
+    target: "_blank",
   },
   {
     id: "node",
@@ -564,7 +565,7 @@ const SkillDetailModal = memo(({ skill, isOpen, onClose, isMobile, reduceMotion 
             {/* Close button */}
             <button
               onClick={onClose}
-              className="mt-5 w-full rounded-lg bg-primary text-primary-foreground py-2 font-medium"
+              className="mt-5 w-full rounded-lg bg-[hsl(var(--button))] text-[hsl(var(--button-foreground))] py-2 font-medium hover:bg-[hsl(var(--button-hover))]"
             >
               Close
             </button>

@@ -40,6 +40,8 @@ const Contact = () => {
   };
 
   useEffect(() => {
+    // Keep ref accurate across React StrictMode mount/unmount checks in development.
+    isMountedRef.current = true;
     return () => {
       isMountedRef.current = false;
     };
@@ -70,6 +72,8 @@ const Contact = () => {
 
     setIsSubmitting(true);
     setSubmitError("");
+    const abortController = new AbortController();
+    const timeoutId = window.setTimeout(() => abortController.abort(), 15000);
 
     try {
       const formPayload = new FormData();
@@ -83,6 +87,7 @@ const Contact = () => {
         headers: {
           Accept: "application/json",
         },
+        signal: abortController.signal,
         body: formPayload,
       });
 
@@ -90,16 +95,24 @@ const Contact = () => {
         throw new Error("Form submission failed");
       }
 
-      if (!isMountedRef.current) return;
-      setFormData(EMPTY_FORM);
-      setShowSuccessModal(true);
+      if (isMountedRef.current) {
+        setFormData(EMPTY_FORM);
+        setShowSuccessModal(true);
+      }
     } catch (error) {
-      void error;
       if (!isMountedRef.current) return;
-      setSubmitError("Message could not be sent right now. Please try again in a moment.");
+
+      const isTimeout = error instanceof DOMException && error.name === "AbortError";
+      setSubmitError(
+        isTimeout
+          ? "Request timed out. Please check your connection and try again."
+          : "Message could not be sent right now. Please try again in a moment."
+      );
     } finally {
-      if (!isMountedRef.current) return;
-      setIsSubmitting(false);
+      window.clearTimeout(timeoutId);
+      if (isMountedRef.current) {
+        setIsSubmitting(false);
+      }
     }
   };
 

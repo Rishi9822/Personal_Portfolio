@@ -49,9 +49,9 @@ const Hero = () => {
     () => (
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center normal-case">
         <span className="text-xs tracking-[0.45em] text-muted-foreground">HELLO, I AM</span>
-        <div className="text-[clamp(2.2rem,5.2vw,4.6rem)] font-black leading-tight text-foreground">
+        <h1 className="text-[clamp(2.2rem,5.2vw,4.6rem)] font-black leading-tight text-foreground">
           Rishi Patel
-        </div>
+        </h1>
         <p className="mx-auto max-w-2xl text-center text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed">
           Full-stack developer focused on building fast, elegant, and scalable
           digital products.

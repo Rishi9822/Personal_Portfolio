@@ -13,8 +13,38 @@ import { MouseFollowingEyes } from "@/components/ui/mouse-following-eyes";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 import { ReactLenis } from "lenis/react";
 
+// SEO CONFIG:
+// 1) Set VITE_SITE_URL in your deployment environment to your production domain.
+//    Example: https://yourdomain.com
+// 2) Update social links in `personStructuredData.sameAs` if needed.
+const DEFAULT_SITE_URL = "https://example.com";
+const siteUrl = (import.meta.env.VITE_SITE_URL || DEFAULT_SITE_URL).replace(/\/+$/, "");
+const canonicalUrl = `${siteUrl}/`;
+const socialPreviewImageUrl = `${siteUrl}/photo.png`;
+
 const Index = () => {
   useSmoothScroll();
+  const personStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Rishi Patel",
+    url: canonicalUrl,
+    jobTitle: "Full-Stack Developer",
+    email: "mailto:rishipatel9822@gmail.com",
+    image: socialPreviewImageUrl,
+    sameAs: [
+      "https://github.com/Rishi9822",
+      "https://linkedin.com/in/rishi-patel-091226291",
+    ],
+  };
+
+  const websiteStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Rishi Patel Portfolio",
+    url: canonicalUrl,
+    inLanguage: "en",
+  };
 
   return (
     <>
@@ -28,8 +58,17 @@ const Index = () => {
           name="keywords"
           content="developer, portfolio, computer science, web development, react, full-stack"
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#0B0F14" />
+        <meta
+          name="robots"
+          content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+        />
+        <meta
+          name="googlebot"
+          content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+        />
+        <link rel="canonical" href={canonicalUrl} />
+        <link rel="alternate" hrefLang="en" href={canonicalUrl} />
 
         <meta property="og:title" content="Rishi Patel | CS Student & Developer" />
         <meta
@@ -37,6 +76,18 @@ const Index = () => {
           content="Portfolio of a passionate CS student building elegant digital experiences."
         />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:site_name" content="Rishi Patel Portfolio" />
+        <meta property="og:image" content={socialPreviewImageUrl} />
+        <meta property="og:image:alt" content="Rishi Patel Profile Photo" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Rishi Patel | CS Student & Developer" />
+        <meta
+          name="twitter:description"
+          content="Portfolio of a passionate CS student building elegant digital experiences."
+        />
+        <meta name="twitter:image" content={socialPreviewImageUrl} />
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -44,6 +95,13 @@ const Index = () => {
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+
+        <script type="application/ld+json">
+          {JSON.stringify(personStructuredData)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(websiteStructuredData)}
+        </script>
       </Helmet>
 
       <motion.div

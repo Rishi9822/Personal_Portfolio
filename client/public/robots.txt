@@ -1,0 +1,7 @@
+# SEO CONFIG:
+# Replace https://yourdomain.com with your live production domain before final deploy.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://yourdomain.com/sitemap.xml

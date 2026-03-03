@@ -13,11 +13,7 @@ import { MouseFollowingEyes } from "@/components/ui/mouse-following-eyes";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 import { ReactLenis } from "lenis/react";
 
-// SEO CONFIG:
-// 1) Set VITE_SITE_URL in your deployment environment to your production domain.
-//    Example: https://yourdomain.com
-// 2) Update social links in `personStructuredData.sameAs` if needed.
-const DEFAULT_SITE_URL = "https://example.com";
+const DEFAULT_SITE_URL = "https://rishiwebfolio.netlify.app/";
 const siteUrl = (import.meta.env.VITE_SITE_URL || DEFAULT_SITE_URL).replace(/\/+$/, "");
 const canonicalUrl = `${siteUrl}/`;
 const socialPreviewImageUrl = `${siteUrl}/photo.png`;

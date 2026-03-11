@@ -49,7 +49,7 @@ const Hero = () => {
     () => (
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center normal-case">
         <span className="text-xs tracking-[0.45em] text-muted-foreground">HELLO, I AM</span>
-        <h1 className="text-[clamp(2.2rem,5.2vw,4.6rem)] font-black leading-tight text-foreground">
+        <h1 className="text-[clamp(1.6rem,3.6vw,3.2rem)] font-display font-black leading-tight tracking-[-0.02em] text-foreground">
           Rishi Patel
         </h1>
         <p className="mx-auto max-w-2xl text-center text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed">
@@ -79,10 +79,10 @@ const Hero = () => {
 
   const fxSizes = useMemo(
     () => ({
-      header: "clamp(1.4rem, 3.8vw, 3rem)",
-      title: "clamp(2rem, 5.5vw, 4.6rem)",
-      footer: "clamp(0.9rem, 2.6vw, 1.8rem)",
-      item: "clamp(0.8rem, 1.1vw, 1.1rem)",
+      header: "clamp(1rem, 2.4vw, 2rem)",
+      title: "clamp(1.4rem, 3.4vw, 2.8rem)",
+      footer: "clamp(0.8rem, 1.6vw, 1.2rem)",
+      item: "clamp(0.65rem, 0.9vw, 0.95rem)",
     }),
     []
   );
@@ -108,7 +108,7 @@ const Hero = () => {
         showProgress
         showEnd={false}
         smoothScroll
-        fontFamily='"Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif'
+        fontFamily='var(--font-display)'
         topPadding={4}
         sizes={fxSizes}
         durations={fxDurations}

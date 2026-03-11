@@ -56,7 +56,7 @@ function Footer() {
             >
               <a
                 href="#"
-                className="inline-block text-2xl font-bold tracking-tight text-gradient transition-opacity hover:opacity-90 sm:text-3xl"
+                className="inline-block text-2xl font-display font-bold tracking-tight text-gradient transition-opacity hover:opacity-90 sm:text-3xl"
               >
                 Rishi Patel
               </a>

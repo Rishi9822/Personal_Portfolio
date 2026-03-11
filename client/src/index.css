@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Syne:wght@400..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,6 +6,10 @@
 
 @layer base {
   :root {
+    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-display: "Syne", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
     --background: 213 28% 6%;
     --foreground: 210 22% 96%;
 
@@ -57,7 +61,8 @@
 
   body {
     @apply bg-background text-foreground font-sans;
-    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
     cursor: none;
     overflow-x: hidden;
   }
@@ -104,6 +109,20 @@
   a[role='button'] {
     transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
   }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+  }
+
+  code,
+  pre {
+    font-family: var(--font-mono);
+  }
 }
 
 @layer components {
@@ -125,7 +144,7 @@
   }
 
   .font-mono {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-family: var(--font-mono);
   }
 
   .grid-background {

@@ -304,6 +304,19 @@ const Navbar = () => {
               exit="closed"
               className="fixed top-0 right-0 bottom-0 w-[300px] bg-card border-l border-border z-50 md:hidden p-8 flex flex-col"
             >
+              <div className="flex items-center justify-between mb-8">
+                <span className="text-sm font-semibold text-muted-foreground">Menu</span>
+                <motion.button
+                  type="button"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-card border border-border hover:bg-hover transition-colors"
+                  aria-label="Close menu"
+                >
+                  <X className="w-5 h-5" />
+                </motion.button>
+              </div>
               <div className="flex-1 flex flex-col justify-center gap-8">
                 {navLinks.map((link) => (
                   <motion.a
@@ -311,7 +324,7 @@ const Navbar = () => {
                     href={link.href}
                     variants={menuItemVariants}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="text-3xl font-bold text-foreground hover:text-primary transition-colors"
+                    className="text-3xl font-display font-bold text-foreground hover:text-primary transition-colors"
                   >
                     {link.name}
                   </motion.a>

@@ -127,7 +127,7 @@ const Contact = () => {
         {/* Section header */}
         <ScrollReveal direction="up" distance={40} blur>
           <div className="mx-auto mb-12 max-w-3xl text-center sm:mb-16 lg:mb-20">
-            <h2 className="mb-5 text-3xl font-bold sm:text-4xl md:text-5xl lg:text-6xl">
+            <h2 className="mb-5 text-3xl font-display font-bold tracking-[-0.015em] sm:text-4xl md:text-5xl lg:text-6xl">
               Let's Work
               <span className="text-gradient">
                 Together

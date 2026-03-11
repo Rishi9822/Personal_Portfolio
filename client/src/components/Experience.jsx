@@ -172,7 +172,7 @@ const ExperienceCard = memo(function ExperienceCard({ exp, index, isActive, dire
           </motion.div>
 
           <div className="flex-1">
-            <h3 className="text-xl lg:text-2xl font-bold mb-2 group-hover:text-primary transition-all duration-300">
+            <h3 className="text-xl lg:text-2xl font-display font-bold mb-2 group-hover:text-primary transition-all duration-300">
               {exp.title}
               {isActive && (
                 <motion.div
@@ -432,7 +432,7 @@ const Experience = () => {
         <div className="container">
           {/* Header */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+            <h2 className="text-3xl sm:text-4xl font-display font-bold mb-4">
               Work <span className="text-gradient">Experience</span>
             </h2>
             <p className="text-muted-foreground text-base max-w-xl mx-auto">
@@ -509,7 +509,7 @@ const Experience = () => {
           {/* Header - fixed at top */}
           <div className="pt-14 lg:pt-12 pb-6 text-center relative z-20">
             <motion.h2
-              className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-3"
+              className="text-4xl lg:text-5xl xl:text-6xl font-display font-bold mb-3"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}

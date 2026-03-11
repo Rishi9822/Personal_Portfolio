@@ -579,8 +579,10 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
           grid-row: 2;
           position: relative;
           inset: auto;
-          display: grid; grid-template-columns: 1fr 1.3fr 1fr;
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(0, min(60vw, 760px)) minmax(0, 1fr);
           align-items: center;
+          justify-items: center;
           height: 100%;
           min-height: 26vh;
           padding: 0;
@@ -590,6 +592,8 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
           height: min(48vh, 100%);
           overflow: hidden;
           display: grid; align-content: center;
+          max-width: 22vw;
+          width: 100%;
         }
         .fx-left { justify-items: start; }
         .fx-right { justify-items: end; }
@@ -621,8 +625,11 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
         .fx-right-item.active::after { right: 0; }
         .fx-center {
           display: grid; place-items: center; text-align: center; height: min(48vh, 100%); overflow: hidden;
+          width: 100%;
+          max-width: min(60vw, 760px);
+          margin-inline: auto;
         }
-        .fx-featured { position: absolute; opacity: 0; visibility: hidden; }
+        .fx-featured { position: absolute; opacity: 0; visibility: hidden; width: 100%; }
         .fx-featured.active { opacity: 1; visibility: visible; }
         .fx-featured-title {
           margin: 0; color: var(--fx-text);
@@ -631,6 +638,10 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
           text-shadow: none;
           line-height: 0.92;
           text-transform: uppercase;
+          max-width: min(58vw, 28ch);
+          margin-inline: auto;
+          padding-inline: 0.75rem;
+          text-wrap: balance;
         }
         .fx-word-mask { display: inline-block; overflow: hidden; vertical-align: middle; }
         .fx-word { display: inline-block; vertical-align: middle; }
@@ -658,9 +669,10 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
             grid-template-columns: 1fr; row-gap: 3vh;
             place-items: center;
           }
-          .fx-left, .fx-right, .fx-center { height: auto; }
+          .fx-left, .fx-right, .fx-center { height: auto; max-width: 100%; }
           .fx-left, .fx-right { justify-items: center; }
           .fx-track { transform: none !important; }
+          .fx-featured-title { max-width: 90vw; padding-inline: 0.5rem; }
         }
       `}</style>
     </div>

@@ -685,7 +685,7 @@ const Skills = () => {
             {/* Section header */}
             <ScrollReveal direction="up" distance={20}>
               <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-5">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-3 sm:mb-5">
                   Tech Stack & <span className="text-gradient">Expertise</span>
                 </h2>
                 <p

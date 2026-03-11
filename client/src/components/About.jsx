@@ -82,7 +82,7 @@ const About = () => {
           <div className="mx-auto w-full max-w-[680px]">
             <ScrollReveal direction="right" distance={60} delay={0.2}>
               <motion.div className="mb-8">
-                <h2 className="text-4xl font-bold leading-none tracking-tight text-foreground sm:text-5xl">
+                <h2 className="text-4xl font-display font-bold leading-none tracking-tight text-foreground sm:text-5xl">
                   About
                 </h2>
                 <div className="mt-3 h-px w-24 bg-border" />
@@ -90,7 +90,7 @@ const About = () => {
             </ScrollReveal>
 
             <ScrollReveal direction="up" distance={40} delay={0.3}>
-              <h3 className="mb-7 max-w-[20ch] text-2xl font-bold leading-[1.12] md:text-3xl xl:text-4xl">
+              <h3 className="mb-7 max-w-[20ch] text-2xl font-display font-bold leading-[1.12] md:text-3xl xl:text-4xl">
                 Passionate about
                 <br />
                 <span className="text-gradient">

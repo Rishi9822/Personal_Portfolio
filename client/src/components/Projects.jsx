@@ -136,7 +136,7 @@ const StickyCard = memo(function StickyCard({
             {project.subtitle}
           </span>
 
-          <h3 className="mt-3 text-2xl sm:text-3xl md:text-5xl font-semibold tracking-tight">
+          <h3 className="mt-3 text-2xl sm:text-3xl md:text-5xl font-display font-semibold tracking-tight">
             {project.title}
           </h3>
 
@@ -236,7 +236,7 @@ const Projects = () => {
         <div className="container">
           {/* Section Header */}
           <div className="text-center mb-4 pt-14">
-            <h2 className="text-4xl lg:text-6xl font-bold mb-4">Featured Projects</h2>
+            <h2 className="text-4xl lg:text-6xl font-display font-bold mb-4">Featured Projects</h2>
             <p className="text-xl text-muted-foreground">Scroll to explore my work</p>
           </div>
 
@@ -372,7 +372,7 @@ const Projects = () => {
                     <div className="lg:hidden space-y-4 px-2 pb-6">
                       <div className="flex items-center gap-3">
                         <span
-                          className="text-2xl font-semibold"
+                          className="text-2xl font-display font-semibold"
                           style={{ color: project.color }}
                         >
                           {project.number}
@@ -438,7 +438,7 @@ const Projects = () => {
       >
         <div className="container">
           <div className="text-center mb-12 pt-6">
-            <h3 className="text-3xl md:text-4xl font-semibold mb-3">
+            <h3 className="text-3xl md:text-4xl font-display font-semibold mb-3">
               Client Projects
             </h3>
             <p className="text-base md:text-lg text-muted-foreground">

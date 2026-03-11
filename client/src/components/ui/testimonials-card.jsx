@@ -120,7 +120,7 @@ export function TestimonialsCard({
               exit={{ opacity: 0, y: -25 }}
               transition={{ duration: 0.35 }}
             >
-              <h3 className="text-xl font-bold text-foreground">
+              <h3 className="text-xl font-display font-bold text-foreground">
                 {activeItem.title}
               </h3>
               <p className="text-sm text-muted-foreground mt-2">

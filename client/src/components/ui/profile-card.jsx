@@ -96,7 +96,7 @@ function ProfileCard({
               />
             </div>
             <div className="min-w-0">
-              <h3 className="truncate text-lg font-semibold tracking-tight sm:text-2xl">{name}</h3>
+              <h3 className="truncate text-lg font-display font-semibold tracking-tight sm:text-2xl">{name}</h3>
               <p className="mt-0.5 text-xs text-neutral-400 sm:text-sm">{role}</p>
             </div>
           </div>

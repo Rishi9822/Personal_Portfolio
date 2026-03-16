@@ -119,6 +119,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
+      tabIndex="-1"
       className="relative overflow-hidden py-14 sm:py-12 lg:py-18"
       ref={containerRef}
       style={{ contentVisibility: "auto", containIntrinsicSize: "1px 1000px" }}
@@ -146,7 +147,7 @@ const Contact = () => {
             <ScrollReveal direction="left" distance={40} delay={0.15}>
               <ProfileCard
                 name="Rishi Patel"
-                role="CS Student & Developer"
+                role="Full-Stack Developer & CS Student"
                 email="rishipatel9822@gmail.com"
                 statusText="Open to opportunities"
                 statusColor="bg-primary"

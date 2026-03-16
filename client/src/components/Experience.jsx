@@ -425,7 +425,7 @@ const Experience = () => {
   // Mobile/Tablet: Normal scrolling layout
   if (!isDesktop) {
     return (
-      <section id="experience" className="py-20 lg:py-28 relative overflow-hidden">
+      <section id="experience" tabIndex="-1" className="py-20 lg:py-28 relative overflow-hidden">
         {/* Section divider */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
@@ -458,7 +458,7 @@ const Experience = () => {
 
   // Desktop: Pinned scroll-snap behavior
   return (
-    <section id="experience" className="relative">
+    <section id="experience" tabIndex="-1" className="relative">
       {/* Section divider */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent z-10" />
 

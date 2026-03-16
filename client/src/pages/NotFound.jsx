@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { CANONICAL_URL } from "@/lib/seo";
 
 const NotFound = () => {
   const location = useLocation();
@@ -12,8 +13,10 @@ const NotFound = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted">
       <Helmet>
-        <title>404 | Page Not Found</title>
-        <meta name="robots" content="noindex, nofollow" />
+        <title>404 | Rishi Patel Portfolio</title>
+        <meta name="robots" content="noindex, nofollow, noarchive" />
+        <meta name="googlebot" content="noindex, nofollow, noarchive" />
+        <link rel="canonical" href={CANONICAL_URL} />
       </Helmet>
       <div className="text-center">
         <h1 className="mb-4 text-4xl font-display font-bold tracking-[-0.02em]">404</h1>

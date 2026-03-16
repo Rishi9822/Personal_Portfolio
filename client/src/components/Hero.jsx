@@ -4,9 +4,12 @@ import heroBg1 from "@/assets/1.webp";
 import heroBg2 from "@/assets/2.jpg";
 import heroBg3 from "@/assets/3.webp";
 import heroBg4 from "@/assets/4.webp";
+import { SEO_PROFILE } from "@/lib/seo";
 const resumeUrl = new URL("../assets/Rishi Patel Resume.pdf", import.meta.url).href;
 
 const Hero = () => {
+  const collegeSnippet = SEO_PROFILE.collegeName ? ` at ${SEO_PROFILE.collegeName}` : "";
+
   const fxSections = useMemo(
     () => [
       {
@@ -53,8 +56,9 @@ const Hero = () => {
           Rishi Patel
         </h1>
         <p className="mx-auto max-w-2xl text-center text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed">
-          Full-stack developer focused on building fast, elegant, and scalable
-          digital products.
+          Full-stack developer, software engineer, and computer science student
+          {collegeSnippet} focused on building fast, elegant, and scalable digital
+          products.
         </p>
         <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
           <a
@@ -72,7 +76,7 @@ const Hero = () => {
         </div>
       </div>
     ),
-    []
+    [collegeSnippet]
   );
 
   const heroFooter = useMemo(() => <div>Selected Highlights</div>, []);
@@ -100,7 +104,7 @@ const Hero = () => {
   );
 
   return (
-    <section className="relative overflow-hidden">
+    <section id="home" tabIndex="-1" className="relative overflow-hidden">
       <FullScreenScrollFX
         sections={fxSections}
         header={heroHeader}

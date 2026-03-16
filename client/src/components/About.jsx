@@ -4,14 +4,17 @@ import { Sparkles } from "lucide-react";
 
 import ScrollReveal from "./ScrollReveal";
 import aboutPhotoSrc from "@/assets/photo.png";
+import { SEO_PROFILE } from "@/lib/seo";
 
 const About = () => {
   const visualRef = useRef(null);
   const visualInView = useInView(visualRef, { once: true, margin: "-100px" });
+  const collegeClause = SEO_PROFILE.collegeName ? ` at ${SEO_PROFILE.collegeName}` : "";
 
   return (
     <section
       id="about"
+      tabIndex="-1"
       className="relative overflow-hidden py-16 md:py-20 lg:min-h-screen lg:py-10 lg:flex lg:items-center"
     >
       {/* Section divider with animation */}
@@ -102,7 +105,7 @@ const About = () => {
             <ScrollReveal direction="up" distance={30} delay={0.5}>
               <div className="mb-9 max-w-[64ch] space-y-4 text-base leading-relaxed text-muted-foreground md:text-lg">
                 <p>
-                  I'm a third-year Computer Science student focused on building scalable, real-world software solutions. I specialize in full-stack development, where I design efficient backend systems and craft clean, responsive user interfaces that deliver seamless user experiences.
+                  I&apos;m {SEO_PROFILE.fullName}, a third-year Computer Science student{collegeClause} focused on building scalable, real-world software solutions. I specialize in full-stack development, where I design efficient backend systems and craft clean, responsive user interfaces that deliver seamless user experiences.
                 </p>
                 <p>
                   I enjoy solving complex problems, optimizing performance, and continuously refining my understanding of system design and modern development practices. Beyond academics, I actively explore emerging technologies and build projects that challenge me to grow as an engineer.

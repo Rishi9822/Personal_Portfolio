@@ -230,6 +230,8 @@ const Projects = () => {
   return (
     <>
       <section
+        id="projects"
+        tabIndex="-1"
         className="min-h-screen bg-background text-foreground"
         style={{ contentVisibility: "auto", containIntrinsicSize: isDesktop ? "1px 2600px" : "1px 3600px" }}
       >

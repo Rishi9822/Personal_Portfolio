@@ -635,6 +635,7 @@ const Skills = () => {
   return (
     <section
       id="skills"
+      tabIndex="-1"
       className={`relative overflow-hidden ${isMobile ? "py-16 sm:py-20 lg:py-28" : "py-10 lg:py-16"
         }`}
       ref={containerRef}

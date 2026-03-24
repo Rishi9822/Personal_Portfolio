@@ -5,13 +5,13 @@
 >
   <url>
     <loc>https://rishiwebfolio.netlify.app/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-03-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://rishiwebfolio.netlify.app/og-image.png</image:loc>
       <image:title>Rishi Patel Portfolio</image:title>
-      <image:caption>Portfolio homepage and featured work by Rishi Patel</image:caption>
+      <image:caption>Rishi Patel Portfolio highlights full-stack projects, engineering experience, and work from K.D.K College of Engineering, Nagpur (KDK College).</image:caption>
     </image:image>
   </url>
 </urlset>

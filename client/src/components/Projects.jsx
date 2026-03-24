@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion
 import { useRef, useState, useEffect, useCallback, useMemo, memo } from "react";
 import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
 import { TestimonialsCard } from "@/components/ui/testimonials-card";
+import { CANONICAL_URL } from "@/lib/seo";
 
 const projects = [
   {
@@ -19,11 +20,11 @@ const projects = [
   {
     id: 2,
     number: "02/04",
-    title: "Rishi Patel",
+    title: "Rishi Patel Portfolio",
     subtitle: "Personal Portfolio Website",
     description: "I built this personal portfolio to showcase my full-stack development skills, scalable system design, and modern UI practices. It highlights my projects, technical stack, and problem-solving approach while focusing on performance, responsiveness, and clean architecture to deliver a smooth and professional user experience.",
     image: new URL("../assets/Personal2.png", import.meta.url).href,
-    liveUrl: "#",
+    liveUrl: CANONICAL_URL,
     githubUrl: "https://github.com/Rishi9822/Personal_Portfolio",
     color: "hsl(var(--muted-foreground))",
     tags: ["React", "SEO Optimized", "Modern UI", "Tailwind"]

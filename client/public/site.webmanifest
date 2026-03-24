@@ -1,13 +1,20 @@
 {
+  "id": "https://rishiwebfolio.netlify.app/",
+  "lang": "en-IN",
   "name": "Rishi Patel Portfolio",
   "short_name": "Rishi Portfolio",
-  "description": "Portfolio of Rishi Patel, full-stack developer and computer science student.",
+  "description": "Rishi Patel Portfolio highlights full-stack projects, engineering experience, and work from K.D.K College of Engineering, Nagpur (KDK College).",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0B0F14",
   "theme_color": "#0B0F14",
+  "categories": [
+    "portfolio",
+    "developer",
+    "software"
+  ],
   "icons": [
     {
       "src": "/Logo.png",

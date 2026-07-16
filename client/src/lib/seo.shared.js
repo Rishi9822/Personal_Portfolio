@@ -91,7 +91,7 @@ const buildCollegeVariants = (collegeName, csvAliases = "") => {
 const buildFaqItems = (profile, text) => [
   {
     question: `Who is ${profile.fullName}?`,
-    answer: `I'm ${profile.fullName}, a ${profile.rolePrimary.toLowerCase()} and ${profile.roleAcademic.toLowerCase()} from ${profile.location}. On this portfolio, I share the projects I've built, the experience I'm gaining, the tools I work with, and the kind of software I enjoy creating.`,
+    answer: `I'm ${profile.fullName}, a ${profile.rolePrimary.toLowerCase()} and ${profile.roleAcademic.toLowerCase()} from ${profile.location}. I specialize in building scalable web applications using React, Node.js, and clean software engineering practices.`,
   },
   {
     question: `Which college does ${profile.fullName} attend?`,

@@ -12,7 +12,7 @@ const projects = [
     subtitle: "Multi-Tenant SaaS Timetable Management Platform",
     description: "Production-ready multi-tenant SaaS platform for schools and colleges to generate conflict-free timetables. Built with a subscription-driven architecture (Trial, Standard, Flex), dual-mode data isolation (School & College), role-based access control, and a Super Admin governance system for cross-tenant management and notifications.",
     image: new URL("../assets/Personal1.png", import.meta.url).href,
-    liveUrl: "#",
+    liveUrl: "https://smarttable-management.netlify.app",
     githubUrl: "https://github.com/Rishi9822/TimeTable_Organizer",
     color: "hsl(var(--muted-foreground))",
     tags: ["React", "Node.js", "MongoDB", "Express", "SaaS", "Tailwind"]
@@ -75,7 +75,7 @@ const clientProjects = [
     title: "Sellestial Devs",
     description: "I developed a modern, responsive website for a software development company to showcase its services, portfolio, and technical expertise. The focus was on clean UI, smooth navigation, performance optimization, and creating a strong digital presence to attract potential clients.",
     image: new URL("../assets/Client3.png", import.meta.url).href,
-    liveUrl: "#",
+    liveUrl: "https://www.sellestial.dev",
   },
 ];
 

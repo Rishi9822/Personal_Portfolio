@@ -43,7 +43,7 @@ export const RESOLVED_SEO = Object.freeze({
   "text": {
     "siteName": "Rishi Patel Portfolio",
     "title": "Rishi Patel Portfolio | Full-Stack Developer, KDK College",
-    "description": "Official portfolio of Rishi Patel, full-stack developer and computer science student at K.D.K College of Engineering, Nagpur, also searched as KDK College. Explore projects, skills, experience, and contact details from Nagpur, Maharashtra, India.",
+    "description": "Official portfolio of Rishi Patel, full-stack developer and computer science student at K.D.K College of Engineering, Nagpur. Explore projects, skills, experience, and contact details from Nagpur, Maharashtra",
     "socialDescription": "Rishi Patel builds scalable full-stack products with React, Node.js, and clean software engineering practices.",
     "pageSummary": "Rishi Patel Portfolio highlights full-stack projects, engineering experience, and work from K.D.K College of Engineering, Nagpur (KDK College)."
   },
@@ -74,7 +74,7 @@ export const RESOLVED_SEO = Object.freeze({
   "faqItems": [
     {
       "question": "Who is Rishi Patel?",
-      "answer": "I'm Rishi Patel, a full-stack developer and computer science student from Nagpur, Maharashtra, India. On this portfolio, I share the projects I've built, the experience I'm gaining, the tools I work with, and the kind of software I enjoy creating."
+      "answer": "I'm Rishi Patel, a full-stack developer and computer science student from Nagpur, Maharashtra. I specialize in building scalable web applications using React, Node.js, and clean software engineering practices."
     },
     {
       "question": "Which college does Rishi Patel attend?",
@@ -115,7 +115,7 @@ export const RESOLVED_SEO = Object.freeze({
         "familyName": "Patel",
         "url": "https://rishiwebfolio.netlify.app/",
         "image": "https://rishiwebfolio.netlify.app/photo.png",
-        "description": "Official portfolio of Rishi Patel, full-stack developer and computer science student at K.D.K College of Engineering, Nagpur, also searched as KDK College. Explore projects, skills, experience, and contact details from Nagpur, Maharashtra, India.",
+        "description": "Official portfolio of Rishi Patel, full-stack developer and computer science student at K.D.K College of Engineering, Nagpur, also searched as KDK College. Explore projects, skills, experience, and contact details from Nagpur, Maharashtra.",
         "jobTitle": "Full-Stack Developer",
         "email": "mailto:rishipatel9822@gmail.com",
         "mainEntityOfPage": {
@@ -164,7 +164,7 @@ export const RESOLVED_SEO = Object.freeze({
         "@id": "https://rishiwebfolio.netlify.app/#webpage",
         "url": "https://rishiwebfolio.netlify.app/",
         "name": "Rishi Patel Portfolio | Full-Stack Developer, KDK College",
-        "description": "Official portfolio of Rishi Patel, full-stack developer and computer science student at K.D.K College of Engineering, Nagpur, also searched as KDK College. Explore projects, skills, experience, and contact details from Nagpur, Maharashtra, India.",
+        "description": "Official portfolio of Rishi Patel, full-stack developer and computer science student at K.D.K College of Engineering, Nagpur, also searched as KDK College. Explore projects, skills, experience, and contact details from Nagpur, Maharashtra.",
         "inLanguage": "en-IN",
         "isPartOf": {
           "@id": "https://rishiwebfolio.netlify.app/#website"
@@ -208,7 +208,7 @@ export const RESOLVED_SEO = Object.freeze({
             "name": "Who is Rishi Patel?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "I'm Rishi Patel, a full-stack developer and computer science student from Nagpur, Maharashtra, India. On this portfolio, I share the projects I've built, the experience I'm gaining, the tools I work with, and the kind of software I enjoy creating."
+              "text": "I'm Rishi Patel, a full-stack developer and computer science student from Nagpur, Maharashtra. I specialize in building scalable web applications using React, Node.js, and clean software engineering practices."
             }
           },
           {

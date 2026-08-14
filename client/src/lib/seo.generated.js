@@ -19,7 +19,7 @@ export const RESOLVED_SEO = Object.freeze({
     "roleSecondary": "Software Engineer",
     "roleAcademic": "Computer Science Student",
     "email": "rishipatel9822@gmail.com",
-    "location": "Nagpur, Maharashtra, India",
+    "location": "Nagpur, Maharashtra",
     "locality": "Nagpur",
     "region": "Maharashtra",
     "countryCode": "IN",
@@ -78,7 +78,7 @@ export const RESOLVED_SEO = Object.freeze({
     },
     {
       "question": "Which college does Rishi Patel attend?",
-      "answer": "I study at K.D.K College of Engineering, Nagpur, which many people also search for as KDK College."
+      "answer": "I study at K.D.K College of Engineering, Nagpur."
     },
     {
       "question": "What can I find on the Rishi Patel Portfolio?",
@@ -115,7 +115,7 @@ export const RESOLVED_SEO = Object.freeze({
         "familyName": "Patel",
         "url": "https://rishiwebfolio.netlify.app/",
         "image": "https://rishiwebfolio.netlify.app/photo.png",
-        "description": "Official portfolio of Rishi Patel, full-stack developer and computer science student at K.D.K College of Engineering, Nagpur, also searched as KDK College. Explore projects, skills, experience, and contact details from Nagpur, Maharashtra.",
+        "description": "Official portfolio of Rishi Patel, full-stack developer and computer science student at K.D.K College of Engineering, Nagpur. Explore projects, skills, experience, and contact details from Nagpur, Maharashtra.",
         "jobTitle": "Full-Stack Developer",
         "email": "mailto:rishipatel9822@gmail.com",
         "mainEntityOfPage": {
@@ -129,7 +129,7 @@ export const RESOLVED_SEO = Object.freeze({
         },
         "homeLocation": {
           "@type": "Place",
-          "name": "Nagpur, Maharashtra, India"
+          "name": "Nagpur, Maharashtra"
         },
         "affiliation": {
           "@id": "https://rishiwebfolio.netlify.app/#college"
@@ -164,7 +164,7 @@ export const RESOLVED_SEO = Object.freeze({
         "@id": "https://rishiwebfolio.netlify.app/#webpage",
         "url": "https://rishiwebfolio.netlify.app/",
         "name": "Rishi Patel Portfolio | Full-Stack Developer, KDK College",
-        "description": "Official portfolio of Rishi Patel, full-stack developer and computer science student at K.D.K College of Engineering, Nagpur, also searched as KDK College. Explore projects, skills, experience, and contact details from Nagpur, Maharashtra.",
+        "description": "Official portfolio of Rishi Patel, full-stack developer and computer science student at K.D.K College of Engineering, Nagpur. Explore projects, skills, experience, and contact details from Nagpur, Maharashtra.",
         "inLanguage": "en-IN",
         "isPartOf": {
           "@id": "https://rishiwebfolio.netlify.app/#website"
@@ -216,7 +216,7 @@ export const RESOLVED_SEO = Object.freeze({
             "name": "Which college does Rishi Patel attend?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "I study at K.D.K College of Engineering, Nagpur, which many people also search for as KDK College."
+              "text": "I study at K.D.K College of Engineering, Nagpur."
             }
           },
           {

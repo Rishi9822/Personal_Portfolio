@@ -105,7 +105,7 @@ const About = () => {
             <ScrollReveal direction="up" distance={30} delay={0.5}>
               <div className="mb-9 max-w-[64ch] space-y-4 text-base leading-relaxed text-muted-foreground md:text-lg">
                 <p>
-                  I&apos;m {SEO_PROFILE.fullName}, a third-year Computer Science student{collegeClause} focused on building scalable, real-world software solutions. I specialize in full-stack development, where I design efficient backend systems and craft clean, responsive user interfaces that deliver seamless user experiences.
+                  I&apos;m {SEO_PROFILE.fullName}, a final-year Computer Science student{collegeClause} focused on building scalable, real-world software solutions. I specialize in full-stack development, where I design efficient backend systems and craft clean, responsive user interfaces that deliver seamless user experiences.
                 </p>
                 <p>
                   I enjoy solving complex problems, optimizing performance, and continuously refining my understanding of system design and modern development practices. Beyond academics, I actively explore emerging technologies and build projects that challenge me to grow as an engineer.

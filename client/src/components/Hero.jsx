@@ -56,7 +56,7 @@ const Hero = () => {
           Rishi Patel
         </h1>
         <p className="mx-auto max-w-2xl text-center text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed">
-          Full-stack developer, software engineer, and computer science student
+          Full-stack developer and computer science student
           {collegeSnippet} focused on building fast, elegant, and scalable digital
           products.
         </p>

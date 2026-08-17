@@ -34,7 +34,7 @@ const projects = [
     number: "03/04",
     title: "eArchitect",
     subtitle: "Automated Floor Plan Generator for Irregular Plots",
-    description: "Full-stack intelligent CAD engine designed to automate residential floor plan layout generation for non-standard polygonal plots. Built with a Python and Shapely computational geometry core using recursive Binary Space Partitioning (BSP) and constraint optimization algorithms to enforce room adjacencies, circulation paths, and architectural feasibility. Delivers 78–91% spatial efficiency across irregular plot boundaries, integrated via a FastAPI backend, React.js interactive frontend and Node.js gateway.",
+    description: "Full-stack intelligent CAD engine automating residential layouts for non-standard polygonal plots. Powered by a Python core using Shapely, recursive BSP, and constraint optimization, it enforces architectural feasibility to achieve 78–91% spatial efficiency. Integrated via FastAPI, React.js, Node.js, and MongoDB.",
     image: new URL("../assets/Personal3.jpg", import.meta.url).href,
     liveUrl: "#",
     githubUrl: "https://github.com/Rishi9822/eArchitect",

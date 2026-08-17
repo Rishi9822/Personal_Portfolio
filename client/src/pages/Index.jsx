@@ -49,8 +49,8 @@ const Index = () => {
         position: 3,
         item: {
           "@type": "SoftwareSourceCode",
-          name: "RoomiPlan",
-          codeRepository: "https://github.com/Rishi9822/Roomiplan",
+          name: "eArchitect",
+          codeRepository: "https://github.com/Rishi9822/eArchitect",
           programmingLanguage: "JavaScript",
         },
       },

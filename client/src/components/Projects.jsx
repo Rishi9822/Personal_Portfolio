@@ -32,14 +32,14 @@ const projects = [
   {
     id: 3,
     number: "03/04",
-    title: "RoomiPlan",
-    subtitle: "Floor Plan Generator",
-    description: "A web application that generates optimized floor plans based on user-defined room dimensions and layout preferences. It utilizes a custom algorithm to efficiently arrange rooms while maximizing space utilization and adhering to design constraints, providing users with visually appealing and functional floor plan options.",
-    image: new URL("../assets/Personal3.png", import.meta.url).href,
+    title: "eArchitect",
+    subtitle: "Automated Floor Plan Generator for Irregular Plots",
+    description: "Full-stack intelligent CAD engine designed to automate residential floor plan layout generation for non-standard polygonal plots. Built with a Python and Shapely computational geometry core using recursive Binary Space Partitioning (BSP) and constraint optimization algorithms to enforce room adjacencies, circulation paths, and architectural feasibility. Delivers 78–91% spatial efficiency across irregular plot boundaries, integrated via a FastAPI backend, React.js interactive frontend and Node.js gateway.",
+    image: new URL("../assets/Personal3.jpg", import.meta.url).href,
     liveUrl: "#",
-    githubUrl: "https://github.com/Rishi9822/Roomiplan",
+    githubUrl: "https://github.com/Rishi9822/eArchitect",
     color: "hsl(var(--muted-foreground))",
-    tags: ["React", "Express", "MongoDB", "Node.js", "Tailwind" ]
+    tags: ["React", "Express", "FAST API", "Node.js", "Tailwind" ]
   },
   {
     id: 4,

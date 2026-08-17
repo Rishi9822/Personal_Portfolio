@@ -95,7 +95,7 @@ const buildFaqItems = (profile, text) => [
   },
   {
     question: `Which college does ${profile.fullName} attend?`,
-    answer: `I study at ${profile.collegeName}${profile.collegeShortName ? `, ${profile.collegeShortName}` : ""}.`,
+    answer: `I study at ${profile.collegeName}.`,
   },
   {
     question: `What can I find on the ${text.siteName}?`,
@@ -149,7 +149,7 @@ export const resolveSeoConfig = (env = {}) => {
   const text = Object.freeze({
     siteName: BASE_DEFAULTS.siteName,
     title: `${profile.fullName} Portfolio | ${profile.rolePrimary}, ${collegeTitleSuffix}`,
-    description: `Official portfolio of ${profile.fullName}, ${profile.rolePrimary.toLowerCase()} and ${profile.roleAcademic.toLowerCase()} at ${profile.collegeName}${profile.collegeShortName && profile.collegeShortName !== profile.collegeName ? `, ${profile.collegeShortName}` : ""}. Explore projects, skills, experience, and contact details from ${profile.location}.`,
+    description: `Official portfolio of ${profile.fullName}, ${profile.rolePrimary.toLowerCase()} and ${profile.roleAcademic.toLowerCase()} at ${profile.collegeName}. Explore projects, skills, experience, and contact details from ${profile.location}.`,
     socialDescription: `${profile.fullName} builds scalable full-stack products with React, Node.js, and clean software engineering practices.`,
     pageSummary: `${profile.fullName} Portfolio highlights full-stack projects, engineering experience, and work from ${profile.collegeSearchLabel || profile.location}.`,
   });

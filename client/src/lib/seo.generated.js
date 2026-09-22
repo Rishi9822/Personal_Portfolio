@@ -42,7 +42,7 @@ export const RESOLVED_SEO = Object.freeze({
   },
   "text": {
     "siteName": "Rishi Patel Portfolio",
-    "title": "Rishi Patel Portfolio | Full-Stack Developer, KDK College",
+    "title": "Rishi Patel Portfolio | Full-Stack Developer",
     "description": "Official portfolio of Rishi Patel, full-stack developer and computer science student at K.D.K College of Engineering, Nagpur. Explore projects, skills, experience, and contact details from Nagpur, Maharashtra.",
     "socialDescription": "Rishi Patel builds scalable full-stack products with React, Node.js, and clean software engineering practices.",
     "pageSummary": "Rishi Patel Portfolio highlights full-stack projects, engineering experience, and work from K.D.K College of Engineering, Nagpur (KDK College)."

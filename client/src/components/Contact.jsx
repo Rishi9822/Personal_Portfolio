@@ -303,7 +303,6 @@ const Contact = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setShowSuccessModal(false)}
-            aria-hidden="true"
           >
             <motion.div
               role="dialog"

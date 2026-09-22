@@ -119,7 +119,11 @@ export const FullScreenScrollFX = forwardRef(function FullScreenScrollFX(
 
   const measureRAF = (fn) => {
     if (typeof window === "undefined") return;
-    requestAnimationFrame(() => requestAnimationFrame(fn));
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (rootRef.current) fn();
+      });
+    });
   };
 
   // Compute scroll snap positions

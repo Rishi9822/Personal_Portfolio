@@ -183,7 +183,7 @@ const buildSitemapXml = (seo) => `<?xml version="1.0" encoding="UTF-8"?>
 
 const buildManifest = (seo) =>
   `${toPrettyJson({
-    id: seo.canonicalUrl,
+    id: "/",
     lang: seo.language,
     name: seo.text.siteName,
     short_name: "Rishi Portfolio",

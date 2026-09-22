@@ -1,9 +1,9 @@
 {
-  "id": "https://rishiwebfolio.netlify.app/",
+  "id": "/",
   "lang": "en-IN",
   "name": "Rishi Patel Portfolio",
   "short_name": "Rishi Portfolio",
-  "description": "Rishi Patel Portfolio highlights full-stack projects, engineering experience, and work from K.D.K College of Engineering, Nagpur (KDK College).",
+  "description": "Rishi Patel Portfolio highlights full-stack projects, engineering experience, and work from K.D.K College of Engineering, Nagpur.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

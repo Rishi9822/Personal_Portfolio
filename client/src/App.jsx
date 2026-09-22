@@ -29,6 +29,7 @@ const App = () => {
 
         {/* App Content (Always Mounted) */}
         <motion.div
+          className="relative"
           initial={{ opacity: 0 }}
           animate={{ opacity: loading ? 0 : 1 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}

@@ -7,7 +7,7 @@ import { CANONICAL_URL } from "@/lib/seo";
 const projects = [
   {
     id: 1,
-    number: "01/04",
+    number: "01/03",
     title: "smartTable",
     subtitle: "Multi-Tenant SaaS Timetable Management Platform",
     description: "Production-ready multi-tenant SaaS platform for schools and colleges to generate conflict-free timetables. Built with a subscription-driven architecture (Trial, Standard, Flex), dual-mode data isolation (School & College), role-based access control, and a Super Admin governance system for cross-tenant management and notifications.",
@@ -18,20 +18,8 @@ const projects = [
     tags: ["React", "Node.js", "MongoDB", "Express", "SaaS", "Tailwind"]
   },
   {
-    id: 2,
-    number: "02/04",
-    title: "Rishi Patel Portfolio",
-    subtitle: "Personal Portfolio Website",
-    description: "I built this personal portfolio to showcase my full-stack development skills, scalable system design, and modern UI practices. It highlights my projects, technical stack, and problem-solving approach while focusing on performance, responsiveness, and clean architecture to deliver a smooth and professional user experience.",
-    image: new URL("../assets/Personal2.png", import.meta.url).href,
-    liveUrl: CANONICAL_URL,
-    githubUrl: "https://github.com/Rishi9822/Personal_Portfolio",
-    color: "hsl(var(--muted-foreground))",
-    tags: ["React", "SEO Optimized", "Modern UI", "Tailwind"]
-  },
-  {
     id: 3,
-    number: "03/04",
+    number: "02/03",
     title: "eArchitect",
     subtitle: "Automated Floor Plan Generator for Irregular Plots",
     description: "Full-stack intelligent CAD engine automating residential layouts for non-standard polygonal plots. Powered by a Python core using Shapely, recursive BSP, and constraint optimization, it enforces architectural feasibility to achieve 78–91% spatial efficiency. Integrated via FastAPI, React.js, Node.js, and MongoDB.",
@@ -41,6 +29,20 @@ const projects = [
     color: "hsl(var(--muted-foreground))",
     tags: ["React", "Express", "FAST API", "Node.js", "Tailwind" ]
   },
+  {
+    id: 2,
+    number: "03/03",
+    title: "Rishi Patel Portfolio",
+    subtitle: "Personal Portfolio Website",
+    description: "I built this personal portfolio to showcase my full-stack development skills, scalable system design, and modern UI practices. It highlights my projects, technical stack, and problem-solving approach while focusing on performance, responsiveness, and clean architecture to deliver a smooth and professional user experience.",
+    image: new URL("../assets/Personal2.png", import.meta.url).href,
+    liveUrl: CANONICAL_URL,
+    githubUrl: "https://github.com/Rishi9822/Personal_Portfolio",
+    color: "hsl(var(--muted-foreground))",
+    tags: ["React", "SEO Optimized", "Modern UI", "Tailwind"]
+  },
+  
+  /*
   {
     id: 4,
     number: "04/04",
@@ -53,6 +55,7 @@ const projects = [
     color: "hsl(var(--muted-foreground))",
     tags: ["HTML", "CSS", "JavaScript"]
   }
+    */
 ];
 
 const clientProjects = [

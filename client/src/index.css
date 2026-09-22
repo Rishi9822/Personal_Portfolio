@@ -54,6 +54,7 @@
   }
 
   html {
+    position: relative;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
